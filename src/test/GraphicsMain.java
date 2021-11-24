@@ -19,8 +19,16 @@ package test;
 
 import java.awt.*;
 
-
+/**
+ * @author Filippo Ranza
+ * @version 0.1
+ */
 public class GraphicsMain {
+    /**
+     * This method will invoke GameFrame constructor and initialize method
+     * in GameFrame class.
+     * @param args The command line arguments
+     */
 
     public static void main(String[] args){
         EventQueue.invokeLater(() -> new GameFrame().initialize());

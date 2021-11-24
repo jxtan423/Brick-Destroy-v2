@@ -19,11 +19,14 @@ package test;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-import java.awt.event.WindowListener;
 
+/**
+ * This class is to create a frame with different contents
+ * on user's screen.
+ * The user can interact with the window by keyboard or mouse.
+ */
 
 public class GameFrame extends JFrame implements WindowFocusListener {
 
@@ -31,28 +34,41 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     private GameBoard gameBoard;
     private HomeMenu homeMenu;
+    private SelectionGame selectionGame;
+    private GameInfo infoPage;
 
     private boolean gaming;
 
-    public GameFrame(){
+    /**
+     * This is a constructor.
+     * It creates the GameBoard object and HomeMenu object.
+     * HomeMenu will be added to the frame and displayed on the user's screen first.
+     * The frame border will not be displayed on user's screen.
+     */
+
+    public GameFrame() {
         super();
 
         gaming = false;
 
         this.setLayout(new BorderLayout());
 
-        gameBoard = new GameBoard(this);
+        homeMenu = new HomeMenu(this);
 
-        homeMenu = new HomeMenu(this,new Dimension(450,300));
+        this.add(homeMenu, BorderLayout.CENTER);
 
-        this.add(homeMenu,BorderLayout.CENTER);
-
-        this.setUndecorated(true);
-
+        setUndecorated(true);
 
     }
 
-    public void initialize(){
+    /**
+     * This method set the window name to "Brick Destroy".
+     * The frame will appear at exact coordinate on the user's screen.
+     * The frame will be sized perfectly to ensure every content is at preferred size.
+     * The game will be terminated once the user closes the window.
+     */
+
+    public void initialize() {
         this.setTitle(DEF_TITLE);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.pack();
@@ -60,10 +76,17 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setVisible(true);
     }
 
-    public void enableGameBoard(){
+    /**
+     * The current window will be destroyed once this method is executed.
+     * The HomeMenu will be removed from the user's screen.
+     * The GameBoard will be shown on the user's screen along with frame border.
+     */
+
+    public void enableGameBoard() {
         this.dispose();
-        this.remove(homeMenu);
-        this.add(gameBoard,BorderLayout.CENTER);
+        this.remove(selectionGame);
+        gameBoard = new GameBoard(this);
+        this.add(gameBoard, BorderLayout.CENTER);
         this.setUndecorated(false);
         initialize();
         /*to avoid problems with graphics focus controller is added here*/
@@ -71,13 +94,46 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     }
 
-    private void autoLocate(){
+    public void enableSelectionGame(boolean fromHomeMenu) {
+        if(fromHomeMenu)
+            this.remove(homeMenu);
+        else
+            this.remove(infoPage);
+        selectionGame = new SelectionGame(this);
+        this.add(selectionGame, BorderLayout.CENTER);
+        initialize();
+    }
+
+    public void enableInfo() {
+        this.remove(selectionGame);
+        infoPage = new GameInfo(this);
+        this.add(infoPage, BorderLayout.CENTER);
+        initialize();
+    }
+
+
+    /**
+     * This method will get user's screen resolution.
+     * The width and height will undergo calculation to get
+     * a perfect frame coordinate.
+     * The coordinate of the frame will be set.
+     */
+
+    private void autoLocate() {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (size.width - this.getWidth()) / 2;
         int y = (size.height - this.getHeight()) / 2;
-        this.setLocation(x,y);
+        this.setLocation(x, y);
     }
 
+    /**
+     * Invoked when the Window is set to be the focused Window, which means
+     * that the Window, or one of its subcomponents, will receive keyboard
+     * events.
+     * The user starts the game.
+     *
+     * @param windowEvent the event to be processed
+     */
 
     @Override
     public void windowGainedFocus(WindowEvent windowEvent) {
@@ -92,9 +148,18 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         gaming = true;
     }
 
+    /**
+     * Invoked when the Window is no longer the focused Window, which means
+     * that keyboard events will no longer be delivered to the Window or any of
+     * its subcomponents.
+     * onLostFocus will be executed in GameBoard class if the user is playing.
+     *
+     * @param windowEvent the event to be processed
+     */
+
     @Override
     public void windowLostFocus(WindowEvent windowEvent) {
-        if(gaming)
+        if (gaming)
             gameBoard.onLostFocus();
 
     }
