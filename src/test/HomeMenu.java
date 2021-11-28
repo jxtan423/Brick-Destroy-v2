@@ -68,7 +68,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
      */
 
     public HomeMenu(GameFrame owner) {
-        image = new DisplayImage(false);
+        image = new DisplayImage();
 
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -221,7 +221,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
             g2d.drawString(text, x, y);
             g2d.setColor(tmp);
         } else {
-            g2d.draw(startButton);
+            g2d.draw(button);
             g2d.drawString(text, x, y);
         }
     }

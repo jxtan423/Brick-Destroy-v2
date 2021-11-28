@@ -21,6 +21,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * This class is to create a frame with different contents
@@ -36,6 +40,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     private HomeMenu homeMenu;
     private SelectionGame selectionGame;
     private GameInfo infoPage;
+    private HighScore highScore;
 
     private boolean gaming;
 
@@ -53,12 +58,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
         this.setLayout(new BorderLayout());
 
-        homeMenu = new HomeMenu(this);
-
-        this.add(homeMenu, BorderLayout.CENTER);
-
-        setUndecorated(true);
-
+        enableHomeMenu();
     }
 
     /**
@@ -74,6 +74,14 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.pack();
         this.autoLocate();
         this.setVisible(true);
+    }
+
+    public void enableHomeMenu() {
+        this.dispose();
+        homeMenu = new HomeMenu(this);
+        this.add(homeMenu, BorderLayout.CENTER);
+        this.setUndecorated(true);
+        initialize();
     }
 
     /**
@@ -111,6 +119,11 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         initialize();
     }
 
+    public void enableScore() throws IOException {
+        this.dispose();
+        this.remove(selectionGame);
+        highScore = new HighScore(this);
+    }
 
     /**
      * This method will get user's screen resolution.
@@ -161,6 +174,5 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     public void windowLostFocus(WindowEvent windowEvent) {
         if (gaming)
             gameBoard.onLostFocus();
-
     }
 }

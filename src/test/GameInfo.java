@@ -31,7 +31,7 @@ public class GameInfo extends JComponent implements MouseListener, MouseMotionLi
     private boolean pointToBack;
 
     public GameInfo(GameFrame owner) {
-        image = new DisplayImage(true);
+        image = new DisplayImage();
 
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -86,7 +86,6 @@ public class GameInfo extends JComponent implements MouseListener, MouseMotionLi
         int textHeight = (int) (backButton.getHeight() - bTxtRect.getHeight()) / 2 + (int) (backButton.y + backButton.height * 0.9);
 
         DrawButton(g2d,textWidth,textHeight,backButton,BACK_TEXT);
-
     }
 
     private void DrawButton(Graphics2D g2d, int x, int y, Rectangle button, String text) {
@@ -166,5 +165,4 @@ public class GameInfo extends JComponent implements MouseListener, MouseMotionLi
             repaint();
         }
     }
-
 }

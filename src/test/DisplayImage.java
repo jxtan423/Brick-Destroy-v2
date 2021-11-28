@@ -11,7 +11,7 @@ public class DisplayImage extends JComponent {
     private BufferedImage img;
     private static final Dimension IMAGE_SIZE = new Dimension(511, 511);
 
-    public DisplayImage(boolean info) {
+    public DisplayImage() {
 
         this.setFocusable(true);
         this.requestFocusInWindow();
