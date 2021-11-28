@@ -191,8 +191,8 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         int menuWidth = buttonWidth(mTxtRect, menuButton);
         int menuHeight = buttonHeight(mTxtRect, menuButton);
 
-        drawButton(g2d, startWidth, startHeight, startButton, START_TEXT);
-        drawButton(g2d, menuWidth, menuHeight, menuButton, MENU_TEXT);
+        drawButton(g2d, startWidth, startHeight, startButton, START_TEXT, pointToStart);
+        drawButton(g2d, menuWidth, menuHeight, menuButton, MENU_TEXT, pointToExit);
     }
 
     private int identifyButton_Y() {
@@ -207,23 +207,18 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         return (int) ((startButton.getWidth() - txtRect.getWidth()) / 2) + button.x;
     }
 
-    private void drawButton(Graphics2D g2d, int x, int y, Rectangle button, String text) {
+    private void drawButton(Graphics2D g2d, int x, int y, Rectangle button, String text, boolean pointToButton) {
         g2d.setColor(BUTTON_COLOR);
         g2d.fill(button);
         g2d.setColor(TEXT_COLOR);
 
-        if (pointToStart || pointToExit) {
-            Color tmp = g2d.getColor();
+        if (pointToButton) {
             g2d.setColor(CLICKED_BUTTON_COLOR);
             g2d.fill(button);
             g2d.setColor(CLICKED_TEXT);
-            g2d.draw(button);
-            g2d.drawString(text, x, y);
-            g2d.setColor(tmp);
-        } else {
-            g2d.draw(button);
-            g2d.drawString(text, x, y);
         }
+        g2d.draw(button);
+        g2d.drawString(text, x, y);
     }
 
     @Override
@@ -274,11 +269,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         if (startButton.contains(p)) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             pointToStart = true;
-            pointToExit = false;
             repaint(startButton.x, startButton.y, startButton.width + 1, startButton.height + 1);
         } else if (menuButton.contains(p)) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            pointToStart = false;
             pointToExit = true;
             repaint(menuButton.x, menuButton.y, menuButton.width + 1, menuButton.height + 1);
         } else {

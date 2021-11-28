@@ -1,6 +1,5 @@
 package test;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -45,7 +44,9 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
     private boolean pointToInfo;
     private boolean pointToScore;
 
+
     public SelectionGame(GameFrame owner) {
+
         image = new DisplayImage();
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -110,10 +111,10 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
         int scoreText_X = textWidth(slTxtRect, scoreButton);
         int scoreText_Y = textHeight(slTxtRect, scoreButton);
 
-        drawButton(g2d, normalText_X, normalText_Y, normalButton, NORMAL_TEXT);
-        drawButton(g2d, specialText_X, specialText_Y, specialButton, SPECIAL_TEXT);
-        drawButton(g2d, infoText_X, infoText_Y, infoButton, INFO_TEXT);
-        drawButton(g2d, scoreText_X, scoreText_Y, scoreButton, SCORE_TEXT);
+        drawButton(g2d, normalText_X, normalText_Y, normalButton, NORMAL_TEXT, pointToNormal);
+        drawButton(g2d, specialText_X, specialText_Y, specialButton, SPECIAL_TEXT, pointToSpecial);
+        drawButton(g2d, infoText_X, infoText_Y, infoButton, INFO_TEXT, pointToInfo);
+        drawButton(g2d, scoreText_X, scoreText_Y, scoreButton, SCORE_TEXT, pointToScore);
     }
 
     private int textHeight(Rectangle2D TxtRect, Rectangle button) {
@@ -132,23 +133,18 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
         return (int) (area.getWidth() / 2 - (normalButton.getWidth() / 2));
     }
 
-    private void drawButton(Graphics2D g2d, int x, int y, Rectangle button, String text) {
+    private void drawButton(Graphics2D g2d, int x, int y, Rectangle button, String text, boolean pointToButton) {
         g2d.setColor(BUTTON_COLOR);
         g2d.fill(button);
         g2d.setColor(TEXT_COLOR);
 
-        if (pointToNormal || pointToSpecial || pointToInfo || pointToScore) {
-            Color tmp = g2d.getColor();
+        if (pointToButton) {
             g2d.setColor(CLICKED_BUTTON_COLOR);
             g2d.fill(button);
             g2d.setColor(CLICKED_TEXT);
-            g2d.draw(button);
-            g2d.drawString(text, x, y);
-            g2d.setColor(tmp);
-        } else {
-            g2d.draw(button);
-            g2d.drawString(text, x, y);
         }
+        g2d.draw(button);
+        g2d.drawString(text, x, y);
     }
 
     @Override
@@ -201,48 +197,26 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
         Point p = e.getPoint();
         if (normalButton.contains(p)) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
             pointToNormal = true;
-            pointToSpecial = false;
-            pointToInfo = false;
-            pointToScore = false;
-
             repaint(normalButton.x, normalButton.y, normalButton.width + 1, normalButton.height + 1);
         } else if (specialButton.contains(p)) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-            pointToNormal = false;
             pointToSpecial = true;
-            pointToInfo = false;
-            pointToScore = false;
-
             repaint(specialButton.x, specialButton.y, specialButton.width + 1, specialButton.height + 1);
         } else if (infoButton.contains(p)) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-            pointToNormal = false;
-            pointToSpecial = false;
             pointToInfo = true;
-            pointToScore = false;
-
             repaint(infoButton.x, infoButton.y, infoButton.width + 1, infoButton.height + 1);
         } else if (scoreButton.contains(p)) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-            pointToNormal = false;
-            pointToSpecial = false;
-            pointToInfo = false;
             pointToScore = true;
-
             repaint(scoreButton.x, scoreButton.y, scoreButton.width + 1, scoreButton.height + 1);
         } else {
             this.setCursor(Cursor.getDefaultCursor());
-
             pointToNormal = false;
             pointToSpecial = false;
             pointToInfo = false;
             pointToScore = false;
-
             repaint();
         }
     }
