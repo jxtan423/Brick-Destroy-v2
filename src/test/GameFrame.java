@@ -96,17 +96,15 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         gameBoard = new GameBoard(this);
         this.add(gameBoard, BorderLayout.CENTER);
         this.setUndecorated(false);
+        this.setResizable(false);
         initialize();
         /*to avoid problems with graphics focus controller is added here*/
         this.addWindowFocusListener(this);
-
     }
 
     public void enableSelectionGame(boolean fromHomeMenu) {
         if(fromHomeMenu)
             this.remove(homeMenu);
-        else
-            this.remove(infoPage);
         selectionGame = new SelectionGame(this);
         this.add(selectionGame, BorderLayout.CENTER);
         initialize();
@@ -119,9 +117,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         initialize();
     }
 
-    public void enableScore() throws IOException {
-        this.dispose();
-        this.remove(selectionGame);
+    public void enableScore() {
         highScore = new HighScore(this);
     }
 

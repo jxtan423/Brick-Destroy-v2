@@ -28,28 +28,6 @@ public class Score implements ActionListener {
 
         this.owner = owner;
 
-        //this.setFocusable(true);
-        //this.requestFocusInWindow();
-        //setPreferredSize(dim);
-        //setLocation((size.width/2) - (int)(dim.getWidth()/2),size.height/2);
-        //setLayout(null);
-        //setUndecorated(true);
-        //this.pack();
-        //this.setVisible(true);
-
-        //label.setBounds(10,0,250,30);
-        //label.setFont(new Font(null,Font.PLAIN,25));
-        //this.add(label);
-
-        //btn = new JButton(text);
-        //btn.setBounds(50,105,150,30);
-        //this.add(btn);
-
-        //this.setVisible(true);
-        //this.setUndecorated(true);
-        //this.pack();
-        //this.setPreferredSize(dim);
-
         frame = new JFrame("Submit");
         frame.setSize(DEF_WIDTH, DEF_HEIGHT);
         frame.setUndecorated(true);
@@ -112,24 +90,22 @@ public class Score implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btn)
-            frame.dispose();
-        try {
-            word = field.getText();
-            File file = new File("scoreList.txt");
-            FileWriter fileWriter = new FileWriter(file, true);
-            BufferedWriter buffer = new BufferedWriter(fileWriter);
-            PrintWriter printWriter = new PrintWriter(buffer);
-            printWriter.printf("%.2f %s\n", getHighScore(), word);
-            printWriter.close();
+        if (e.getSource() == btn) {
+            try {
+                word = field.getText();
+                File file = new File("scoreList.txt");
+                FileWriter fileWriter = new FileWriter(file, true);
+                BufferedWriter buffer = new BufferedWriter(fileWriter);
+                PrintWriter printWriter = new PrintWriter(buffer);
+                printWriter.printf("%s %.2f\n", word, getHighScore());
+                printWriter.close();
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        try {
-            owner.enableScore();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            owner.enableHomeMenu();
+            //owner.enableScore();
+            frame.dispose();
         }
     }
 }

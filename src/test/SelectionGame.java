@@ -159,11 +159,8 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
             System.exit(0);
             //owner.enableSpecial();
         } else if (scoreButton.contains(p)) {
-            try {
-                owner.enableScore();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+            owner.remove(this);
+            owner.enableScore();
         }
     }
 

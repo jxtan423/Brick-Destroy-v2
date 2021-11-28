@@ -2,18 +2,22 @@ package test;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
-public class HighScore {
+public class HighScore implements ActionListener {
 
     private JFrame frame;
     private GameFrame owner;
 
-    public HighScore(GameFrame owner) throws IOException {
+    private JButton btn;
+
+    public HighScore(GameFrame owner)  {
 
         ArrayList<Score> list = new ArrayList<>();
 
@@ -31,7 +35,7 @@ public class HighScore {
         frame = new JFrame("HighScore List");
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.setUndecorated(true);
-        frame.setLocation((size.width / 2) - (frame.getWidth() / 2), size.height / 4);
+        frame.setLocation((size.width / 2) - (frame.getWidth() / 2), (size.height / 2) - (frame.getHeight() / 2));
         frame.setLayout(null);
 
         JLabel label = new JLabel("High score list :");
@@ -39,16 +43,22 @@ public class HighScore {
         label.setFont(new Font("Arial", Font.PLAIN, 27));
         frame.add(label);
 
-        frame.setVisible(true);
+        btn = new JButton("Back");
+        btn.setBounds(400, 470, 100, 30);
+        btn.addActionListener(this);
+        frame.add(btn);
 
-        FileReader file = new FileReader("scoreList.txt");
-
-        Scanner scan = new Scanner(file);
-        while(scan.hasNextLine()) {
-            Double point = scan.nextDouble();
-            String username = scan.next();
-            name.append(username).append("\n");
-            score.append(point).append("\n");
+        try {
+            FileReader file = new FileReader("scoreList.txt");
+            Scanner scan = new Scanner(file);
+            while (scan.hasNextLine()) {
+                String username = scan.next();
+                Double point = scan.nextDouble();
+                name.append(username).append("\n");
+                score.append(point).append("\n");
+            }
+        } catch(FileNotFoundException e){
+            System.out.println("File not found");
         }
 
         JTextArea area = new JTextArea(String.valueOf(name));
@@ -62,6 +72,15 @@ public class HighScore {
         area1.setText(score + "\n");
         area1.setBounds(350,40,70,160);
         frame.add(area1);
+
+        frame.setVisible(true);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == btn) {
+            frame.dispose();
+            owner.enableSelectionGame(false);
+        }
+    }
 }
