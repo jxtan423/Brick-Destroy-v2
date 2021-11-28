@@ -10,14 +10,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
-public class HighScore implements ActionListener {
+public class HighScore extends JComponent implements ActionListener {
 
     private JFrame frame;
     private GameFrame owner;
-
     private JButton btn;
 
-    public HighScore(GameFrame owner)  {
+    public HighScore(GameFrame owner) throws FileNotFoundException {
 
         ArrayList<Score> list = new ArrayList<>();
 
@@ -48,17 +47,15 @@ public class HighScore implements ActionListener {
         btn.addActionListener(this);
         frame.add(btn);
 
-        try {
-            FileReader file = new FileReader("scoreList.txt");
-            Scanner scan = new Scanner(file);
-            while (scan.hasNextLine()) {
-                String username = scan.next();
-                Double point = scan.nextDouble();
-                name.append(username).append("\n");
-                score.append(point).append("\n");
-            }
-        } catch(FileNotFoundException e){
-            System.out.println("File not found");
+        frame.setVisible(true);
+
+        FileReader file = new FileReader("scoreboard.txt");
+        Scanner scan = new Scanner(file);
+        while (scan.hasNext()) {
+            String username = scan.next();
+            Double point = scan.nextDouble();
+            name.append(username).append("\n");
+            score.append(point).append("\n");
         }
 
         JTextArea area = new JTextArea(String.valueOf(name));
@@ -72,14 +69,13 @@ public class HighScore implements ActionListener {
         area1.setText(score + "\n");
         area1.setBounds(350,40,70,160);
         frame.add(area1);
-
-        frame.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btn) {
             frame.dispose();
+            owner.setUndecorated(true);
             owner.enableSelectionGame(false);
         }
     }

@@ -93,7 +93,7 @@ public class Score implements ActionListener {
         if (e.getSource() == btn) {
             try {
                 word = field.getText();
-                File file = new File("scoreList.txt");
+                File file = new File("scoreboard.txt");
                 FileWriter fileWriter = new FileWriter(file, true);
                 BufferedWriter buffer = new BufferedWriter(fileWriter);
                 PrintWriter printWriter = new PrintWriter(buffer);
@@ -103,8 +103,11 @@ public class Score implements ActionListener {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            owner.enableHomeMenu();
-            //owner.enableScore();
+            try {
+                owner.enableScore();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
             frame.dispose();
         }
     }

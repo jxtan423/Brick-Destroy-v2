@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class SelectionGame extends JComponent implements MouseListener, MouseMotionListener {
@@ -160,7 +161,11 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
             //owner.enableSpecial();
         } else if (scoreButton.contains(p)) {
             owner.remove(this);
-            owner.enableScore();
+            try {
+                owner.enableScore();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
         }
     }
 

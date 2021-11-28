@@ -52,13 +52,12 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private final Font creditsFont;
     private final Font buttonFont;
 
-    private GameFrame owner;
-    private Dimension area;
-    private DisplayImage image;
+    private final GameFrame owner;
+    private final Dimension area;
+    private final DisplayImage image;
 
     private boolean pointToStart;
     private boolean pointToExit;
-
 
     /**
      * This constructor is to create and design buttons,
@@ -68,20 +67,22 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
      */
 
     public HomeMenu(GameFrame owner) {
-        image = new DisplayImage();
 
         this.setFocusable(true);
         this.requestFocusInWindow();
-
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
 
-        this.owner = owner;
+        int BUTTON_WIDTH = btnWidth();
+        int BUTTON_HEIGHT = btnHeight();
+
+        image = new DisplayImage();
         this.area = image.getArea();
+        this.owner = owner;
 
         this.setPreferredSize(area);
 
-        Dimension btnDim = new Dimension(area.width / 3, area.height / 12);
+        Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
         startButton = new Rectangle(btnDim);
         menuButton = new Rectangle(btnDim);
 
@@ -89,7 +90,14 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         gameTitleFont = new Font("Noto Mono", Font.BOLD, 40);
         creditsFont = new Font("Monospaced", Font.PLAIN, 10);
         buttonFont = new Font("Monospaced", Font.PLAIN, startButton.height - 2);
+    }
 
+    private int btnWidth() {
+        return area.width / 3;
+    }
+
+    private int btnHeight() {
+        return area.height / 12;
     }
 
     /**
