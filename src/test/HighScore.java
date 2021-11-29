@@ -12,9 +12,9 @@ import java.util.Scanner;
 
 public class HighScore extends JComponent implements ActionListener {
 
-    private JFrame frame;
-    private GameFrame owner;
-    private JButton btn;
+    private final JFrame frame;
+    private final GameFrame owner;
+    private final JButton btn;
 
     public HighScore(GameFrame owner) throws FileNotFoundException {
 
@@ -75,7 +75,7 @@ public class HighScore extends JComponent implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btn) {
             frame.dispose();
-            owner.setUndecorated(true);
+            //owner.setUndecorated(true);
             owner.enableSelectionGame(false);
         }
     }

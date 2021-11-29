@@ -142,9 +142,7 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
                     message = "ALL WALLS DESTROYED";
                     gameTimer.stop();
                     timer.stop();
-                    //this.owner.dispose();
-                    this.owner.remove(this);
-                    scores.showScore();
+                    showScore = true;
                 }
             }
             repaint();
@@ -356,8 +354,6 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
         }
 
         g2d.drawString(EXIT, x, y);
-
-
         g2d.setFont(tmpFont);
         g2d.setColor(tmpColor);
     }
@@ -426,9 +422,16 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
                 message = "Next level";
                 wall.ballReset();
                 wall.wallReset();
-                wall.nextLevel();
-                showScore = false;
-                repaint();
+                if(wall.hasLevel()) {
+                    wall.nextLevel();
+                    showScore = false;
+                    repaint();
+                }
+                else {
+                    showScore = false;
+                    this.owner.remove(this);
+                    scores.showScore();
+                }
             }
         }
     }

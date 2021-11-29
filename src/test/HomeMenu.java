@@ -25,7 +25,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
-
 /**
  * This class is to create and design the home page (content)
  * of the frame when user runs the program.
@@ -37,185 +36,200 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private static final String GAME_TITLE = "Brick Destroy";
     private static final String CREDITS = "Version 2.0";
     private static final String START_TEXT = "Start";
-    private static final String MENU_TEXT = "Exit";
+    private static final String EXIT_TEXT = "Exit";
 
     private static final Color BUTTON_COLOR = new Color(102, 102, 102);
     private static final Color TEXT_COLOR = new Color(255, 255, 255);
     private static final Color CLICKED_BUTTON_COLOR = new Color(255, 255, 0);
     private static final Color CLICKED_TEXT = Color.black;
 
-    private final Rectangle startButton;
-    private final Rectangle menuButton;
-
     private final Font greetingsFont;
     private final Font gameTitleFont;
     private final Font creditsFont;
     private final Font buttonFont;
 
+    private final Rectangle startButton;
+    private final Rectangle exitButton;
+
     private final GameFrame owner;
     private final Dimension area;
     private final DisplayImage image;
+    private final Button btn;
 
     private boolean pointToStart;
     private boolean pointToExit;
 
     /**
      * This constructor is to create and design buttons,
-     * page border, and specify the fonts.
+     * texts with specific fonts and colours.
+     * Image object is invoked and the size of image is
+     * initialized to the current frame area.
+     * Buttons are clickable since MouseListener
+     * is implemented and added.
      *
      * @param owner The details and functionality of the frame
      */
 
     public HomeMenu(GameFrame owner) {
 
+        final int AMOUNT_OF_BUTTON = 2;
+        final int GREETINGS_FONT_SIZE = 25;
+        final int GAME_TITLE_FONT_SIZE = 40;
+        final int CREDITS_FONT_SIZE = 10;
+
+        this.owner = owner;
+
+        image = new DisplayImage();
+        this.area = image.getArea();
+        this.setPreferredSize(area);
+
+        btn = new Button(area, AMOUNT_OF_BUTTON);
+
+        Rectangle[] rect = btn.getRect();
+        startButton = rect[0];
+        exitButton = rect[1];
+
+        greetingsFont = new Font("Noto Mono", Font.PLAIN, GREETINGS_FONT_SIZE);
+        gameTitleFont = new Font("Noto Mono", Font.BOLD, GAME_TITLE_FONT_SIZE);
+        creditsFont = new Font("Monospaced", Font.PLAIN, CREDITS_FONT_SIZE);
+        buttonFont = btn.getFont();
+
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
-
-        int BUTTON_WIDTH = btnWidth();
-        int BUTTON_HEIGHT = btnHeight();
-
-        image = new DisplayImage();
-        this.area = image.getArea();
-        this.owner = owner;
-
-        this.setPreferredSize(area);
-
-        Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
-        startButton = new Rectangle(btnDim);
-        menuButton = new Rectangle(btnDim);
-
-        greetingsFont = new Font("Noto Mono", Font.PLAIN, 25);
-        gameTitleFont = new Font("Noto Mono", Font.BOLD, 40);
-        creditsFont = new Font("Monospaced", Font.PLAIN, 10);
-        buttonFont = new Font("Monospaced", Font.PLAIN, startButton.height - 2);
-    }
-
-    private int btnWidth() {
-        return area.width / 3;
-    }
-
-    private int btnHeight() {
-        return area.height / 12;
     }
 
     /**
-     * The graphics is passed to drawMenu method for painting.
+     * Image is drawn by getting from image class.
+     * The graphics is passed to drawHomeMenu method
+     * for further drawing and painting.
      *
      * @param g The graphics context in which to paint
      */
 
     public void paint(Graphics g) {
         g.drawImage(image.img(), 0, 0, null);
-        drawMenu((Graphics2D) g);
+        drawHomeMenu((Graphics2D) g);
     }
 
     /**
-     * Container, text and button will be painted
-     * and design accordingly through method calls.
+     * In HomeMenu frame, there are texts and
+     * buttons to be drawn and painted.
      *
      * @param g2d The graphics context in which to paint in 2D form
      */
 
-    public void drawMenu(Graphics2D g2d) {
-        Text(g2d);
-        Button(g2d);
-    }
-
-    /**
-     * Texts are drawn and designed at respective coordinates.
-     *
-     * @param g2d The graphics context in which to paint in 2D form
-     */
-
-    private void Text(Graphics2D g2d) {
-
-        g2d.setColor(TEXT_COLOR);
-
+    public void drawHomeMenu(Graphics2D g2d) {
         FontRenderContext frc = g2d.getFontRenderContext();
+        Text(g2d, frc);
+        Button();
+        ButtonText(g2d, frc);
+    }
+
+    /**
+     * Texts are coordinated.
+     * Texts are drawn through drawTest method.
+     *
+     * @param g2d The graphics context in which to paint in 2D form
+     */
+
+    private void Text(Graphics2D g2d, FontRenderContext frc) {
 
         Rectangle2D greetingsRect = greetingsFont.getStringBounds(GREETINGS, frc);
         Rectangle2D gameTitleRect = gameTitleFont.getStringBounds(GAME_TITLE, frc);
         Rectangle2D creditsRect = creditsFont.getStringBounds(CREDITS, frc);
 
-        int gX = identify_X(greetingsRect);
-        int tX = identify_X(gameTitleRect);
-        int sX = identify_X(creditsRect);
+        g2d.setColor(TEXT_COLOR);
 
-        int gY = identify_Y();
-        int tY = identify_Y(gY, gameTitleRect);
-        int sY = identify_Y(tY, creditsRect);
+        Text greeting = new Text(null, greetingsRect, area, false);
+        Text title = new Text(null, gameTitleRect, area, false);
+        Text credits = new Text(null, creditsRect, area, false);
 
-        drawText(g2d, greetingsFont, GREETINGS, gX, gY);
-        drawText(g2d, gameTitleFont, GAME_TITLE, tX, tY);
-        drawText(g2d, creditsFont, CREDITS, sX, sY);
-    }
+        title.setNewText_Y(greeting.getText_Y());
+        credits.setNewText_Y(title.getText_Y());
 
-    private void drawText(Graphics2D g2d, Font font, String text, int x, int y) {
-        g2d.setFont(font);
-        g2d.drawString(text, x, y);
-    }
+        Point GREETING_COORDINATES = new Point(greeting.getText_X(), greeting.getText_Y());
+        Point TITLE_COORDINATES = new Point(title.getText_X(), title.getText_Y());
+        Point CREDITS_COORDINATES = new Point(credits.getText_X(), credits.getText_Y());
 
-    private int identify_Y(int y, Rectangle2D rect) {
-        return y + (int) (rect.getHeight() * 1.1); //add 10% of String height between the two strings
-    }
+        drawText(g2d, greetingsFont, GREETINGS, GREETING_COORDINATES);
+        drawText(g2d, gameTitleFont, GAME_TITLE, TITLE_COORDINATES);
+        drawText(g2d, creditsFont, CREDITS, CREDITS_COORDINATES);
 
-    private int identify_Y() {
-        return (int) (area.getHeight() / 2);
-    }
-
-    private int identify_X(Rectangle2D rect) {
-        return (int) (area.getWidth() - rect.getWidth()) / 2;
     }
 
     /**
-     * The "start" and "exit" buttons are created
-     * and designed at respective coordinates.
-     * Colour changes whenever the buttons are clicked.
+     * The texts are drawn with specific font.
      *
      * @param g2d The graphics context in which to paint in 2D form
+     * @param font The font of the text
+     * @param text The content that will be drawn in the form of string
+     * @param coordinates The coordinates of text
      */
 
-    private void Button(Graphics2D g2d) {
+    private void drawText(Graphics2D g2d, Font font, String text, Point coordinates) {
+        g2d.setFont(font);
+        g2d.drawString(text, (int) coordinates.getX(), (int) coordinates.getY());
+    }
 
-        FontRenderContext frc = g2d.getFontRenderContext();
+    /**
+     * The coordinates of "start" and "exit"
+     * buttons are set.
+     */
+
+    private void Button() {
+
+        Point START_BUTTON = new Point(btn.getButton_X(true), btn.getButton_Y(false));
+        Point EXIT_BUTTON = new Point(btn.getButton_X(false), btn.getButton_Y(false));
+
+        startButton.setLocation(START_BUTTON);
+        exitButton.setLocation(EXIT_BUTTON);
+    }
+
+    /**
+     * The coordinates of the texts inside the container
+     * are set.
+     * Both buttons and texts are drawn through
+     * drawButton method.
+     *
+     * @param g2d The graphics context in which to paint in 2D form
+     * @param frc The information needed to correctly measure text inside a container
+     */
+
+    private void ButtonText(Graphics2D g2d, FontRenderContext frc) {
 
         Rectangle2D txtRect = buttonFont.getStringBounds(START_TEXT, frc);
-        Rectangle2D mTxtRect = buttonFont.getStringBounds(MENU_TEXT, frc);
+        Rectangle2D mTxtRect = buttonFont.getStringBounds(EXIT_TEXT, frc);
 
         g2d.setFont(buttonFont);
 
-        int startX = 64;
-        int endX = 277;
-        int y = identifyButton_Y();
+        Text startTxt = new Text(startButton, txtRect, area,true);
+        Text exitTxt = new Text(exitButton, mTxtRect, area,true);
 
-        startButton.setLocation(startX, y);
-        menuButton.setLocation(endX, y);
+        Point START_TEXT_COORDINATES = new Point(startTxt.getButton_Text_X(), startTxt.getButton_Text_Y());
+        Point EXIT_TEXT_COORDINATES = new Point(exitTxt.getButton_Text_X(), exitTxt.getButton_Text_Y());
 
-        int startWidth = buttonWidth(txtRect, startButton);
-        int startHeight = buttonHeight(txtRect, startButton);
-
-        int menuWidth = buttonWidth(mTxtRect, menuButton);
-        int menuHeight = buttonHeight(mTxtRect, menuButton);
-
-        drawButton(g2d, startWidth, startHeight, startButton, START_TEXT, pointToStart);
-        drawButton(g2d, menuWidth, menuHeight, menuButton, MENU_TEXT, pointToExit);
+        drawButton(g2d, START_TEXT_COORDINATES, startButton, START_TEXT, pointToStart);
+        drawButton(g2d, EXIT_TEXT_COORDINATES, exitButton, EXIT_TEXT, pointToExit);
     }
 
-    private int identifyButton_Y() {
-        return (int) ((area.height - startButton.height) * 0.8);
-    }
+    /**
+     * Button is drawn and filled with specific font
+     * and colour.
+     * Text inside the container is drawn
+     * with specific font.
+     * The button change colour whenever the mouse points
+     * to the respective button.
+     *
+     * @param g2d           The graphics context in which to paint in 2D form
+     * @param coordinates   The coordinates of texts
+     * @param button        The coordinates and area of both buttons
+     * @param text          The content that will be drawn in the form of words
+     * @param pointToButton Return true when the mouse points the button
+     */
 
-    private int buttonHeight(Rectangle2D txtRect, Rectangle button) {
-        return (int) ((startButton.getHeight() - txtRect.getHeight()) / 2) + (int) (button.y + (button.height * 0.9));
-    }
-
-    private int buttonWidth(Rectangle2D txtRect, Rectangle button) {
-        return (int) ((startButton.getWidth() - txtRect.getWidth()) / 2) + button.x;
-    }
-
-    private void drawButton(Graphics2D g2d, int x, int y, Rectangle button, String text, boolean pointToButton) {
+    private void drawButton(Graphics2D g2d, Point coordinates, Rectangle button, String text, boolean pointToButton) {
         g2d.setColor(BUTTON_COLOR);
         g2d.fill(button);
         g2d.setColor(TEXT_COLOR);
@@ -226,7 +240,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
             g2d.setColor(CLICKED_TEXT);
         }
         g2d.draw(button);
-        g2d.drawString(text, x, y);
+        g2d.drawString(text, (int) coordinates.getX(), (int) coordinates.getY());
     }
 
     @Override
@@ -234,7 +248,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         Point p = mouseEvent.getPoint();
         if (startButton.contains(p)) {
             owner.enableSelectionGame(true);
-        } else if (menuButton.contains(p)) {
+        } else if (exitButton.contains(p)) {
             System.out.println("Goodbye " + System.getProperty("user.name"));
             System.exit(0);
         }
@@ -252,7 +266,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
             repaint(startButton.x, startButton.y, startButton.width + 1, startButton.height + 1);
         } else if (pointToExit) {
             pointToExit = false;
-            repaint(menuButton.x, menuButton.y, menuButton.width + 1, menuButton.height + 1);
+            repaint(exitButton.x, exitButton.y, exitButton.width + 1, exitButton.height + 1);
         }
     }
 
@@ -278,10 +292,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
             this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             pointToStart = true;
             repaint(startButton.x, startButton.y, startButton.width + 1, startButton.height + 1);
-        } else if (menuButton.contains(p)) {
+        } else if (exitButton.contains(p)) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             pointToExit = true;
-            repaint(menuButton.x, menuButton.y, menuButton.width + 1, menuButton.height + 1);
+            repaint(exitButton.x, exitButton.y, exitButton.width + 1, exitButton.height + 1);
         } else {
             this.setCursor(Cursor.getDefaultCursor());
             pointToStart = false;

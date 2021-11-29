@@ -108,6 +108,7 @@ public class Score implements ActionListener {
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
+            owner.dispose();
             frame.dispose();
         }
     }

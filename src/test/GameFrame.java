@@ -118,7 +118,6 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
     public void enableScore() throws FileNotFoundException {
-        this.dispose();
         highScore = new HighScore(this);
     }
 

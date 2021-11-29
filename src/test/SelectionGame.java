@@ -8,7 +8,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class SelectionGame extends JComponent implements MouseListener, MouseMotionListener {
 
@@ -22,11 +21,6 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
     private static final Color CLICKED_BUTTON_COLOR = new Color(255, 255, 0);
     private static final Color CLICKED_TEXT = Color.black;
 
-    private static final int normalBtn = 0;
-    private static final int specialBtn = 65;
-    private static final int infoBtn = 130;
-    private static final int scoreBtn = 195;
-
     private final Rectangle normalButton;
     private final Rectangle specialButton;
     private final Rectangle infoButton;
@@ -34,40 +28,40 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
 
     private final Font buttonFont;
 
-    private GameFrame owner;
-    private DisplayImage image;
-    private Score score;
+    private final GameFrame owner;
+    private final DisplayImage image;
 
-    private Dimension area;
+    private final Dimension area;
+    private final Button btn;
 
     private boolean pointToNormal;
     private boolean pointToSpecial;
     private boolean pointToInfo;
     private boolean pointToScore;
 
-
     public SelectionGame(GameFrame owner) {
 
-        image = new DisplayImage();
-        this.setFocusable(true);
-        this.requestFocusInWindow();
-
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
-
+        final int AMOUNT_OF_BUTTON = 4;
         this.owner = owner;
-        this.area = image.getArea();
 
+        image = new DisplayImage();
+        this.area = image.getArea();
         this.setPreferredSize(area);
 
-        Dimension btnDim = new Dimension(area.width / 3, area.height / 12);
-        normalButton = new Rectangle(btnDim);
-        specialButton = new Rectangle(btnDim);
-        infoButton = new Rectangle(btnDim);
-        scoreButton = new Rectangle(btnDim);
+        btn = new Button(area, AMOUNT_OF_BUTTON);
 
-        buttonFont = new Font("Monospaced", Font.PLAIN, normalButton.height - 2);
+        Rectangle[] rect = btn.getRect();
+        normalButton = rect[0];
+        specialButton = rect[1];
+        infoButton = rect[2];
+        scoreButton = rect[3];
 
+        buttonFont = btn.getFont();
+
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.addMouseListener(this);
+        this.addMouseMotionListener(this);
     }
 
     public void paint(Graphics g) {
@@ -76,10 +70,25 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
     }
 
     public void drawMenu(Graphics2D g2d) {
-        Button(g2d);
+        Button();
+        ButtonText(g2d);
     }
 
-    private void Button(Graphics2D g2d) {
+    private void Button() {
+
+        Point START_BUTTON = new Point(btn.getButton_X(true), btn.getButton_Y(true));
+        Point SPECIAL_BUTTON = new Point(btn.getButton_X(false), btn.getButton_Y(true));
+        Point INFO_BUTTON = new Point(btn.getButton_X(true), btn.getButton_Y(false));
+        Point SCORE_BUTTON = new Point(btn.getButton_X(false), btn.getButton_Y(false));
+
+        normalButton.setLocation(START_BUTTON);
+        specialButton.setLocation(SPECIAL_BUTTON);
+        infoButton.setLocation(INFO_BUTTON);
+        scoreButton.setLocation(SCORE_BUTTON);
+    }
+
+    private void ButtonText(Graphics2D g2d) {
+
         FontRenderContext frc = g2d.getFontRenderContext();
 
         Rectangle2D nTxtRect = buttonFont.getStringBounds(NORMAL_TEXT, frc);
@@ -89,52 +98,23 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
 
         g2d.setFont(buttonFont);
 
-        int x = setBtn_X();
-        int nY = setBtn_Y(normalBtn);
-        int sY = setBtn_Y(specialBtn);
-        int iY = setBtn_Y(infoBtn);
-        int slY = setBtn_Y(scoreBtn);
+        Text normalTxt = new Text(normalButton, nTxtRect, area, true);
+        Text specialTxt = new Text(specialButton, sTxtRect, area, true);
+        Text infoTxt = new Text(infoButton, iTxtRect, area, true);
+        Text scoreTxt = new Text(scoreButton, slTxtRect, area, true);
 
-        normalButton.setLocation(x, nY);
-        specialButton.setLocation(x, sY);
-        infoButton.setLocation(x, iY);
-        scoreButton.setLocation(x, slY);
+        Point NORMAL_TEXT_COORDINATES = new Point(normalTxt.getButton_Text_X(), normalTxt.getButton_Text_Y());
+        Point SPECIAL_TEXT_COORDINATES = new Point(specialTxt.getButton_Text_X(), specialTxt.getButton_Text_Y());
+        Point INFO_TEXT_COORDINATES = new Point(infoTxt.getButton_Text_X(), infoTxt.getButton_Text_Y());
+        Point SCORE_TEXT_COORDINATES = new Point(scoreTxt.getButton_Text_X(), scoreTxt.getButton_Text_Y());
 
-        int normalText_X = textWidth(nTxtRect, normalButton);
-        int normalText_Y = textHeight(nTxtRect, normalButton);
-
-        int specialText_X = textWidth(sTxtRect, specialButton);
-        int specialText_Y = textHeight(sTxtRect, specialButton);
-
-        int infoText_X = textWidth(iTxtRect, infoButton);
-        int infoText_Y = textHeight(iTxtRect, infoButton);
-
-        int scoreText_X = textWidth(slTxtRect, scoreButton);
-        int scoreText_Y = textHeight(slTxtRect, scoreButton);
-
-        drawButton(g2d, normalText_X, normalText_Y, normalButton, NORMAL_TEXT, pointToNormal);
-        drawButton(g2d, specialText_X, specialText_Y, specialButton, SPECIAL_TEXT, pointToSpecial);
-        drawButton(g2d, infoText_X, infoText_Y, infoButton, INFO_TEXT, pointToInfo);
-        drawButton(g2d, scoreText_X, scoreText_Y, scoreButton, SCORE_TEXT, pointToScore);
+        drawButton(g2d, NORMAL_TEXT_COORDINATES, normalButton, NORMAL_TEXT, pointToNormal);
+        drawButton(g2d, SPECIAL_TEXT_COORDINATES, specialButton, SPECIAL_TEXT, pointToSpecial);
+        drawButton(g2d, INFO_TEXT_COORDINATES, infoButton, INFO_TEXT, pointToInfo);
+        drawButton(g2d, SCORE_TEXT_COORDINATES, scoreButton, SCORE_TEXT, pointToScore);
     }
 
-    private int textHeight(Rectangle2D TxtRect, Rectangle button) {
-        return (int) (normalButton.getHeight() - TxtRect.getHeight()) / 2 + (int) (button.y + button.height * 0.9);
-    }
-
-    private int textWidth(Rectangle2D TxtRect, Rectangle button) {
-        return (int) ((normalButton.getWidth() - TxtRect.getWidth()) / 2) + button.x;
-    }
-
-    private int setBtn_Y(int addBtnHgt) {
-        return (int) (area.getHeight() / 2) + addBtnHgt;
-    }
-
-    private int setBtn_X() {
-        return (int) (area.getWidth() / 2 - (normalButton.getWidth() / 2));
-    }
-
-    private void drawButton(Graphics2D g2d, int x, int y, Rectangle button, String text, boolean pointToButton) {
+    private void drawButton(Graphics2D g2d, Point coordinates, Rectangle button, String text, boolean pointToButton) {
         g2d.setColor(BUTTON_COLOR);
         g2d.fill(button);
         g2d.setColor(TEXT_COLOR);
@@ -145,7 +125,7 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
             g2d.setColor(CLICKED_TEXT);
         }
         g2d.draw(button);
-        g2d.drawString(text, x, y);
+        g2d.drawString(text, (int) coordinates.getX(), (int) coordinates.getY());
     }
 
     @Override
@@ -156,7 +136,6 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
         } else if (infoButton.contains(p)) {
             owner.enableInfo();
         } else if (specialButton.contains(p)) {
-            //score = new Score("Go to next level");
             System.exit(0);
             //owner.enableSpecial();
         } else if (scoreButton.contains(p)) {

@@ -31,13 +31,8 @@ public class GameInfo extends JComponent implements MouseListener, MouseMotionLi
     private boolean pointToBack;
 
     public GameInfo(GameFrame owner) {
+
         image = new DisplayImage();
-
-        this.setFocusable(true);
-        this.requestFocusInWindow();
-
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
 
         this.owner = owner;
         this.area = image.getArea();
@@ -59,6 +54,10 @@ public class GameInfo extends JComponent implements MouseListener, MouseMotionLi
         backButtonFont = new Font("Monospaced", Font.PLAIN, backButton.height - 2);
         containerFont = new Font("Monospaced",Font.BOLD,11);
 
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.addMouseListener(this);
+        this.addMouseMotionListener(this);
     }
 
     public void paint(Graphics g) {
