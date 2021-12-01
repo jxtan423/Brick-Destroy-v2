@@ -6,16 +6,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class DisplayImage extends JComponent {
+abstract public class Image extends JComponent {
 
     private BufferedImage img;
     private static final Dimension IMAGE_SIZE = new Dimension(511, 511);
 
-    public DisplayImage() {
-
+    public Image() {
         this.setFocusable(true);
         this.requestFocusInWindow();
-
         setPreferredSize(IMAGE_SIZE);
 
         try {
@@ -29,8 +27,17 @@ public class DisplayImage extends JComponent {
         return IMAGE_SIZE;
     }
 
-    public Image img() {
+    public BufferedImage img() {
         return img;
     }
 
+    public abstract void button();
+
+    public abstract void content();
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        g.drawImage(img, 0, 0, null);
+    }
 }

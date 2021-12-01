@@ -39,8 +39,6 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     private GameBoard gameBoard;
     private HomeMenu homeMenu;
     private SelectionGame selectionGame;
-    private GameInfo infoPage;
-    private HighScore highScore;
 
     private boolean gaming;
 
@@ -53,12 +51,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     public GameFrame() {
         super();
-
         gaming = false;
-
         this.setLayout(new BorderLayout());
-
-        enableHomeMenu();
+        enableHomeMenu(false);
     }
 
     /**
@@ -76,8 +71,10 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setVisible(true);
     }
 
-    public void enableHomeMenu() {
+    public void enableHomeMenu(boolean isFromGameBoard) {
         this.dispose();
+        if(isFromGameBoard)
+            this.remove(gameBoard);
         homeMenu = new HomeMenu(this);
         this.add(homeMenu, BorderLayout.CENTER);
         this.setUndecorated(true);
@@ -102,8 +99,8 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.addWindowFocusListener(this);
     }
 
-    public void enableSelectionGame(boolean fromHomeMenu) {
-        if(fromHomeMenu)
+    public void enableSelectionGame(boolean isFromHomeMenu) {
+        if(isFromHomeMenu)
             this.remove(homeMenu);
         selectionGame = new SelectionGame(this);
         this.add(selectionGame, BorderLayout.CENTER);
@@ -112,13 +109,11 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     public void enableInfo() {
         this.remove(selectionGame);
-        infoPage = new GameInfo(this);
-        this.add(infoPage, BorderLayout.CENTER);
-        initialize();
+        new GameInfo(this);
     }
 
     public void enableScore() throws FileNotFoundException {
-        highScore = new HighScore(this);
+        new HighScore(this);
     }
 
     /**
@@ -133,6 +128,10 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         int x = (size.width - this.getWidth()) / 2;
         int y = (size.height - this.getHeight()) / 2;
         this.setLocation(x, y);
+    }
+
+    public void game() {
+        gaming = !gaming;
     }
 
     /**

@@ -4,21 +4,19 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
-public class HighScore extends TextFrame implements ActionListener {
+public class HighScore extends TextFrame {
 
     private final GameFrame owner;
     private final JFrame frame;
     private final JButton btn;
 
     public HighScore(GameFrame owner) {
-
         super("High Score");
         this.owner = owner;
         frame = super.getFrame();
@@ -77,5 +75,6 @@ public class HighScore extends TextFrame implements ActionListener {
         point.setBounds(350, 40, 60, 165);
         frame.add(point);
 
+        frame.setVisible(true);
     }
 }

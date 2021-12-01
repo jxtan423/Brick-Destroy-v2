@@ -9,7 +9,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.FileNotFoundException;
 
-public class SelectionGame extends JComponent implements MouseListener, MouseMotionListener {
+public class SelectionGame extends Image implements MouseListener, MouseMotionListener {
 
     private static final String NORMAL_TEXT = "Normal";
     private static final String SPECIAL_TEXT = "Special";
@@ -21,18 +21,17 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
     private static final Color CLICKED_BUTTON_COLOR = new Color(255, 255, 0);
     private static final Color CLICKED_TEXT = Color.black;
 
-    private final Rectangle normalButton;
-    private final Rectangle specialButton;
-    private final Rectangle infoButton;
-    private final Rectangle scoreButton;
+    private Rectangle normalButton;
+    private Rectangle specialButton;
+    private Rectangle infoButton;
+    private Rectangle scoreButton;
 
-    private final Font buttonFont;
+    private Font buttonFont;
 
     private final GameFrame owner;
-    private final DisplayImage image;
 
     private final Dimension area;
-    private final Button btn;
+    private Button btn;
 
     private boolean pointToNormal;
     private boolean pointToSpecial;
@@ -41,40 +40,44 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
 
     public SelectionGame(GameFrame owner) {
 
-        final int AMOUNT_OF_BUTTON = 4;
+        super();
         this.owner = owner;
-
-        image = new DisplayImage();
-        this.area = image.getArea();
-        this.setPreferredSize(area);
-
-        btn = new Button(area, AMOUNT_OF_BUTTON);
-
-        Rectangle[] rect = btn.getRect();
-        normalButton = rect[0];
-        specialButton = rect[1];
-        infoButton = rect[2];
-        scoreButton = rect[3];
-
-        buttonFont = btn.getFont();
-
+        this.area = super.getArea();
+        button();
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
     }
 
+    @Override
+    public void button() {
+        int AMOUNT_OF_BUTTON = 4;
+        btn = new Button(area, AMOUNT_OF_BUTTON);
+        Rectangle[] rect = btn.getRect();
+        normalButton = rect[0];
+        specialButton = rect[1];
+        infoButton = rect[2];
+        scoreButton = rect[3];
+        buttonFont = btn.getFont();
+    }
+
+    @Override
+    public void content() {
+
+    }
+
+    @Override
     public void paint(Graphics g) {
-        g.drawImage(image.img(), 0, 0, null);
+        super.paint(g);
         drawMenu((Graphics2D) g);
     }
 
     public void drawMenu(Graphics2D g2d) {
-        Button();
-        ButtonText(g2d);
+        Button(g2d);
     }
 
-    private void Button() {
+    private void Button(Graphics2D g2d) {
 
         Point START_BUTTON = new Point(btn.getButton_X(true), btn.getButton_Y(true));
         Point SPECIAL_BUTTON = new Point(btn.getButton_X(false), btn.getButton_Y(true));
@@ -85,9 +88,6 @@ public class SelectionGame extends JComponent implements MouseListener, MouseMot
         specialButton.setLocation(SPECIAL_BUTTON);
         infoButton.setLocation(INFO_BUTTON);
         scoreButton.setLocation(SCORE_BUTTON);
-    }
-
-    private void ButtonText(Graphics2D g2d) {
 
         FontRenderContext frc = g2d.getFontRenderContext();
 

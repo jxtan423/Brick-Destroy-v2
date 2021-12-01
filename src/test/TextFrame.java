@@ -4,46 +4,39 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-abstract public class TextFrame implements ActionListener {
+public abstract class TextFrame extends Image implements ActionListener {
 
-    private final JFrame frame;
-    private final JButton btn;
+    private JFrame frame;
+    private JButton btn;
     private Point coordinate;
 
-
-    Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+    public final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     public TextFrame(String name) {
+        super();
+        setFrame(name);
+        button();
+    }
 
-        DisplayImage image = new DisplayImage();
-
+    public void setFrame(String name) {
         frame = new JFrame(name);
-        frame.setSize(image.getArea());
+        frame.setSize(super.getArea());
         frame.setUndecorated(true);
         setCoordinate();
         frame.setLocation(getCoordinate());
         frame.setLayout(null);
-        frame.setContentPane(new JLabel(new ImageIcon(image.img())));
+        frame.setContentPane(new JLabel(new ImageIcon(super.img())));
+    }
 
-        btn = new JButton("Back");
-        btn.setFont(new Font("Arial", Font.ITALIC, 25));
-        btn.setBounds(400, 470, 100, 30);
-        btn.addActionListener(this);
-        frame.add(btn);
-        frame.setVisible(true);
+    public void setCoordinate() {
+        int x = (screenSize.width / 2) - (frame.getWidth() / 2);
+        int y = (screenSize.height / 2) - (frame.getHeight() / 2);
+        this.coordinate = new Point(x, y);
     }
 
     public Point getCoordinate() {
         return this.coordinate;
     }
-
-    public void setCoordinate() {
-        int x = (size.width / 2) - (frame.getWidth() / 2);
-        int y = (size.height / 2) - (frame.getHeight() / 2);
-        this.coordinate = new Point(x, y);
-    }
-
-    public abstract void content();
 
     public JButton getBtn() {
         return btn;
@@ -52,4 +45,16 @@ abstract public class TextFrame implements ActionListener {
     public JFrame getFrame() {
         return frame;
     }
+
+    @Override
+    public void button() {
+        btn = new JButton("Back");
+        btn.setFont(new Font("Arial", Font.ITALIC, 20));
+        btn.setBounds(400, 470, 100, 30);
+        btn.addActionListener(this);
+        frame.add(btn);
+    }
+
+    @Override
+    public abstract void content();
 }

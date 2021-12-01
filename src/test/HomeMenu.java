@@ -17,7 +17,6 @@
  */
 package test;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -30,7 +29,7 @@ import java.awt.geom.Rectangle2D;
  * of the frame when user runs the program.
  */
 
-public class HomeMenu extends JComponent implements MouseListener, MouseMotionListener {
+public class HomeMenu extends Image implements MouseListener, MouseMotionListener {
 
     private static final String GREETINGS = "Welcome to:";
     private static final String GAME_TITLE = "Brick Destroy";
@@ -43,27 +42,25 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private static final Color CLICKED_BUTTON_COLOR = new Color(255, 255, 0);
     private static final Color CLICKED_TEXT = Color.black;
 
-    private final Font greetingsFont;
-    private final Font gameTitleFont;
-    private final Font creditsFont;
-    private final Font buttonFont;
+    private Font greetingsFont;
+    private Font gameTitleFont;
+    private Font creditsFont;
+    private Font buttonFont;
 
-    private final Rectangle startButton;
-    private final Rectangle exitButton;
+    private Rectangle startButton;
+    private Rectangle exitButton;
 
     private final GameFrame owner;
     private final Dimension area;
-    private final DisplayImage image;
-    private final Button btn;
+    private Button btn;
 
     private boolean pointToStart;
     private boolean pointToExit;
 
     /**
      * This constructor is to create and design buttons,
-     * texts with specific fonts and colours.
-     * Image object is invoked and the size of image is
-     * initialized to the current frame area.
+     * texts and the texts inside the container
+     * with specific fonts and colours.
      * Buttons are clickable since MouseListener
      * is implemented and added.
      *
@@ -71,45 +68,50 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
      */
 
     public HomeMenu(GameFrame owner) {
-
-        final int AMOUNT_OF_BUTTON = 2;
-        final int GREETINGS_FONT_SIZE = 25;
-        final int GAME_TITLE_FONT_SIZE = 40;
-        final int CREDITS_FONT_SIZE = 10;
-
+        super();
         this.owner = owner;
-
-        image = new DisplayImage();
-        this.area = image.getArea();
-        this.setPreferredSize(area);
-
-        btn = new Button(area, AMOUNT_OF_BUTTON);
-
-        Rectangle[] rect = btn.getRect();
-        startButton = rect[0];
-        exitButton = rect[1];
-
-        greetingsFont = new Font("Noto Mono", Font.PLAIN, GREETINGS_FONT_SIZE);
-        gameTitleFont = new Font("Noto Mono", Font.BOLD, GAME_TITLE_FONT_SIZE);
-        creditsFont = new Font("Monospaced", Font.PLAIN, CREDITS_FONT_SIZE);
-        buttonFont = btn.getFont();
-
+        this.area = super.getArea();
+        button();
+        content();
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
     }
 
+    @Override
+    public void button() {
+        int AMOUNT_OF_BUTTON = 2;
+        btn = new Button(area, AMOUNT_OF_BUTTON);
+        Rectangle[] rect = btn.getRect();
+        startButton = rect[0];
+        exitButton = rect[1];
+    }
+
+    @Override
+    public void content() {
+
+        int GREETINGS_FONT_SIZE = 25;
+        int GAME_TITLE_FONT_SIZE = 40;
+        int CREDITS_FONT_SIZE = 10;
+
+        greetingsFont = new Font("Noto Mono", Font.PLAIN, GREETINGS_FONT_SIZE);
+        gameTitleFont = new Font("Noto Mono", Font.BOLD, GAME_TITLE_FONT_SIZE);
+        creditsFont = new Font("Monospaced", Font.PLAIN, CREDITS_FONT_SIZE);
+        buttonFont = btn.getFont();
+    }
+
     /**
-     * Image is drawn by getting from image class.
+     * Image is drawn through parent class.
      * The graphics is passed to drawHomeMenu method
      * for further drawing and painting.
      *
      * @param g The graphics context in which to paint
      */
 
+    @Override
     public void paint(Graphics g) {
-        g.drawImage(image.img(), 0, 0, null);
+        super.paint(g);
         drawHomeMenu((Graphics2D) g);
     }
 
@@ -123,8 +125,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     public void drawHomeMenu(Graphics2D g2d) {
         FontRenderContext frc = g2d.getFontRenderContext();
         Text(g2d, frc);
-        Button();
-        ButtonText(g2d, frc);
+        Button(g2d, frc);
     }
 
     /**
@@ -134,7 +135,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
      * @param g2d The graphics context in which to paint in 2D form
      */
 
-    private void Text(Graphics2D g2d, FontRenderContext frc) {
+    public void Text(Graphics2D g2d, FontRenderContext frc) {
 
         Rectangle2D greetingsRect = greetingsFont.getStringBounds(GREETINGS, frc);
         Rectangle2D gameTitleRect = gameTitleFont.getStringBounds(GAME_TITLE, frc);
@@ -156,7 +157,6 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         drawText(g2d, greetingsFont, GREETINGS, GREETING_COORDINATES);
         drawText(g2d, gameTitleFont, GAME_TITLE, TITLE_COORDINATES);
         drawText(g2d, creditsFont, CREDITS, CREDITS_COORDINATES);
-
     }
 
     /**
@@ -168,7 +168,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
      * @param coordinates The coordinates of text
      */
 
-    private void drawText(Graphics2D g2d, Font font, String text, Point coordinates) {
+    public void drawText(Graphics2D g2d, Font font, String text, Point coordinates) {
         g2d.setFont(font);
         g2d.drawString(text, (int) coordinates.getX(), (int) coordinates.getY());
     }
@@ -176,18 +176,6 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     /**
      * The coordinates of "start" and "exit"
      * buttons are set.
-     */
-
-    private void Button() {
-
-        Point START_BUTTON = new Point(btn.getButton_X(true), btn.getButton_Y(false));
-        Point EXIT_BUTTON = new Point(btn.getButton_X(false), btn.getButton_Y(false));
-
-        startButton.setLocation(START_BUTTON);
-        exitButton.setLocation(EXIT_BUTTON);
-    }
-
-    /**
      * The coordinates of the texts inside the container
      * are set.
      * Both buttons and texts are drawn through
@@ -197,7 +185,12 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
      * @param frc The information needed to correctly measure text inside a container
      */
 
-    private void ButtonText(Graphics2D g2d, FontRenderContext frc) {
+    private void Button(Graphics2D g2d, FontRenderContext frc) {
+        Point START_BUTTON = new Point(btn.getButton_X(true), btn.getButton_Y(false));
+        Point EXIT_BUTTON = new Point(btn.getButton_X(false), btn.getButton_Y(false));
+
+        startButton.setLocation(START_BUTTON);
+        exitButton.setLocation(EXIT_BUTTON);
 
         Rectangle2D txtRect = buttonFont.getStringBounds(START_TEXT, frc);
         Rectangle2D mTxtRect = buttonFont.getStringBounds(EXIT_TEXT, frc);
