@@ -82,7 +82,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
     @Override
     public void button() {
         int AMOUNT_OF_BUTTON = 2;
-        btn = new Button(area, AMOUNT_OF_BUTTON);
+        btn = new Button(area, AMOUNT_OF_BUTTON,true);
         Rectangle[] rect = btn.getRect();
         startButton = rect[0];
         exitButton = rect[1];
@@ -186,11 +186,6 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
      */
 
     private void Button(Graphics2D g2d, FontRenderContext frc) {
-        Point START_BUTTON = new Point(btn.getButton_X(true), btn.getButton_Y(false));
-        Point EXIT_BUTTON = new Point(btn.getButton_X(false), btn.getButton_Y(false));
-
-        startButton.setLocation(START_BUTTON);
-        exitButton.setLocation(EXIT_BUTTON);
 
         Rectangle2D txtRect = buttonFont.getStringBounds(START_TEXT, frc);
         Rectangle2D mTxtRect = buttonFont.getStringBounds(EXIT_TEXT, frc);

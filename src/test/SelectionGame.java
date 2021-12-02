@@ -16,8 +16,6 @@ public class SelectionGame extends Image implements MouseListener, MouseMotionLi
     private static final String INFO_TEXT = "Info";
     private static final String SCORE_TEXT = "Score";
 
-    private static final Color BUTTON_COLOR = new Color(102, 102, 102);
-    private static final Color TEXT_COLOR = new Color(255, 255, 255);
     private static final Color CLICKED_BUTTON_COLOR = new Color(255, 255, 0);
     private static final Color CLICKED_TEXT = Color.black;
 
@@ -53,12 +51,13 @@ public class SelectionGame extends Image implements MouseListener, MouseMotionLi
     @Override
     public void button() {
         int AMOUNT_OF_BUTTON = 4;
-        btn = new Button(area, AMOUNT_OF_BUTTON);
+        btn = new Button(area, AMOUNT_OF_BUTTON,true);
         Rectangle[] rect = btn.getRect();
-        normalButton = rect[0];
-        specialButton = rect[1];
-        infoButton = rect[2];
-        scoreButton = rect[3];
+        infoButton = rect[0];
+        scoreButton = rect[1];
+        normalButton = rect[2];
+        specialButton = rect[3];
+
         buttonFont = btn.getFont();
     }
 
@@ -78,16 +77,6 @@ public class SelectionGame extends Image implements MouseListener, MouseMotionLi
     }
 
     private void Button(Graphics2D g2d) {
-
-        Point START_BUTTON = new Point(btn.getButton_X(true), btn.getButton_Y(true));
-        Point SPECIAL_BUTTON = new Point(btn.getButton_X(false), btn.getButton_Y(true));
-        Point INFO_BUTTON = new Point(btn.getButton_X(true), btn.getButton_Y(false));
-        Point SCORE_BUTTON = new Point(btn.getButton_X(false), btn.getButton_Y(false));
-
-        normalButton.setLocation(START_BUTTON);
-        specialButton.setLocation(SPECIAL_BUTTON);
-        infoButton.setLocation(INFO_BUTTON);
-        scoreButton.setLocation(SCORE_BUTTON);
 
         FontRenderContext frc = g2d.getFontRenderContext();
 
@@ -115,14 +104,14 @@ public class SelectionGame extends Image implements MouseListener, MouseMotionLi
     }
 
     private void drawButton(Graphics2D g2d, Point coordinates, Rectangle button, String text, boolean pointToButton) {
-        g2d.setColor(BUTTON_COLOR);
+        g2d.setColor(Color.GRAY);
         g2d.fill(button);
-        g2d.setColor(TEXT_COLOR);
+        g2d.setColor(Color.WHITE);
 
         if (pointToButton) {
-            g2d.setColor(CLICKED_BUTTON_COLOR);
+            g2d.setColor(Color.YELLOW);
             g2d.fill(button);
-            g2d.setColor(CLICKED_TEXT);
+            g2d.setColor(Color.BLACK);
         }
         g2d.draw(button);
         g2d.drawString(text, (int) coordinates.getX(), (int) coordinates.getY());

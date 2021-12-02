@@ -22,6 +22,7 @@ public class Text {
         this.button = button;
         this.textRect = textRect;
         this.area = area;
+
         if (isButtonText) {
             setButton_Text_X();
             setButton_Text_Y();
