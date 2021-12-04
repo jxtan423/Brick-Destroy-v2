@@ -25,19 +25,15 @@ import java.awt.event.WindowListener;
 public class DebugConsole extends JDialog implements WindowListener {
 
     private static final String TITLE = "Debug Console";
+    private final JFrame owner;
+    private final DebugPanel debugPanel;
+    private final NormalGame normalGame;
+    private final Wall wall;
 
-
-    private JFrame owner;
-    private DebugPanel debugPanel;
-    private GameBoard gameBoard;
-    private Wall wall;
-
-
-    public DebugConsole(JFrame owner, Wall wall, GameBoard gameBoard) {
-
+    public DebugConsole(JFrame owner, Wall wall, NormalGame normalGame) {
         this.wall = wall;
         this.owner = owner;
-        this.gameBoard = gameBoard;
+        this.normalGame = normalGame;
         initialize();
 
         debugPanel = new DebugPanel(wall);
@@ -70,7 +66,7 @@ public class DebugConsole extends JDialog implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent windowEvent) {
-        gameBoard.repaint();
+        normalGame.repaint();
     }
 
     @Override

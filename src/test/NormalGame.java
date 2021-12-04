@@ -24,7 +24,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 
-public class GameBoard extends JComponent implements KeyListener, MouseListener, MouseMotionListener {
+public class NormalGame extends JComponent implements KeyListener, MouseListener, MouseMotionListener {
 
     private static final String PAUSE = "Pause Menu";
 
@@ -57,7 +57,7 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
 
     private final PauseMenu pM;
 
-    public GameBoard(GameFrame owner) {
+    public NormalGame(GameFrame owner) {
 
         super();
         pM = new PauseMenu(new Dimension(DEF_WIDTH,DEF_HEIGHT));
@@ -74,7 +74,7 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
 
         message = "";
 
-        wall = new Wall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 30, 3, 6 / 2, new Point(300, 430));
+        wall = new Wall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 1, 1, 6 / 2, new Point(300, 430));
 
         debugConsole = new DebugConsole(owner, wall, this);
 
@@ -99,7 +99,7 @@ public class GameBoard extends JComponent implements KeyListener, MouseListener,
             if (wall.isBallLost()) {
                 if (wall.ballEnd()) {
                     wall.wallReset();
-                    message = "Game over";
+                    message = "GAME OVER";
                     timerReset();
                 }
                 wall.ballReset();

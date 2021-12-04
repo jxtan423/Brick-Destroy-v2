@@ -21,7 +21,6 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
-
 public class Wall {
 
     private static final int LEVELS_COUNT = 4;
@@ -81,9 +80,6 @@ public class Wall {
         if (player.impact(ball)) {
             ball.reverseY();
         } else if (impactWall()) {
-            /*for efficiency reverse is done into method impactWall
-             * because for every brick program checks for horizontal and vertical impacts
-             */
             brickCount--;
         } else if (impactBorder()) {
             ball.reverseX();
@@ -97,8 +93,6 @@ public class Wall {
 
     private boolean impactWall() {
         for (Brick b : bricks) {
-            //Vertical Impact
-            //Horizontal Impact
             switch (b.findImpact(ball)) {
                 case Brick.UP_IMPACT -> {
                     ball.reverseY();
@@ -197,5 +191,4 @@ public class Wall {
     public void resetBallCount() {
         ballCount = 3;
     }
-
 }
