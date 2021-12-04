@@ -5,7 +5,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 
 
-public class CementBrick extends Brick {
+public class CementBrick extends Brick implements DetermineBricks {
 
 
     private static final String NAME = "Cement Brick";
@@ -59,5 +59,10 @@ public class CementBrick extends Brick {
         super.repair();
         crack.reset();
         brickFace = super.brickFace;
+    }
+
+    @Override
+    public Brick getSpecificBrick(Point point, Dimension size) {
+        return new CementBrick(point,size);
     }
 }
