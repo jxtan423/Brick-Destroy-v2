@@ -1,6 +1,5 @@
 package test;
 
-import javax.print.attribute.HashPrintJobAttributeSet;
 import java.awt.*;
 import java.util.HashMap;
 

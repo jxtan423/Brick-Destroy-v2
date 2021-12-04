@@ -21,6 +21,7 @@ abstract public class Brick {
     public static final int LEFT_IMPACT = 300;
     public static final int RIGHT_IMPACT = 400;
 
+
     public static Random rnd;
 
     private String name;
@@ -55,7 +56,6 @@ abstract public class Brick {
     }
 
     public abstract Shape getBrick();
-
 
     public Color getBorderColor() {
         return border;

@@ -48,6 +48,7 @@ public class Crack {
         Point start = new Point();
         Point end = new Point();
 
+
         switch (direction) {
             case LEFT:
                 start.setLocation(bounds.x + bounds.width, bounds.y);
@@ -74,13 +75,16 @@ public class Crack {
                 end.setLocation(bounds.x + bounds.width, bounds.y);
                 tmp = makeRandomPoint(start, end, HORIZONTAL);
                 makeCrack(impact, tmp);
+
                 break;
+
         }
     }
 
     protected void makeCrack(Point start, Point end) {
 
         GeneralPath path = new GeneralPath();
+
 
         path.moveTo(start.x, start.y);
 
@@ -96,11 +100,14 @@ public class Crack {
 
             x = (i * w) + start.x;
             y = (i * h) + start.y + randomInBounds(bound);
-            if (inMiddle(i, steps))
-                y += jumps(jump);
+
+            if (inMiddle(i, CRACK_SECTIONS, steps))
+                y += jumps(jump, JUMP_PROBABILITY);
 
             path.lineTo(x, y);
+
         }
+
         path.lineTo(end.x, end.y);
         crack.append(path, true);
     }
@@ -110,23 +117,26 @@ public class Crack {
         return Brick.rnd.nextInt(n) - bound;
     }
 
-    private boolean inMiddle(int i, int divisions) {
-        int low = (CRACK_SECTIONS / divisions);
+    private boolean inMiddle(int i, int steps, int divisions) {
+        int low = (steps / divisions);
         int up = low * (divisions - 1);
 
         return (i > low) && (i < up);
     }
 
-    private int jumps(int bound) {
-        if (Brick.rnd.nextDouble() > JUMP_PROBABILITY)
+    private int jumps(int bound, double probability) {
+
+        if (Brick.rnd.nextDouble() > probability)
             return randomInBounds(bound);
         return 0;
 
     }
 
     private Point makeRandomPoint(Point from, Point to, int direction) {
+
         Point out = new Point();
         int pos;
+
         switch (direction) {
             case HORIZONTAL -> {
                 pos = Brick.rnd.nextInt(to.x - from.x) + from.x;
