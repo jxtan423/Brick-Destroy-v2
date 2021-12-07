@@ -33,6 +33,10 @@ public class ShowScore extends Score {
         setHighScore(score);
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     private int allInSeconds(int minutes, int seconds) {
         return seconds + (minutes * 60);
     }

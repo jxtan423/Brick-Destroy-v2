@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 
-
 public class CementBrick extends Brick implements DetermineBricks {
 
     private static final String NAME = "Cement Brick";

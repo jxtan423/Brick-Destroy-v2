@@ -1,15 +1,17 @@
 package test;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.Point;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
+import java.time.chrono.JapaneseChronology;
 import java.util.Random;
 
 /**
  * Created by filippo on 04/09/16.
  */
-abstract public class Brick {
+abstract public class Brick extends JComponent {
 
     public static final int MIN_CRACK = 1;
     public static final int DEF_CRACK_DEPTH = 1;
@@ -45,6 +47,22 @@ abstract public class Brick {
         this.inner = inner;
         this.fullStrength = this.strength = strength;
     }
+
+    public void paint(Graphics g) {
+        drawBricks((Graphics2D) g);
+    }
+
+
+    public void drawBricks(Graphics2D g2d) {
+        Color tmp = g2d.getColor();
+        g2d.setColor(inner);
+        g2d.fill(getBrick());
+        g2d.setColor(border);
+        g2d.draw(getBrick());
+        g2d.setColor(tmp);
+    }
+
+
 
     protected abstract Shape makeBrickFace(Point pos, Dimension size);
 

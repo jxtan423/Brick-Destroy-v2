@@ -39,6 +39,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     private NormalGame normalGame;
     private HomeMenu homeMenu;
     private SelectionGame selectionGame;
+    private SpecialGame specialGame;
 
     private boolean gaming;
 
@@ -71,9 +72,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setVisible(true);
     }
 
-    public void enableHomeMenu(boolean isFromGameBoard) {
+    public void enableHomeMenu(Boolean isFromNormalGame) {
         this.dispose();
-        if(isFromGameBoard)
+        if(isFromNormalGame)
             this.remove(normalGame);
         homeMenu = new HomeMenu(this);
         this.add(homeMenu, BorderLayout.CENTER);
@@ -87,7 +88,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
      * The GameBoard will be shown on the user's screen along with frame border.
      */
 
-    public void enableGameBoard() {
+    public void enableNormalGame() {
         this.dispose();
         this.remove(selectionGame);
         normalGame = new NormalGame(this);
@@ -96,6 +97,17 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setResizable(false);
         initialize();
         /*to avoid problems with graphics focus controller is added here*/
+        this.addWindowFocusListener(this);
+    }
+
+    public void enableSpecialGame() throws InterruptedException {
+        this.dispose();
+        this.remove(selectionGame);
+        specialGame = new SpecialGame(this);
+        this.add(specialGame, BorderLayout.CENTER);
+        this.setUndecorated(false);
+        this.setResizable(false);
+        initialize();
         this.addWindowFocusListener(this);
     }
 
@@ -167,7 +179,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     @Override
     public void windowLostFocus(WindowEvent windowEvent) {
-        if (gaming)
-            normalGame.onLostFocus();
+        if (gaming) {
+            //normalGame.onLostFocus();
+            //specialGame.onLostFocus();
+        }
     }
 }

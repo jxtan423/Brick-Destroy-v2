@@ -17,7 +17,6 @@ public class Crack {
     public static final int VERTICAL = 100;
     public static final int HORIZONTAL = 200;
 
-
     private final Brick brick;
     private GeneralPath crack;
 

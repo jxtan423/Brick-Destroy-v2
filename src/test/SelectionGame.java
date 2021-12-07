@@ -16,9 +16,6 @@ public class SelectionGame extends Image implements MouseListener, MouseMotionLi
     private static final String INFO_TEXT = "Info";
     private static final String SCORE_TEXT = "Score";
 
-    private static final Color CLICKED_BUTTON_COLOR = new Color(255, 255, 0);
-    private static final Color CLICKED_TEXT = Color.black;
-
     private Rectangle normalButton;
     private Rectangle specialButton;
     private Rectangle infoButton;
@@ -121,12 +118,15 @@ public class SelectionGame extends Image implements MouseListener, MouseMotionLi
     public void mouseClicked(MouseEvent e) {
         Point p = e.getPoint();
         if (normalButton.contains(p)) {
-            owner.enableGameBoard();
+            owner.enableNormalGame();
         } else if (infoButton.contains(p)) {
             owner.enableInfo();
         } else if (specialButton.contains(p)) {
-            System.exit(0);
-            //owner.enableSpecial();
+            try {
+                owner.enableSpecialGame();
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
         } else if (scoreButton.contains(p)) {
             owner.remove(this);
             try {

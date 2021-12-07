@@ -17,12 +17,13 @@
  */
 package test;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 
-public class Player {
+public class Player extends JComponent {
 
 
     public static final Color BORDER_COLOR = Color.GREEN.darker().darker();
@@ -83,5 +84,18 @@ public class Player {
     public void moveTo(Point p) {
         ballPoint.setLocation(p);
         playerFace.setLocation(ballPoint.x - (int) playerFace.getWidth() / 2, ballPoint.y);
+    }
+
+    public void paint(Graphics g) {
+        drawPlayer((Graphics2D) g);
+    }
+
+    private void drawPlayer(Graphics2D g2d) {
+        Color tmp = g2d.getColor();
+        g2d.setColor(INNER_COLOR);
+        g2d.fill(playerFace);
+        g2d.setColor(BORDER_COLOR);
+        g2d.draw(playerFace);
+        g2d.setColor(tmp);
     }
 }

@@ -1,36 +1,44 @@
 package test;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 public class CreationOfBricks {
 
     private static final int CLAY = 1;
     private static final int STEEL = 2;
     private static final int CEMENT = 3;
+    private static final int GREEN = 4;
+    private static final int YELLOW = 5;
+    private static final int RED = 6;
+
     private Brick[] allBricks;
     private final Rectangle area;
     private int AmountOfBrick;
     private final int LinesOfBrick;
     private final double SizeRatio;
 
-    public CreationOfBricks(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int typeA, int typeB) {
+    private Point p;
+
+    public CreationOfBricks(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int typeA, int typeB, int typeC) {
         area = drawArea;
         AmountOfBrick = brickCnt;
         LinesOfBrick = lineCnt;
         SizeRatio = brickSizeRatio;
-        brickCreation(typeA, typeB);
+        brickCreation(typeA, typeB, typeC);
     }
 
-    private void brickCreation(int typeA, int typeB) {
-        AmountOfBrick = AdjustBrickCount(AmountOfBrick, LinesOfBrick);
-        int brickOnLine = CountBricksOnSingleLine(AmountOfBrick, LinesOfBrick);
-        double brickLen = CalculateBrickLen(brickOnLine, area);
-        double brickHgt = CalculateBrickHgt(brickLen, SizeRatio);
+    private void brickCreation(int typeA, int typeB, int typeC) {
+        AmountOfBrick = AdjustBrickCount();
+        int brickOnLine = CountBricksOnSingleLine();
+        double brickLen = CalculateBrickLen(brickOnLine);
+        double brickHgt = CalculateBrickHgt(brickLen);
 
         Brick[] tmp = new Brick[AmountOfBrick];
         Dimension brickSize = new Dimension((int) brickLen, (int) brickHgt);
-        Point p = new Point();
+        p = new Point();
 
         int i;
         double y;
@@ -38,20 +46,27 @@ public class CreationOfBricks {
 
         for (i = 0; i < AmountOfBrick; i++) {
             int line = identifyLine(i, brickOnLine);
-            if (ReachMaxLine(line, LinesOfBrick))
+            if (ReachMaxLine(line))
                 break;
             int posX = identifyPositionX(i, brickOnLine);
             x = createBrickOnX(posX, brickLen, line);
             y = createBrickOnY(line, brickHgt);
             p.setLocation(x, y);
-            if (haveTwoTypesOfBrick(typeA, typeB)) {
-                boolean isTypeA = identifySequenceOfBricks(brickOnLine, line, posX, i);
-                if (isTypeA)
-                    tmp[i] = makeSpecificBrick(p, brickSize, typeA);
-                else
-                    tmp[i] = makeSpecificBrick(p, brickSize, typeB);
-            } else
-                tmp[i] = makeSpecificBrick(p, brickSize, typeA);
+            if(noTypeCFound(typeC)) {
+                HashMap<Boolean, Brick> hashMap = new HashMap<>();
+                hashMap.put(Boolean.TRUE,makeSpecificBrick(p, brickSize, typeA));
+                hashMap.put(Boolean.FALSE, makeSpecificBrick(p, brickSize, typeB));
+                tmp[i] = hashMap.get(identifySequenceOfBricks(brickOnLine, line, posX, i));
+            }
+            else{
+                Random rnd = new Random();
+                int number = rnd.nextInt(3) + 4;
+                HashMap<Integer, Brick> hashMap = new HashMap<>();
+                hashMap.put(GREEN, makeSpecificBrick(p, brickSize, typeA));
+                hashMap.put(YELLOW, makeSpecificBrick(p, brickSize, typeB));
+                hashMap.put(RED, makeSpecificBrick(p, brickSize, typeC));
+                tmp[i] = hashMap.get(number);
+            }
         }
         for (y = brickHgt; i < tmp.length; i++, y += NextOddLine(brickHgt)) {
             x = identifyLastBrickOnX(brickOnLine, brickLen);
@@ -69,24 +84,28 @@ public class CreationOfBricks {
         return allBricks;
     }
 
-    private boolean ReachMaxLine(int line, int lineCnt) {
-        return line == lineCnt;
+    private boolean noTypeCFound(int typeC) {
+        return typeC == 0;
     }
 
-    private int AdjustBrickCount(int brickCnt, int lineCnt) {
-        return (brickCnt - (brickCnt % lineCnt)) + lineCnt / 2;
+    private boolean ReachMaxLine(int line) {
+        return line == LinesOfBrick;
     }
 
-    private int CountBricksOnSingleLine(int brickCnt, int lineCnt) {
-        return brickCnt / lineCnt;
+    private int AdjustBrickCount() {
+        return (AmountOfBrick - (AmountOfBrick % LinesOfBrick)) + LinesOfBrick / 2;
     }
 
-    private double CalculateBrickLen(int brickOnLine, Rectangle drawArea) {
-        return drawArea.getWidth() / brickOnLine;
+    private int CountBricksOnSingleLine() {
+        return AmountOfBrick / LinesOfBrick;
     }
 
-    private double CalculateBrickHgt(double brickLen, double brickSizeRatio) {
-        return brickLen / brickSizeRatio;
+    private double CalculateBrickLen(int brickOnLine) {
+        return area.getWidth() / brickOnLine;
+    }
+
+    private double CalculateBrickHgt(double brickLen) {
+        return brickLen / SizeRatio;
     }
 
     private int identifyLine(int i, int brickOnLine) {
@@ -106,11 +125,7 @@ public class CreationOfBricks {
         return (line % 2 == 0) ? x : (x - (brickLen / 2));
     }
 
-    private boolean haveTwoTypesOfBrick(int typeA, int typeB) {
-        return typeA != 0 && typeB != 0;
-    }
-
-    private boolean identifySequenceOfBricks(int brickOnLine, int line, int posX, int i) {
+    private Boolean identifySequenceOfBricks(int brickOnLine, int line, int posX, int i) {
         int centerLeft = brickOnLine / 2 - 1;
         int centerRight = brickOnLine / 2 + 1;
         return ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight));
@@ -124,11 +139,18 @@ public class CreationOfBricks {
         return (2 * brickHgt);
     }
 
+    public Point getP() {
+        return p;
+    }
+
     private Brick makeSpecificBrick(Point point, Dimension size, int type) {
         HashMap<Integer, DetermineBricks> hM = new HashMap<>();
         hM.put(CLAY, new ClayBrick(point, size));
         hM.put(STEEL, new SteelBrick(point, size));
         hM.put(CEMENT, new CementBrick(point, size));
+        hM.put(GREEN, new GreenBrick(point, size));
+        hM.put(YELLOW, new YellowBrick(point, size));
+        hM.put(RED, new RedBrick(point, size));
         DetermineBricks db = hM.get(type);
         return db.getSpecificBrick(point, size);
     }
