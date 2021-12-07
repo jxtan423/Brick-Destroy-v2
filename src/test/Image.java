@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-abstract public class Image extends JComponent {
+public abstract class Image extends JComponent {
 
     private BufferedImage img;
     private static final Dimension IMAGE_SIZE = new Dimension(511, 511);

@@ -11,7 +11,7 @@ import java.util.Random;
 /**
  * Created by filippo on 04/09/16.
  */
-abstract public class Brick extends JComponent {
+public abstract class Brick extends JComponent {
 
     public static final int MIN_CRACK = 1;
     public static final int DEF_CRACK_DEPTH = 1;
