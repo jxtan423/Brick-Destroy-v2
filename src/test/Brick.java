@@ -23,7 +23,6 @@ abstract public class Brick extends JComponent {
     public static final int LEFT_IMPACT = 300;
     public static final int RIGHT_IMPACT = 400;
 
-
     public static Random rnd;
 
     private String name;
@@ -75,6 +74,7 @@ abstract public class Brick extends JComponent {
 
     public abstract Shape getBrick();
 
+
     public Color getBorderColor() {
         return border;
     }
@@ -115,6 +115,15 @@ abstract public class Brick extends JComponent {
         strength--;
         broken = (strength == 0);
     }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setInner(Color inner) {
+        this.inner = inner;
+    }
+
 }
 
 
