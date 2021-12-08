@@ -10,7 +10,6 @@ public class SpecialWall extends Wall {
     private static final int YELLOW = 5;
     private static final int RED = 6;
 
-    RonaldoBall CR7;
     private boolean isCR7Time;
 
     public SpecialWall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPos) {

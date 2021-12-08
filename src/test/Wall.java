@@ -19,6 +19,7 @@ package test;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.HashMap;
 import java.util.Random;
 
 public abstract class Wall {
@@ -110,6 +111,30 @@ public abstract class Wall {
         }
         return false;
     }
+
+    /*private boolean upImpact(Brick b) {
+        ball.reverseY();
+        score++;
+        return b.setImpact(ball.down, Crack.UP);
+    }
+
+    private boolean downImpact(Brick b) {
+        ball.reverseY();
+        score++;
+        return b.setImpact(ball.up, Crack.DOWN);
+    }
+
+    private boolean leftImpact(Brick b) {
+        ball.reverseX();
+        score++;
+        return b.setImpact(ball.right, Crack.RIGHT);
+    }
+
+    private boolean rightImpact(Brick b) {
+        ball.reverseX();
+        score++;
+        return b.setImpact(ball.left, Crack.LEFT);
+    }*/
 
     public boolean impactBorder() {
         Point2D p = ball.getPosition();

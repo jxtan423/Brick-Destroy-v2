@@ -4,11 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.util.HashMap;
 import java.util.Random;
 
-/**
- * Created by filippo on 04/09/16.
- */
 public abstract class Brick extends JComponent {
 
     public static final int MIN_CRACK = 1;
@@ -25,10 +23,10 @@ public abstract class Brick extends JComponent {
     private String name;
     Shape brickFace;
 
-    private Color border;
+    private final Color border;
     private Color inner;
 
-    private int fullStrength;
+    private final int fullStrength;
     private int strength;
 
     private boolean broken;
@@ -58,8 +56,6 @@ public abstract class Brick extends JComponent {
         g2d.setColor(tmp);
     }
 
-
-
     protected abstract Shape makeBrickFace(Point pos, Dimension size);
 
     public boolean setImpact(Point2D point, int dir) {
@@ -71,7 +67,6 @@ public abstract class Brick extends JComponent {
 
     public abstract Shape getBrick();
 
-
     public Color getBorderColor() {
         return border;
     }
@@ -81,22 +76,15 @@ public abstract class Brick extends JComponent {
     }
 
     public final int findImpact(Ball b) {
-        if (broken)
+        if(broken)
             return 0;
-        int out = 0;
-        if (brickFace.contains(b.right))
-            out = LEFT_IMPACT;
-
-        else if (brickFace.contains(b.left))
-            out = RIGHT_IMPACT;
-
-        else if (brickFace.contains(b.up))
-            out = DOWN_IMPACT;
-
-        else if (brickFace.contains(b.down))
-            out = UP_IMPACT;
-
-        return out;
+        HashMap<Boolean, Integer> hM = new HashMap<>();
+        hM.put(brickFace.contains(b.right), LEFT_IMPACT);
+        hM.put(brickFace.contains(b.left), RIGHT_IMPACT);
+        hM.put(brickFace.contains(b.up), DOWN_IMPACT);
+        hM.put(brickFace.contains(b.down), UP_IMPACT);
+        hM.put(Boolean.FALSE, 0);
+        return hM.get(brickFace.contains(b.getPosition()));
     }
 
     public final boolean isBroken() {
@@ -120,7 +108,6 @@ public abstract class Brick extends JComponent {
     public void setInner(Color inner) {
         this.inner = inner;
     }
-
 }
 
 

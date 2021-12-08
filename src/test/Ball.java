@@ -117,7 +117,7 @@ public abstract class Ball extends JComponent {
     }
 
     private void setPoints(double width, double height) {
-        up.setLocation(center.getX(), center.getY() - (height / 2));
+        up.setLocation(center.getX(), center.getY() - (height / 10));
         down.setLocation(center.getX(), center.getY() + (height) / 10);
 
         left.setLocation(center.getX() - (width / 2), center.getY());
