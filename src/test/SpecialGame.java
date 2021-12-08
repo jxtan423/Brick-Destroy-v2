@@ -10,19 +10,14 @@ public class SpecialGame extends Game {
     private static final int DEF_HEIGHT = 675;
 
     private final JFrame frame;
-
     private final GameFrame owner;
     private SpecialWall wall;
-
-    private String message;
-    private String lives;
 
     private Timer gameTimer;
     private Timer timer;
     private Timer celebration;
 
     private int second;
-
     private boolean isCR7Time;
     private boolean is7Pressed;
 
@@ -32,8 +27,6 @@ public class SpecialGame extends Game {
         this.owner = owner;
         isCR7Time = false;
         is7Pressed = false;
-        tab = "Press Tab to start game";
-        message = "";
         second = 90;
     }
 

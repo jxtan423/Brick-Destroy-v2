@@ -50,8 +50,6 @@ public class NormalGame extends Game {
         second = 0;
         min = 0;
         textFont = new Font("Arial", Font.BOLD, 18);
-        tab = "Press Tab to start game";
-        message = "";
         debugConsole = new DebugConsole(owner, wall, this);
     }
 

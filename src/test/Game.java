@@ -25,6 +25,8 @@ public abstract class Game extends JComponent implements KeyListener, MouseListe
         show = new ShowScore(owner);
         submit = new SubmitScore(owner);
         showPauseMenu = false;
+        tab = "Press Tab to start game";
+        message = "";
         createWall();
         createTimer();
         createGame();
