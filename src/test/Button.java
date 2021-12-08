@@ -1,80 +1,108 @@
 package test;
 
 import java.awt.*;
+import java.util.HashMap;
 
 public class Button {
 
     private int BUTTON_WIDTH;
     private int BUTTON_HEIGHT;
     private final int HALF_FRAME;
-    private int Button_X;
-    private int Button_Y;
+    private final int amountOfButtons;
+    private double ADD_HEIGHT;
+    private int NEW_ROW;
 
+    private Point coordinate;
     private final Dimension area;
     private final Rectangle[] btn;
     private final Font buttonFont;
 
     public Button(Dimension area, int amountOfButtons, boolean isLeftRightPosition) {
         this.area = area;
-        HALF_FRAME = (int) (this.area.getWidth() / 2);
+        this.amountOfButtons = amountOfButtons;
+        HALF_FRAME = getHALF_FRAME();
+        ADD_HEIGHT = 1;
+        NEW_ROW = 0;
         btn = new Rectangle[amountOfButtons];
         setWidth();
         setHeight();
-        setButton_X(isLeftRightPosition);
-        setButton_Y(isLeftRightPosition);
+        set_coordinate(isLeftRightPosition);
         buttonFont = new Font("serif", Font.PLAIN, BUTTON_HEIGHT - 4);
-        createRectangle(btn, amountOfButtons, isLeftRightPosition);
+        createRectangle();
+        createPosition(isLeftRightPosition);
     }
 
-    private void createRectangle(Rectangle[] btn, int amountOfButtons, boolean isLeftRightPosition) {
-        int i;
-        for (i = 0; i < amountOfButtons; i++) {
-            btn[i] = new Rectangle(BUTTON_WIDTH, BUTTON_HEIGHT);
-        }
-        if(!isLeftRightPosition) {
-            double ADD_HEIGHT = 1;
-            for(i = 0; i < amountOfButtons; i++) {
-                btn[i].setLocation(Button_X, (int) (Button_Y * ADD_HEIGHT));
-                ADD_HEIGHT += 0.45;
-            }
-        }
-        else {
-            int NEW_ROW = 0;
-            for(i = 0; i < amountOfButtons; i++ ) {
-                btn[i].setLocation(Button_X,Button_Y + NEW_ROW);
-                i++;
-                btn[i].setLocation(Button_X + HALF_FRAME,Button_Y + NEW_ROW);
-                NEW_ROW -= 65;
-            }
-        }
+    private void set_coordinate(boolean isLeftRightPosition) {
+        HashMap<Boolean, Point> hM = new HashMap<>();
+        hM.put(Boolean.TRUE, LeftRightPoint());
+        hM.put(Boolean.FALSE, MiddlePoint());
+        coordinate = hM.get(isLeftRightPosition);
+    }
+
+    private Point LeftRightPoint() {
+        int x = (HALF_FRAME - BUTTON_WIDTH) / 2;
+        int y = (int) ((this.area.height - BUTTON_HEIGHT) * 0.8);
+        return new Point(x,y);
+    }
+
+    private Point MiddlePoint() {
+        int x = (int) (area.getWidth() - BUTTON_WIDTH) /2;
+        int y = (int) ((this.area.height - BUTTON_HEIGHT) * 0.4);
+        return new Point(x, y);
+    }
+
+    public int getHALF_FRAME() {
+        return (int) (this.area.getWidth() / 2);
     }
 
     public void setWidth() {
         this.BUTTON_WIDTH = (int) (this.area.getWidth() / 3);
     }
+
     public void setHeight() {
         this.BUTTON_HEIGHT = (int) (this.area.getWidth() / 12);
     }
 
-    public void setButton_X(boolean isLeftRightPosition) {
-        if(isLeftRightPosition) {
-            int SPACE_LEFT = (this.HALF_FRAME - BUTTON_WIDTH);
-            Button_X = SPACE_LEFT / 2;
-        }
-        else
-            Button_X = (int) ((area.getWidth() - BUTTON_WIDTH) /2);
+    private void createRectangle() {
+        for (int i = 0; i < amountOfButtons; i++)
+            btn[i] = new Rectangle(BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
-    public void setButton_Y(boolean isLeftRightButton) {
-        if(isLeftRightButton)
-            Button_Y = (int) ((this.area.height - BUTTON_HEIGHT) * 0.8);
+    private void createPosition(boolean isLeftRightPosition) {
+        if(isLeftRightPosition)
+            leftRightLocation();
         else
-            Button_Y = (int) ((this.area.height - BUTTON_HEIGHT) * 0.4);
+            middleLocation();
+    }
+
+    private void middleLocation() {
+        for(int i = 0; i < amountOfButtons; i++) {
+            btn[i].setLocation(coordinate.x, (int) (coordinate.y * ADD_HEIGHT));
+            setADD_HEIGHT();
+        }
+    }
+
+    private void leftRightLocation() {
+        for(int i = 0; i < amountOfButtons; i++ ) {
+            btn[i].setLocation(coordinate.x,coordinate.y + NEW_ROW);
+            i++;
+            btn[i].setLocation(coordinate.x + HALF_FRAME,coordinate.y + NEW_ROW);
+            setNEW_ROW();
+        }
+    }
+
+    private void setADD_HEIGHT() {
+        ADD_HEIGHT += 0.45;
+    }
+
+    private void setNEW_ROW() {
+        NEW_ROW -= 65;
     }
 
     public Rectangle[] getRect() {
         return btn;
     }
+
     public Font getFont() {
         return buttonFont;
     }
