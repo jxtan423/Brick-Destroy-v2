@@ -13,6 +13,7 @@ public class Button {
     private int NEW_ROW;
 
     private Point coordinate;
+    private Dimension btn_area;
     private final Dimension area;
     private final Rectangle[] btn;
     private final Font buttonFont;
@@ -24,8 +25,7 @@ public class Button {
         ADD_HEIGHT = 1;
         NEW_ROW = 0;
         btn = new Rectangle[amountOfButtons];
-        setWidth();
-        setHeight();
+        set_area();
         set_coordinate(isLeftRightPosition);
         buttonFont = new Font("serif", Font.PLAIN, BUTTON_HEIGHT - 4);
         createRectangle();
@@ -51,21 +51,19 @@ public class Button {
         return new Point(x, y);
     }
 
+    private void set_area() {
+        BUTTON_WIDTH = (int) (this.area.getWidth() / 3);
+        BUTTON_HEIGHT = (int) (this.area.getWidth() / 12);
+        btn_area = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
+    }
+
     public int getHALF_FRAME() {
         return (int) (this.area.getWidth() / 2);
     }
 
-    public void setWidth() {
-        this.BUTTON_WIDTH = (int) (this.area.getWidth() / 3);
-    }
-
-    public void setHeight() {
-        this.BUTTON_HEIGHT = (int) (this.area.getWidth() / 12);
-    }
-
     private void createRectangle() {
         for (int i = 0; i < amountOfButtons; i++)
-            btn[i] = new Rectangle(BUTTON_WIDTH, BUTTON_HEIGHT);
+            btn[i] = new Rectangle(btn_area);
     }
 
     private void createPosition(boolean isLeftRightPosition) {
