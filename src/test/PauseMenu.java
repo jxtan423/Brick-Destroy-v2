@@ -69,9 +69,9 @@ public class PauseMenu extends JComponent {
         g2d.fill(exitBtn);
 
         g2d.setColor(Color.WHITE);
-        g2d.drawString(CONTINUE, txt.getButton_Text_X(), txt.getButton_Text_Y());
-        g2d.drawString(RESTART, rTxt.getButton_Text_X(), rTxt.getButton_Text_Y());
-        g2d.drawString(EXIT, eTxt.getButton_Text_X(), eTxt.getButton_Text_Y());
+        g2d.drawString(CONTINUE, txt.getCoordinate().x, txt.getCoordinate().y);
+        g2d.drawString(RESTART, rTxt.getCoordinate().x, rTxt.getCoordinate().y);
+        g2d.drawString(EXIT, eTxt.getCoordinate().x, eTxt.getCoordinate().y);
     }
 
     public Rectangle getContinueBtn() {

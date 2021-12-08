@@ -1,19 +1,14 @@
 package test;
 
-import org.w3c.dom.css.Rect;
-
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 
 public class Text {
 
     private static final double HEIGHT_DIFFERENCE = 1.1;
 
-    private int Button_Text_X;
-    private int Button_Text_Y;
-    private int Text_X;
-    private int Text_Y;
-
+    private Point coordinate;
     private final Dimension area;
     private final Rectangle button;
     private final Rectangle2D textRect;
@@ -22,52 +17,52 @@ public class Text {
         this.button = button;
         this.textRect = textRect;
         this.area = area;
-
-        if (isButtonText) {
-            setButton_Text_X();
-            setButton_Text_Y();
-        } else {
-            setText_X();
-            setText_Y();
-        }
+        createText(isButtonText);
     }
 
-    public int getButton_Text_X() {
-        return this.Button_Text_X;
+    private void createText(boolean isButton) {
+        HashMap<Boolean, Point> hM = new HashMap<>();
+        hM.put(Boolean.TRUE, button_text());
+        hM.put(Boolean.FALSE, text());
+        coordinate = hM.get(isButton);
     }
 
-    public void setButton_Text_X() {
+    private Point button_text() {
+        int x = setButton_Text_X();
+        int y = setButton_Text_Y();
+        return new Point(x, y);
+    }
+
+    private Point text() {
+        int x = setText_X();
+        int y = setText_Y();
+        return new Point(x, y);
+    }
+
+    public int setButton_Text_X() {
         int SPACE_LEFT = (int) ((this.button.getWidth() - this.textRect.getWidth()) / 2);
-        Button_Text_X = SPACE_LEFT + this.button.x;
+        return SPACE_LEFT + this.button.x;
     }
 
-    public int getButton_Text_Y() {
-        return this.Button_Text_Y;
-    }
-
-    public void setButton_Text_Y() {
+    public int setButton_Text_Y() {
         int SPACE_LEFT = (int) ((this.button.getHeight() - this.textRect.getHeight()) / 2);
         int TEXT = (int) (this.button.y + (button.height * 0.9));
-        Button_Text_Y = SPACE_LEFT + TEXT;
+        return SPACE_LEFT + TEXT;
     }
 
-    public int getText_X() {
-        return this.Text_X;
+    public int setText_X() {
+        return (int) (this.area.getWidth() - this.textRect.getWidth()) / 2;
     }
 
-    public void setText_X() {
-        Text_X = (int) (this.area.getWidth() - this.textRect.getWidth()) / 2;
+    public int setText_Y() {
+        return (int) (area.getHeight() / 2);
     }
 
-    public int getText_Y() {
-        return this.Text_Y;
-    }
-
-    public void setText_Y() {
-        Text_Y = (int) (area.getHeight() / 2);
+    public Point getCoordinate() {
+        return coordinate;
     }
 
     public void setNewText_Y(int y) {
-        this.Text_Y = y + (int) (this.textRect.getHeight() * HEIGHT_DIFFERENCE);
+        this.coordinate.y = y + (int) (this.textRect.getHeight() * HEIGHT_DIFFERENCE);
     }
 }

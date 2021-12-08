@@ -89,10 +89,10 @@ public class SelectionGame extends Image implements MouseListener, MouseMotionLi
         Text infoTxt = new Text(infoButton, iTxtRect, area, true);
         Text scoreTxt = new Text(scoreButton, slTxtRect, area, true);
 
-        Point NORMAL_TEXT_COORDINATES = new Point(normalTxt.getButton_Text_X(), normalTxt.getButton_Text_Y());
-        Point SPECIAL_TEXT_COORDINATES = new Point(specialTxt.getButton_Text_X(), specialTxt.getButton_Text_Y());
-        Point INFO_TEXT_COORDINATES = new Point(infoTxt.getButton_Text_X(), infoTxt.getButton_Text_Y());
-        Point SCORE_TEXT_COORDINATES = new Point(scoreTxt.getButton_Text_X(), scoreTxt.getButton_Text_Y());
+        Point NORMAL_TEXT_COORDINATES = new Point(normalTxt.getCoordinate().x, normalTxt.getCoordinate().y);
+        Point SPECIAL_TEXT_COORDINATES = new Point(specialTxt.getCoordinate().x, specialTxt.getCoordinate().y);
+        Point INFO_TEXT_COORDINATES = new Point(infoTxt.getCoordinate().x, infoTxt.getCoordinate().y);
+        Point SCORE_TEXT_COORDINATES = new Point(scoreTxt.getCoordinate().x, scoreTxt.getCoordinate().y);
 
         drawButton(g2d, NORMAL_TEXT_COORDINATES, normalButton, NORMAL_TEXT, pointToNormal);
         drawButton(g2d, SPECIAL_TEXT_COORDINATES, specialButton, SPECIAL_TEXT, pointToSpecial);

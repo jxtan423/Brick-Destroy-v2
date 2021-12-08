@@ -49,6 +49,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
 
     private Rectangle startButton;
     private Rectangle exitButton;
+    private Rectangle empty;
 
     private final GameFrame owner;
     private final Dimension area;
@@ -86,6 +87,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
         Rectangle[] rect = btn.getRect();
         startButton = rect[0];
         exitButton = rect[1];
+        empty = new Rectangle(0,0);
     }
 
     @Override
@@ -143,16 +145,16 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
 
         g2d.setColor(TEXT_COLOR);
 
-        Text greeting = new Text(null, greetingsRect, area, false);
-        Text title = new Text(null, gameTitleRect, area, false);
-        Text credits = new Text(null, creditsRect, area, false);
+        Text greeting = new Text(empty, greetingsRect, area, false);
+        Text title = new Text(empty, gameTitleRect, area, false);
+        Text credits = new Text(empty, creditsRect, area, false);
 
-        title.setNewText_Y(greeting.getText_Y());
-        credits.setNewText_Y(title.getText_Y());
+        title.setNewText_Y(greeting.getCoordinate().y);
+        credits.setNewText_Y(title.getCoordinate().y);
 
-        Point GREETING_COORDINATES = new Point(greeting.getText_X(), greeting.getText_Y());
-        Point TITLE_COORDINATES = new Point(title.getText_X(), title.getText_Y());
-        Point CREDITS_COORDINATES = new Point(credits.getText_X(), credits.getText_Y());
+        Point GREETING_COORDINATES = new Point(greeting.getCoordinate().x, greeting.getCoordinate().y);
+        Point TITLE_COORDINATES = new Point(title.getCoordinate().x, title.getCoordinate().y);
+        Point CREDITS_COORDINATES = new Point(credits.getCoordinate().x, credits.getCoordinate().y);
 
         drawText(g2d, greetingsFont, GREETINGS, GREETING_COORDINATES);
         drawText(g2d, gameTitleFont, GAME_TITLE, TITLE_COORDINATES);
@@ -195,8 +197,8 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
         Text startTxt = new Text(startButton, txtRect, area,true);
         Text exitTxt = new Text(exitButton, mTxtRect, area,true);
 
-        Point START_TEXT_COORDINATES = new Point(startTxt.getButton_Text_X(), startTxt.getButton_Text_Y());
-        Point EXIT_TEXT_COORDINATES = new Point(exitTxt.getButton_Text_X(), exitTxt.getButton_Text_Y());
+        Point START_TEXT_COORDINATES = new Point(startTxt.getCoordinate().x, startTxt.getCoordinate().y);
+        Point EXIT_TEXT_COORDINATES = new Point(exitTxt.getCoordinate().x, exitTxt.getCoordinate().y);
 
         drawButton(g2d, START_TEXT_COORDINATES, startButton, START_TEXT, pointToStart);
         drawButton(g2d, EXIT_TEXT_COORDINATES, exitButton, EXIT_TEXT, pointToExit);
