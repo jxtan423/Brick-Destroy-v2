@@ -24,59 +24,44 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 
-public class NormalGame extends JComponent implements KeyListener, MouseListener, MouseMotionListener {
+public class NormalGame extends Game {
 
     private static final int DEF_WIDTH = 600;
     private static final int DEF_HEIGHT = 450;
 
-    private static final Color BG_COLOR = Color.WHITE;
+    private static final Color BACKGROUND_COLOUR = Color.WHITE;
 
     private Timer gameTimer;
     private Timer timer;
 
     int second,min;
     String ddSecond = "00",ddMin = "00";
-
     DecimalFormat format = new DecimalFormat("00");
-    private final NormalWall wall;
 
-    private String message;
-
-    private boolean showPauseMenu;
+    private NormalWall wall;
 
     private final Font textFont;
-
-    private final SubmitScore submit;
-    private final ShowScore show;
-
     private final DebugConsole debugConsole;
-
     private final GameFrame owner;
 
-    private final PauseMenu pM;
-
-    private final Ball ball;
-
     public NormalGame(GameFrame owner) {
-        super();
-        pM = new PauseMenu(new Dimension(DEF_WIDTH,DEF_HEIGHT));
+        super(owner, DEF_WIDTH, DEF_HEIGHT);
         this.owner = owner;
-        showPauseMenu = false;
         second = 0;
         min = 0;
         textFont = new Font("Arial", Font.BOLD, 18);
-        submit = new SubmitScore(owner);
-        show = new ShowScore(owner);
-        message = "Press Tab to start game";
-        wall = new NormalWall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 1, 1, 3, new Point(300, 430));
-        ball = wall.getBall();
+        tab = "Press Tab to start game";
+        message = "";
         debugConsole = new DebugConsole(owner, wall, this);
-        startTimer();
-        startGame();
-        this.initialize();
     }
 
-    private void startTimer() {
+    @Override
+    public void createWall() {
+        wall = new NormalWall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 1, 1, 3, new Point(300, 430));
+    }
+
+    @Override
+    public void createTimer() {
         timer = new Timer(1000, e -> {
             second++;
             ddSecond = format.format(second);
@@ -89,9 +74,9 @@ public class NormalGame extends JComponent implements KeyListener, MouseListener
         });
     }
 
-    private void startGame() {
+    @Override
+    public void createGame() {
         wall.ballReset();
-        //initialize the first level
         wall.nextLevel();
         gameTimer = new Timer(10, e -> {
             wall.move();
@@ -101,7 +86,7 @@ public class NormalGame extends JComponent implements KeyListener, MouseListener
                 if (wall.ballEnd()) {
                     wall.wallReset();
                     message = "GAME OVER";
-                    timerReset();
+                    reset();
                 }
                 wall.ballReset();
                 gameTimer.stop();
@@ -116,7 +101,7 @@ public class NormalGame extends JComponent implements KeyListener, MouseListener
                     submit.scoreVisible();
                 }
                 else {
-                    message = "Next Level";
+                    message = "NEXT LEVEL";
                     gameTimer.stop();
                     timer.stop();
                     wall.ballReset();
@@ -124,7 +109,7 @@ public class NormalGame extends JComponent implements KeyListener, MouseListener
                     wall.nextLevel();
                     show.setScore(min,second);
                     this.owner.game();
-                    timerReset();
+                    reset();
                 }
                 show.scoreVisible();
             }
@@ -132,29 +117,22 @@ public class NormalGame extends JComponent implements KeyListener, MouseListener
         });
     }
 
-    private void timerReset() {
+    @Override
+    public void reset() {
         ddSecond = "00";
         ddMin = "00";
         min = 0;
         second = 0;
     }
 
-    private void initialize() {
-        this.setPreferredSize(new Dimension(DEF_WIDTH, DEF_HEIGHT));
-        this.setFocusable(true);
-        this.requestFocusInWindow();
-        this.addKeyListener(this);
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
-    }
-
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         clear(g2d);
         g2d.setColor(Color.BLUE);
-        g2d.drawString(message, 230, 225);
+        g2d.drawString(tab, 230, 225);
+        g2d.drawString(message,250,225);
 
-        ball.paint(g);
+        wall.ball.paint(g);
         wall.player.paint(g);
         for (Brick b : wall.bricks)
             if (!b.isBroken())
@@ -168,7 +146,7 @@ public class NormalGame extends JComponent implements KeyListener, MouseListener
 
     private void clear(Graphics2D g2d) {
         Color tmp = g2d.getColor();
-        g2d.setColor(BG_COLOR);
+        g2d.setColor(BACKGROUND_COLOUR);
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.setColor(tmp);
     }
@@ -201,6 +179,7 @@ public class NormalGame extends JComponent implements KeyListener, MouseListener
                     }  else {
                         gameTimer.start();
                         timer.start();
+                        tab = "";
                     }
                 break;
             case KeyEvent.VK_F1:
@@ -227,7 +206,7 @@ public class NormalGame extends JComponent implements KeyListener, MouseListener
                 message = "Game restarts";
                 wall.ballReset();
                 wall.wallReset();
-                timerReset();
+                reset();
                 showPauseMenu = false;
                 repaint();
             } else if (pM.getExitBtn().contains(p)) {
@@ -276,7 +255,8 @@ public class NormalGame extends JComponent implements KeyListener, MouseListener
 
     public void onLostFocus() {
         gameTimer.stop();
-        message = "Focus lost";
+        timer.stop();
+        tab = "Focus lost";
         repaint();
     }
 }

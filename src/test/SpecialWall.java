@@ -38,7 +38,7 @@ public class SpecialWall extends Wall {
     }
 
     public void setRubberBall(Point2D point) {
-        super.setBall(new RubberBall(point));
+        ball = new RubberBall(point);
         isCR7Time = false;
     }
 

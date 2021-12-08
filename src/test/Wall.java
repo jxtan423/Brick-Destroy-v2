@@ -26,7 +26,7 @@ public abstract class Wall {
     private final Rectangle area;
 
     Brick[] bricks;
-    private Ball ball;
+    Ball ball;
     Player player;
 
     private static final int PLAYER_WIDTH = 150;

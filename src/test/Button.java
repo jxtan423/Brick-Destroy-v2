@@ -32,10 +32,10 @@ public class Button {
             btn[i] = new Rectangle(BUTTON_WIDTH, BUTTON_HEIGHT);
         }
         if(!isLeftRightPosition) {
-            int ADD_HEIGHT = 0;
+            double ADD_HEIGHT = 1;
             for(i = 0; i < amountOfButtons; i++) {
-                btn[i].setLocation(Button_X, Button_Y + ADD_HEIGHT);
-                ADD_HEIGHT += 56;
+                btn[i].setLocation(Button_X, (int) (Button_Y * ADD_HEIGHT));
+                ADD_HEIGHT += 0.45;
             }
         }
         else {
@@ -69,7 +69,7 @@ public class Button {
         if(isLeftRightButton)
             Button_Y = (int) ((this.area.height - BUTTON_HEIGHT) * 0.8);
         else
-            Button_Y = 150;
+            Button_Y = (int) ((this.area.height - BUTTON_HEIGHT) * 0.4);
     }
 
     public Rectangle[] getRect() {

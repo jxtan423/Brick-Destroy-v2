@@ -4,17 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class SpecialGame extends JComponent implements KeyListener, MouseListener, MouseMotionListener {
+public class SpecialGame extends Game {
 
     private static final int DEF_WIDTH = 897;
     private static final int DEF_HEIGHT = 675;
 
-    private boolean showPauseMenu;
     private final JFrame frame;
 
     private final GameFrame owner;
-    private final SpecialWall wall;
-    private final PauseMenu pM;
+    private SpecialWall wall;
 
     private String message;
     private String lives;
@@ -25,34 +23,27 @@ public class SpecialGame extends JComponent implements KeyListener, MouseListene
 
     private int second;
 
-    private final ShowScore show;
-    private final SubmitScore submit;
-
     private boolean isCR7Time;
     private boolean is7Pressed;
 
-    private Ball ball;
-
     public SpecialGame(GameFrame owner) {
-        super();
+        super(owner, DEF_WIDTH, DEF_HEIGHT);
         frame = new GIF().getGIFFrame();
         this.owner = owner;
         isCR7Time = false;
         is7Pressed = false;
-        showPauseMenu = false;
-        show = new ShowScore(owner);
-        submit = new SubmitScore(owner);
-        message = "Press Tab to start game";
-        lives = "";
-        pM = new PauseMenu(new Dimension(DEF_WIDTH,DEF_HEIGHT));
-        wall = new SpecialWall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 117, 9, 3, new Point(450, 655));
-        second = 3;
-        countdown();
-        startGame();
-        this.initialize();
+        tab = "Press Tab to start game";
+        message = "";
+        second = 90;
     }
 
-    private void countdown() {
+    @Override
+    public void createWall() {
+        wall = new SpecialWall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 117, 9, 3, new Point(450, 655));
+    }
+
+    @Override
+    public void createTimer() {
         timer = new Timer(1000, e -> {
             second--;
             if(second == 0) {
@@ -66,46 +57,37 @@ public class SpecialGame extends JComponent implements KeyListener, MouseListene
         });
     }
 
-    private void startGame() {
+    @Override
+    public void createGame() {
         wall.ballReset();
         wall.nextLevel();
         gameTimer = new Timer(10, e -> {
             wall.move();
             wall.findImpacts();
-            lives = String.format("Balls : %d", wall.ballCount);
+            message = String.format("Balls : %d", wall.ballCount);
             if (wall.isBallLost()) {
                 if (wall.ballEnd()) {
-                    message = "GAME OVER";
+                    tab = "GAME OVER";
                     reset();
                 }
                 wall.ballReset();
                 gameTimer.stop();
                 timer.stop();
             }
-            else if(wall.isDone()) {
-                message = "ALL WALLS DESTROYED";
-                gameTimer.stop();
-                timer.stop();
-            }
-            if(wall.getScore() == 1)
+            else if(wall.isDone())
+                second = 0;
+
+            if(wall.getScore() == 2)
                 isCR7Time = !is7Pressed;
+
             repaint();
         });
     }
 
-    private void reset() {
+    @Override
+    public void reset() {
         wall.wallReset();
         second = 90;
-    }
-
-    private void initialize() {
-        this.setPreferredSize(new Dimension(DEF_WIDTH, DEF_HEIGHT));
-        this.setFocusable(true);
-        this.requestFocusInWindow();
-        this.addKeyListener(this);
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
-        this.setBackground(Color.BLACK);
     }
 
     public void paint(Graphics g) {
@@ -115,12 +97,11 @@ public class SpecialGame extends JComponent implements KeyListener, MouseListene
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0,0,897,675);
         g2d.setColor(Color.WHITE);
-        g2d.drawString(message,385,420);
-        g2d.drawString(lives, 800,675);
+        g2d.drawString(tab,385,420);
+        g2d.drawString(message, 800,665);
 
         wall.player.paint(g);
-        ball = wall.getBall();
-        ball.paint(g);
+        wall.ball.paint(g);
 
         for(Brick b : wall.bricks)
             if(!b.isBroken())
@@ -171,7 +152,7 @@ public class SpecialGame extends JComponent implements KeyListener, MouseListene
                     gameTimer.stop();
                     timer.stop();
                     frame.setVisible(true);
-                    wall.setCR7Ball(ball.getPosition());
+                    wall.setCR7Ball(wall.ball.getPosition());
                     celebration = new Timer(2620, ex -> {
                         owner.game();
                         frame.dispose();
@@ -197,7 +178,7 @@ public class SpecialGame extends JComponent implements KeyListener, MouseListene
                     } else {
                         gameTimer.start();
                         timer.start();
-                        message = "";
+                        tab = "";
                     }
                 break;
             default:
@@ -218,14 +199,14 @@ public class SpecialGame extends JComponent implements KeyListener, MouseListene
                 showPauseMenu = false;
                 repaint();
             } else if (pM.getRestartBtn().contains(p)) {
-                message = "Game restarts";
+                tab = "Game restarts";
                 wall.ballReset();
                 reset();
                 showPauseMenu = false;
                 isCR7Time = false;
                 is7Pressed = false;
                 wall.setScore(0);
-                wall.setRubberBall(ball.getPosition());
+                wall.setRubberBall(wall.ball.getPosition());
                 wall.ballReset();
                 repaint();
             } else if (pM.getExitBtn().contains(p)) {
@@ -275,7 +256,7 @@ public class SpecialGame extends JComponent implements KeyListener, MouseListene
     public void onLostFocus() {
         gameTimer.stop();
         timer.stop();
-        String message = "Focus lost";
+        tab = "Focus lost";
         repaint();
     }
 }
