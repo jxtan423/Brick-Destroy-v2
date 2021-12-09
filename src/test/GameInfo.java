@@ -1,13 +1,20 @@
 package test;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.Buffer;
 
 public class GameInfo extends TextFrame {
 
     private final GameFrame owner;
     private final JFrame frame;
     private final JButton btn;
+
+    private BufferedImage img;
 
     public GameInfo(GameFrame owner) {
         super("Info");
@@ -27,6 +34,13 @@ public class GameInfo extends TextFrame {
 
     @Override
     public void content() {
+        try {
+            img = ImageIO.read(getClass().getResourceAsStream("InfoBrick.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        frame.setContentPane(new JLabel(new ImageIcon(img)));
+        frame.add(btn);
         frame.setVisible(true);
     }
 }
