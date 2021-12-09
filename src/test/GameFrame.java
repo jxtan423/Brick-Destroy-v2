@@ -54,7 +54,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         super();
         gaming = false;
         this.setLayout(new BorderLayout());
-        enableHomeMenu(false);
+        homeMenu = new HomeMenu(this);
+        this.add(homeMenu, BorderLayout.CENTER);
+        this.setUndecorated(true);
     }
 
     /**
@@ -76,6 +78,8 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.dispose();
         if (isFromNormalGame)
             this.remove(normalGame);
+        else
+            this.remove(specialGame);
         homeMenu = new HomeMenu(this);
         this.add(homeMenu, BorderLayout.CENTER);
         this.setUndecorated(true);

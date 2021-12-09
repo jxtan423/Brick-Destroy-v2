@@ -28,6 +28,7 @@ public class NormalGame extends Game {
 
     private static final int DEF_WIDTH = 600;
     private static final int DEF_HEIGHT = 450;
+    private static final String filename = "normal.txt";
 
     private static final Color BACKGROUND_COLOUR = Color.WHITE;
 
@@ -45,7 +46,7 @@ public class NormalGame extends Game {
     private final GameFrame owner;
 
     public NormalGame(GameFrame owner) {
-        super(owner, DEF_WIDTH, DEF_HEIGHT);
+        super(owner, DEF_WIDTH, DEF_HEIGHT, filename);
         this.owner = owner;
         second = 0;
         min = 0;

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.util.HashMap;
 
 public class SubmitScore extends Score {
 
@@ -12,14 +13,25 @@ public class SubmitScore extends Score {
     private JTextField field;
     private final GameFrame owner;
 
+    private final String filename;
     private double highScore;
+    private boolean isFromNormalGame;
 
-    public SubmitScore(GameFrame owner) {
+    public SubmitScore(GameFrame owner, String filename) {
         super("Submit Score", "Submit");
         this.owner = owner;
+        this.filename = filename;
         frame = super.getFrame();
         btn = super.getBtn();
         content();
+        checkGame();
+    }
+
+    private void checkGame() {
+        HashMap<String, Boolean> hM = new HashMap<>();
+        hM.put("normal.txt", Boolean.TRUE);
+        hM.put("special.txt", Boolean.FALSE);
+        isFromNormalGame = hM.get(filename);
     }
 
     @Override
@@ -49,7 +61,7 @@ public class SubmitScore extends Score {
         if (e.getSource() == btn) {
             try {
                 String word = field.getText();
-                File file = new File("scoreboard.txt");
+                File file = new File(filename);
                 FileWriter fileWriter = new FileWriter(file, true);
                 BufferedWriter buffer = new BufferedWriter(fileWriter);
                 PrintWriter printWriter = new PrintWriter(buffer);
@@ -60,7 +72,7 @@ public class SubmitScore extends Score {
                 ex.printStackTrace();
             }
             frame.dispose();
-            owner.enableHomeMenu(true);
+            owner.enableHomeMenu(isFromNormalGame);
         }
     }
 }

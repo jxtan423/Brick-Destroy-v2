@@ -62,7 +62,7 @@ public class HighScore extends TextFrame {
             list.add(new Gamer(username, point));
         }
 
-        list.sort(new scoreComparison());
+        list.sort(new ScoreComparison());
 
         BufferedWriter write = new BufferedWriter(new FileWriter(filename));
         for (Gamer gamer : list) {

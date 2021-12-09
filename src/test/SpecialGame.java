@@ -8,6 +8,7 @@ public class SpecialGame extends Game {
 
     private static final int DEF_WIDTH = 897;
     private static final int DEF_HEIGHT = 675;
+    private static final String filename = "special.txt";
 
     private final JFrame frame;
     private final GameFrame owner;
@@ -22,12 +23,12 @@ public class SpecialGame extends Game {
     private boolean is7Pressed;
 
     public SpecialGame(GameFrame owner) {
-        super(owner, DEF_WIDTH, DEF_HEIGHT);
+        super(owner, DEF_WIDTH, DEF_HEIGHT, filename);
         frame = new GIF().getGIFFrame();
         this.owner = owner;
         isCR7Time = false;
         is7Pressed = false;
-        second = 90;
+        second = 7;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class SpecialGame extends Game {
                 gameTimer.stop();
                 timer.stop();
                 show.setScore(wall.getScore());
-                submit.setHighScore(show.getHighScore());
+                submit.setHighScore(wall.getScore());
                 submit.scoreVisible();
                 show.scoreVisible();
             }
