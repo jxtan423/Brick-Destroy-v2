@@ -76,16 +76,18 @@ public class HighScore extends TextFrame {
         write.close();
 
         JTextArea player = new JTextArea(String.valueOf(name));
-        player.setBackground(Color.GRAY);
+        player.setOpaque(false);
         player.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 0, 0, 0)));
+        player.setForeground(Color.WHITE);
         player.setFont(new Font("serif", Font.BOLD, 25));
         player.setText(name + "\n");
         player.setBounds(pos.x, pos.y, 250, 165);
         frame.add(player);
 
         JTextArea point = new JTextArea(String.valueOf(score));
-        point.setBackground(Color.GRAY);
+        point.setOpaque(false);
         point.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 0, 0, 0)));
+        point.setForeground(Color.WHITE);
         point.setFont(new Font("serif", Font.BOLD, 25));
         point.setText(score + "\n");
         point.setBounds(pos.x + 250, pos.y, 80, 165);
