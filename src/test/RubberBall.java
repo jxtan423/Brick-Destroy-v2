@@ -42,7 +42,7 @@ public class RubberBall extends Ball {
     }
 
     public void paint(Graphics g) {
-        drawBall((Graphics2D)g);
+        drawBall((Graphics2D) g);
     }
 
     private void drawBall(Graphics2D g2d) {

@@ -2,7 +2,7 @@ package test;
 
 import java.awt.*;
 
-public class YellowBrick extends Brick implements DetermineBricks  {
+public class YellowBrick extends Brick implements DetermineBricks {
 
     private static final String NAME = "Yellow Brick";
     private static final Color DEF_INNER = new Color(255, 255, 0);
@@ -35,6 +35,6 @@ public class YellowBrick extends Brick implements DetermineBricks  {
 
     public void repair() {
         super.repair();
-        super.setInner(new Color(255,255,0));
+        super.setInner(new Color(255, 255, 0));
     }
 }

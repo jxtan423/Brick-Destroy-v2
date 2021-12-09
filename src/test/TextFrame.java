@@ -3,6 +3,7 @@ package test;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public abstract class TextFrame extends Image implements ActionListener {
 
@@ -56,5 +57,5 @@ public abstract class TextFrame extends Image implements ActionListener {
     }
 
     @Override
-    public abstract void content();
+    public abstract void content() throws IOException;
 }

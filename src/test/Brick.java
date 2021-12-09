@@ -76,7 +76,7 @@ public abstract class Brick extends JComponent {
     }
 
     public final int findImpact(Ball b) {
-        if(broken)
+        if (broken)
             return 0;
         HashMap<Boolean, Integer> hM = new HashMap<>();
         hM.put(brickFace.contains(b.right), LEFT_IMPACT);

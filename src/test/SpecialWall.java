@@ -32,7 +32,7 @@ public class SpecialWall extends Wall {
 
     public void setCR7Ball(Point2D point) {
         super.setBall(new RonaldoBall(point));
-        super.getBall().setSpeed(2,2);
+        super.getBall().setSpeed(2, 2);
         isCR7Time = true;
     }
 
@@ -42,7 +42,7 @@ public class SpecialWall extends Wall {
     }
 
     public boolean impactWall() {
-        if(isCR7Time) {
+        if (isCR7Time) {
             for (Brick b : bricks) {
                 switch (b.findImpact(super.getBall())) {
                     case Brick.UP_IMPACT -> {
@@ -66,8 +66,7 @@ public class SpecialWall extends Wall {
                 }
             }
             return false;
-        }
-        else
+        } else
             return super.impactWall();
     }
 }

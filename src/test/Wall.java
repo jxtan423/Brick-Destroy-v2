@@ -141,11 +141,11 @@ public abstract class Wall {
         return ((p.getX() < area.getX()) || (p.getX() > (area.getX() + area.getWidth())));
     }
 
-    public boolean impactCeiling(){
+    public boolean impactCeiling() {
         return ball.getPosition().getY() < area.getY();
     }
 
-    public boolean ballDrop(){
+    public boolean ballDrop() {
         return ball.getPosition().getY() > area.getY() + area.getHeight();
     }
 

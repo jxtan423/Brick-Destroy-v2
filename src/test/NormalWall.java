@@ -17,10 +17,10 @@ public class NormalWall extends Wall {
     @Override
     public Brick[][] makeLevels(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio) {
         Brick[][] tmp = new Brick[LEVELS_COUNT][];
-        tmp[0] = createBricks(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY,CLAY,0);
-        tmp[1] = createBricks(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, CEMENT,0);
-        tmp[2] = createBricks(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, STEEL,0);
-        tmp[3] = createBricks(drawArea, brickCount, lineCount, brickDimensionRatio, STEEL, CEMENT,0);
+        tmp[0] = createBricks(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, CLAY, 0);
+        tmp[1] = createBricks(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, CEMENT, 0);
+        tmp[2] = createBricks(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, STEEL, 0);
+        tmp[3] = createBricks(drawArea, brickCount, lineCount, brickDimensionRatio, STEEL, CEMENT, 0);
         return tmp;
     }
 

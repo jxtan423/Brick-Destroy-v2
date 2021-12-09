@@ -7,8 +7,8 @@ import java.awt.geom.Point2D;
 public class RonaldoBall extends Ball {
 
     private static final int DEF_RADIUS = 30;
-    private static final Color DEF_INNER_COLOR = new Color(255,255,255);
-    private static final Color DEF_BORDER_COLOR = new Color(0,0,0);
+    private static final Color DEF_INNER_COLOR = new Color(255, 255, 255);
+    private static final Color DEF_BORDER_COLOR = new Color(0, 0, 0);
 
     public RonaldoBall(Point2D center) {
         super(center, DEF_RADIUS, DEF_RADIUS, DEF_INNER_COLOR, DEF_BORDER_COLOR);
@@ -23,7 +23,7 @@ public class RonaldoBall extends Ball {
     }
 
     public void paint(Graphics g) {
-        drawBall((Graphics2D)g);
+        drawBall((Graphics2D) g);
     }
 
     private void drawBall(Graphics2D g2d) {

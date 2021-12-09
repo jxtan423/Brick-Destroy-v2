@@ -74,7 +74,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     public void enableHomeMenu(Boolean isFromNormalGame) {
         this.dispose();
-        if(isFromNormalGame)
+        if (isFromNormalGame)
             this.remove(normalGame);
         homeMenu = new HomeMenu(this);
         this.add(homeMenu, BorderLayout.CENTER);
@@ -112,7 +112,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
     public void enableSelectionGame(boolean isFromHomeMenu) {
-        if(isFromHomeMenu)
+        if (isFromHomeMenu)
             this.remove(homeMenu);
         selectionGame = new SelectionGame(this);
         this.add(selectionGame, BorderLayout.CENTER);
@@ -124,7 +124,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         new GameInfo(this);
     }
 
-    public void enableScore() throws FileNotFoundException {
+    public void enableScore() throws IOException {
         new HighScore(this);
     }
 

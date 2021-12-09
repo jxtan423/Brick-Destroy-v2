@@ -6,7 +6,7 @@ import java.net.URL;
 public class GIF {
     private final JFrame frame;
 
-    public GIF () {
+    public GIF() {
         frame = new JFrame("SIUUUUUUUUUUUUUU");
         URL img = this.getClass().getResource("RonaldoCelebration.gif");
         ImageIcon ii = new ImageIcon(img);
@@ -14,7 +14,7 @@ public class GIF {
         frame.getContentPane().add(label);
         frame.setUndecorated(true);
         frame.pack();
-        frame.setLocation(510,338);
+        frame.setLocation(510, 338);
     }
 
     public JFrame getGIFFrame() {

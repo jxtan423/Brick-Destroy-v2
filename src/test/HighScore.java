@@ -33,19 +33,19 @@ public class HighScore extends TextFrame {
         frame.add(label);
 
         JLabel normal = new JLabel("Normal Game :");
-        normal.setBounds(0,30,300,30);
+        normal.setBounds(0, 30, 300, 30);
         normal.setForeground(Color.WHITE);
         normal.setFont(new Font("Arial", Font.PLAIN, 27));
         frame.add(normal);
 
         JLabel special = new JLabel("Special Game :");
-        special.setBounds(0,245,300,30);
+        special.setBounds(0, 245, 300, 30);
         special.setForeground(Color.WHITE);
         special.setFont(new Font("Arial", Font.PLAIN, 27));
         frame.add(special);
 
-        display("normal.txt", new Point(100,60));
-        display("special.txt", new Point(100,275));
+        display("normal.txt", new Point(100, 60));
+        display("special.txt", new Point(100, 275));
     }
 
     private void display(String filename, Point pos) throws IOException {
@@ -65,9 +65,9 @@ public class HighScore extends TextFrame {
         list.sort(new scoreComparison());
 
         BufferedWriter write = new BufferedWriter(new FileWriter(filename));
-        for(Gamer gamer : list) {
+        for (Gamer gamer : list) {
             write.write(gamer.getName());
-            write.write(" "+gamer.getPoint());
+            write.write(" " + gamer.getPoint());
             name.append(gamer.getName()).append("\n");
             score.append(" ").append(gamer.getPoint()).append("\n");
             write.newLine();
@@ -80,7 +80,7 @@ public class HighScore extends TextFrame {
         player.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 0, 0, 0)));
         player.setFont(new Font("serif", Font.BOLD, 25));
         player.setText(name + "\n");
-        player.setBounds(pos.x, pos.y,250, 165);
+        player.setBounds(pos.x, pos.y, 250, 165);
         frame.add(player);
 
         JTextArea point = new JTextArea(String.valueOf(score));

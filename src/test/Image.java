@@ -33,7 +33,7 @@ public abstract class Image extends JComponent {
 
     public abstract void button();
 
-    public abstract void content();
+    public abstract void content() throws IOException;
 
     @Override
     public void paint(Graphics g) {

@@ -52,13 +52,12 @@ public class CreationOfBricks {
             x = createBrickOnX(posX, brickLen, line);
             y = createBrickOnY(line, brickHgt);
             p.setLocation(x, y);
-            if(noTypeCFound(typeC)) {
+            if (noTypeCFound(typeC)) {
                 HashMap<Boolean, Brick> hashMap = new HashMap<>();
-                hashMap.put(Boolean.TRUE,makeSpecificBrick(p, brickSize, typeA));
+                hashMap.put(Boolean.TRUE, makeSpecificBrick(p, brickSize, typeA));
                 hashMap.put(Boolean.FALSE, makeSpecificBrick(p, brickSize, typeB));
                 tmp[i] = hashMap.get(identifySequenceOfBricks(brickOnLine, line, posX, i));
-            }
-            else{
+            } else {
                 Random rnd = new Random();
                 int number = rnd.nextInt(3) + 4;
                 HashMap<Integer, Brick> hashMap = new HashMap<>();

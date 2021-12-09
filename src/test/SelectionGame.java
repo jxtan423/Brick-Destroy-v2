@@ -8,6 +8,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class SelectionGame extends Image implements MouseListener, MouseMotionListener {
 
@@ -48,7 +49,7 @@ public class SelectionGame extends Image implements MouseListener, MouseMotionLi
     @Override
     public void button() {
         int AMOUNT_OF_BUTTON = 4;
-        btn = new Button(area, AMOUNT_OF_BUTTON,true);
+        btn = new Button(area, AMOUNT_OF_BUTTON, true);
         Rectangle[] rect = btn.getRect();
         infoButton = rect[0];
         scoreButton = rect[1];
@@ -131,8 +132,8 @@ public class SelectionGame extends Image implements MouseListener, MouseMotionLi
             owner.remove(this);
             try {
                 owner.enableScore();
-            } catch (FileNotFoundException fileNotFoundException) {
-                fileNotFoundException.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
     }

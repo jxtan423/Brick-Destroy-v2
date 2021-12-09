@@ -32,14 +32,14 @@ public class RedBrick extends Brick implements DetermineBricks {
     public void impact() {
         super.impact();
         HashMap<Integer, Color> hp = new HashMap<>();
-        hp.put(1,new Color(0, 153, 0));
-        hp.put(2,new Color(255, 255, 0));
+        hp.put(1, new Color(0, 153, 0));
+        hp.put(2, new Color(255, 255, 0));
         setInner(hp.get(super.getStrength()));
     }
 
-   public void repair() {
+    public void repair() {
         super.repair();
-        super.setInner(new Color(204,0,0));
+        super.setInner(new Color(204, 0, 0));
     }
 }
 

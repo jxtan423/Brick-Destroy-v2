@@ -19,7 +19,7 @@ public class GameInfo extends TextFrame {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btn) {
+        if (e.getSource() == btn) {
             frame.dispose();
             owner.enableSelectionGame(false);
         }

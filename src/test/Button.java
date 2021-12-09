@@ -42,11 +42,11 @@ public class Button {
     private Point LeftRightPoint() {
         int x = (HALF_FRAME - BUTTON_WIDTH) / 2;
         int y = (int) ((this.area.height - BUTTON_HEIGHT) * 0.8);
-        return new Point(x,y);
+        return new Point(x, y);
     }
 
     private Point MiddlePoint() {
-        int x = (int) (area.getWidth() - BUTTON_WIDTH) /2;
+        int x = (int) (area.getWidth() - BUTTON_WIDTH) / 2;
         int y = (int) ((this.area.height - BUTTON_HEIGHT) * 0.4);
         return new Point(x, y);
     }
@@ -67,24 +67,24 @@ public class Button {
     }
 
     private void createPosition(boolean isLeftRightPosition) {
-        if(isLeftRightPosition)
+        if (isLeftRightPosition)
             leftRightLocation();
         else
             middleLocation();
     }
 
     private void middleLocation() {
-        for(int i = 0; i < amountOfButtons; i++) {
+        for (int i = 0; i < amountOfButtons; i++) {
             btn[i].setLocation(coordinate.x, (int) (coordinate.y * ADD_HEIGHT));
             setADD_HEIGHT();
         }
     }
 
     private void leftRightLocation() {
-        for(int i = 0; i < amountOfButtons; i++ ) {
-            btn[i].setLocation(coordinate.x,coordinate.y + NEW_ROW);
+        for (int i = 0; i < amountOfButtons; i++) {
+            btn[i].setLocation(coordinate.x, coordinate.y + NEW_ROW);
             i++;
-            btn[i].setLocation(coordinate.x + HALF_FRAME,coordinate.y + NEW_ROW);
+            btn[i].setLocation(coordinate.x + HALF_FRAME, coordinate.y + NEW_ROW);
             setNEW_ROW();
         }
     }

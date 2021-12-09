@@ -66,7 +66,7 @@ public abstract class Ball extends JComponent {
         RectangularShape tmp = (RectangularShape) ballFace;
         speedX = 0;
         speedY = 2;
-        center.setLocation((center.getX() + speedX), (center.getY() +  speedY));
+        center.setLocation((center.getX() + speedX), (center.getY() + speedY));
         double w = tmp.getWidth();
         double h = tmp.getHeight();
 

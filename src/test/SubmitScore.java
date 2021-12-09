@@ -15,7 +15,7 @@ public class SubmitScore extends Score {
     private double highScore;
 
     public SubmitScore(GameFrame owner) {
-        super("Submit Score","Submit");
+        super("Submit Score", "Submit");
         this.owner = owner;
         frame = super.getFrame();
         btn = super.getBtn();

@@ -34,8 +34,8 @@ public class NormalGame extends Game {
     private Timer gameTimer;
     private Timer timer;
 
-    int second,min;
-    String ddSecond = "00",ddMin = "00";
+    int second, min;
+    String ddSecond = "00", ddMin = "00";
     DecimalFormat format = new DecimalFormat("00");
 
     private NormalWall wall;
@@ -55,7 +55,7 @@ public class NormalGame extends Game {
 
     @Override
     public void createWall() {
-        wall = new NormalWall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 30, 3, 3, new Point(300, 430));
+        wall = new NormalWall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 1, 1, 3, new Point(300, 430));
     }
 
     @Override
@@ -65,7 +65,7 @@ public class NormalGame extends Game {
             ddSecond = format.format(second);
             ddMin = format.format(min);
 
-            if(second == 60) {
+            if (second == 60) {
                 min++;
                 second = 0;
             }
@@ -94,18 +94,17 @@ public class NormalGame extends Game {
                     message = "ALL WALLS DESTROYED";
                     gameTimer.stop();
                     timer.stop();
-                    show.setScore(min,second);
+                    show.setScore(min, second);
                     submit.setHighScore(show.getHighScore());
                     submit.scoreVisible();
-                }
-                else {
+                } else {
                     message = "NEXT LEVEL";
                     gameTimer.stop();
                     timer.stop();
                     wall.ballReset();
                     wall.wallReset();
                     wall.nextLevel();
-                    show.setScore(min,second);
+                    show.setScore(min, second);
                     this.owner.game();
                     reset();
                 }
@@ -128,7 +127,7 @@ public class NormalGame extends Game {
         clear(g2d);
         g2d.setColor(Color.BLUE);
         g2d.drawString(tab, 230, 225);
-        g2d.drawString(message,250,225);
+        g2d.drawString(message, 250, 225);
 
         wall.ball.paint(g);
         wall.player.paint(g);
@@ -174,7 +173,7 @@ public class NormalGame extends Game {
                     if (gameTimer.isRunning()) {
                         timer.stop();
                         gameTimer.stop();
-                    }  else {
+                    } else {
                         gameTimer.start();
                         timer.start();
                         tab = "";
