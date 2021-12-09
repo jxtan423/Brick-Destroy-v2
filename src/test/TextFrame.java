@@ -3,6 +3,7 @@ package test;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.RescaleOp;
 import java.io.IOException;
 
 public abstract class TextFrame extends Image implements ActionListener {
@@ -20,13 +21,14 @@ public abstract class TextFrame extends Image implements ActionListener {
     }
 
     public void setFrame(String name) {
+        RescaleOp op = new RescaleOp(.6f, 0, null);
         frame = new JFrame(name);
         frame.setSize(super.getArea());
         frame.setUndecorated(true);
         setCoordinate();
         frame.setLocation(getCoordinate());
         frame.setLayout(null);
-        frame.setContentPane(new JLabel(new ImageIcon(super.img())));
+        frame.setContentPane(new JLabel(new ImageIcon(op.filter(super.img(), null))));
     }
 
     public void setCoordinate() {
