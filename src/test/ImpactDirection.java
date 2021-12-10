@@ -17,7 +17,7 @@ public enum ImpactDirection {
         public boolean setImpact(Brick brick, Ball ball, boolean isRubber) {
             if(isRubber)
                 ball.reverseY();
-            return brick.setImpact(ball.down, Crack.UP);
+            return brick.setImpact(ball.down, Crack.DOWN);
         }
     },
     LEFT_IMPACT {
