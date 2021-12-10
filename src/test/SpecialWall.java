@@ -42,27 +42,12 @@ public class SpecialWall extends Wall {
     }
 
     public boolean impactWall() {
+        int IMPACT_NOT_FOUND = 4;
         if (isCR7Time) {
             for (Brick b : bricks) {
-                switch (b.findImpact(super.getBall())) {
-                    case Brick.UP_IMPACT -> {
-                        score += 2;
-                        return b.setImpact(super.getBall().down, Crack.UP);
-                    }
-                    case Brick.DOWN_IMPACT -> {
-                        score += 2;
-                        return b.setImpact(super.getBall().up, Crack.DOWN);
-                    }
-                    case Brick.LEFT_IMPACT -> {
-                        super.getBall().reverseX();
-                        score += 2;
-                        return b.setImpact(super.getBall().right, Crack.RIGHT);
-                    }
-                    case Brick.RIGHT_IMPACT -> {
-                        super.getBall().reverseX();
-                        score += 2;
-                        return b.setImpact(super.getBall().left, Crack.LEFT);
-                    }
+                if (b.findImpact(ball) < IMPACT_NOT_FOUND) {
+                    score+= 2;
+                    return ImpactDirection.values()[b.findImpact(ball)].setImpact(b, ball, false);
                 }
             }
             return false;
@@ -70,3 +55,4 @@ public class SpecialWall extends Wall {
             return super.impactWall();
     }
 }
+

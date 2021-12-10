@@ -19,7 +19,6 @@ package test;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.HashMap;
 import java.util.Random;
 
 public abstract class Wall {
@@ -85,56 +84,15 @@ public abstract class Wall {
     }
 
     public boolean impactWall() {
+        int IMPACT_NOT_FOUND = 4;
         for (Brick b : bricks) {
-            switch (b.findImpact(ball)) {
-                case Brick.UP_IMPACT -> {
-                    ball.reverseY();
-                    score++;
-                    return b.setImpact(ball.down, Crack.UP);
-                }
-                case Brick.DOWN_IMPACT -> {
-                    ball.reverseY();
-                    score++;
-                    return b.setImpact(ball.up, Crack.DOWN);
-                }
-                case Brick.LEFT_IMPACT -> {
-                    ball.reverseX();
-                    score++;
-                    return b.setImpact(ball.right, Crack.RIGHT);
-                }
-                case Brick.RIGHT_IMPACT -> {
-                    ball.reverseX();
-                    score++;
-                    return b.setImpact(ball.left, Crack.LEFT);
-                }
+            if(b.findImpact(ball) < IMPACT_NOT_FOUND ) {
+                score++;
+                return ImpactDirection.values()[b.findImpact(ball)].setImpact(b, ball, true);
             }
         }
         return false;
     }
-
-    /*private boolean upImpact(Brick b) {
-        ball.reverseY();
-        score++;
-        return b.setImpact(ball.down, Crack.UP);
-    }
-
-    private boolean downImpact(Brick b) {
-        ball.reverseY();
-        score++;
-        return b.setImpact(ball.up, Crack.DOWN);
-    }
-
-    private boolean leftImpact(Brick b) {
-        ball.reverseX();
-        score++;
-        return b.setImpact(ball.right, Crack.RIGHT);
-    }
-
-    private boolean rightImpact(Brick b) {
-        ball.reverseX();
-        score++;
-        return b.setImpact(ball.left, Crack.LEFT);
-    }*/
 
     public boolean impactBorder() {
         Point2D p = ball.getPosition();
