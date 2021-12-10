@@ -6,6 +6,10 @@ import java.awt.geom.Point2D;
 
 public class CementBrick extends Brick implements DetermineBricks {
 
+    public int MIN_CRACK = 1;
+    public int DEF_CRACK_DEPTH = 1;
+    public int DEF_STEPS = 35;
+
     private static final String NAME = "Cement Brick";
     private static final Color DEF_INNER = new Color(147, 147, 147);
     private static final Color DEF_BORDER = new Color(217, 199, 175);
