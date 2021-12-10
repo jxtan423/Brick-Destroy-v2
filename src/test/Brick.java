@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.Point;
 import java.awt.geom.Point2D;
-import java.util.HashMap;
 import java.util.Random;
 
 public abstract class Brick extends JComponent {
@@ -16,21 +15,18 @@ public abstract class Brick extends JComponent {
 
     public static Random rnd;
 
-    private String name;
-    Shape brickFace;
-
     private final Color border;
     private Color inner;
 
     private final int fullStrength;
     private int strength;
-
     private boolean broken;
 
-    public Brick(String name, Point pos, Dimension size, Color border, Color inner, int strength) {
+    Shape brickFace;
+
+    public Brick(Point pos, Dimension size, Color border, Color inner, int strength) {
         rnd = new Random();
         broken = false;
-        this.name = name;
         brickFace = makeBrickFace(pos, size);
         this.border = border;
         this.inner = inner;
@@ -71,15 +67,18 @@ public abstract class Brick extends JComponent {
     }
 
     public final int findImpact(Ball b) {
+        int OUTPUT = 4;
         if (broken)
-            return 4;
-        HashMap<Boolean, Integer> hM = new HashMap<>();
-        hM.put(brickFace.contains(b.right), LEFT_IMPACT);
-        hM.put(brickFace.contains(b.left), RIGHT_IMPACT);
-        hM.put(brickFace.contains(b.up), DOWN_IMPACT);
-        hM.put(brickFace.contains(b.down), UP_IMPACT);
-        hM.put(Boolean.FALSE, 4);
-        return hM.get(brickFace.contains(b.getPosition()));
+            return OUTPUT;
+        if (brickFace.contains(b.right))
+            OUTPUT = LEFT_IMPACT;
+        else if (brickFace.contains(b.left))
+            OUTPUT = RIGHT_IMPACT;
+        else if (brickFace.contains(b.up))
+            OUTPUT = DOWN_IMPACT;
+        else if (brickFace.contains(b.down))
+            OUTPUT = UP_IMPACT;
+        return OUTPUT;
     }
 
     public final boolean isBroken() {
@@ -104,8 +103,3 @@ public abstract class Brick extends JComponent {
         this.inner = inner;
     }
 }
-
-
-
-
-

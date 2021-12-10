@@ -6,13 +6,12 @@ import java.util.Random;
 
 public class GreenBrick extends Brick implements DetermineBricks {
 
-    private static final String NAME = "Green Brick";
     private static final Color DEF_INNER = new Color(0, 153, 0);
     private static final Color DEF_BORDER = Color.BLACK;
     private static final int CLAY_STRENGTH = 1;
 
     public GreenBrick(Point point, Dimension size) {
-        super(NAME, point, size, DEF_BORDER, DEF_INNER, CLAY_STRENGTH);
+        super(point, size, DEF_BORDER, DEF_INNER, CLAY_STRENGTH);
     }
 
     @Override

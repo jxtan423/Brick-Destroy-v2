@@ -5,13 +5,12 @@ import java.util.HashMap;
 
 public class RedBrick extends Brick implements DetermineBricks {
 
-    private static final String NAME = "Red Brick";
-    private static Color DEF_INNER = new Color(204, 0, 0);
+    private static final Color DEF_INNER = new Color(204, 0, 0);
     private static final Color DEF_BORDER = Color.BLACK;
     private static final int STRENGTH = 3;
 
     public RedBrick(Point point, Dimension size) {
-        super(NAME, point, size, DEF_BORDER, DEF_INNER, STRENGTH);
+        super(point, size, DEF_BORDER, DEF_INNER, STRENGTH);
     }
 
     @Override
