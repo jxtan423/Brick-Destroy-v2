@@ -40,18 +40,4 @@ public class RubberBall extends Ball {
 
         return new Ellipse2D.Double(x, y, radiusA, radiusB);
     }
-
-    public void paint(Graphics g) {
-        drawBall((Graphics2D) g);
-    }
-
-    private void drawBall(Graphics2D g2d) {
-        Color tmp = g2d.getColor();
-        Shape s = getBallFace();
-        g2d.setColor(DEF_INNER_COLOR);
-        g2d.fill(s);
-        g2d.setColor(DEF_BORDER_COLOR);
-        g2d.draw(s);
-        g2d.setColor(tmp);
-    }
 }

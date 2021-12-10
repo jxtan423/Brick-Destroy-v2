@@ -9,20 +9,18 @@ public abstract class Ball extends JComponent {
 
     private Shape ballFace;
 
-    private Point2D center;
+    private final Point2D center;
 
     Point2D up;
     Point2D down;
     Point2D left;
     Point2D right;
 
-    private Color border;
-    private Color inner;
+    private final Color border;
+    private final Color inner;
 
     private int speedX;
     private int speedY;
-
-    private boolean brickIsBroken;
 
     public Ball(Point2D center, int radiusA, int radiusB, Color inner, Color border) {
         this.center = center;
@@ -58,20 +56,6 @@ public abstract class Ball extends JComponent {
 
         ballFace = tmp;
     }
-
-    public void drop() {
-        RectangularShape tmp = (RectangularShape) ballFace;
-        speedX = 0;
-        speedY = 2;
-        center.setLocation((center.getX() + speedX), (center.getY() + speedY));
-        double w = tmp.getWidth();
-        double h = tmp.getHeight();
-
-        tmp.setFrame((center.getX() - (w / 2)), (center.getY() - (h / 2)), w, h);
-        setPoints(w, h);
-        ballFace = tmp;
-    }
-
 
     public void setSpeed(int x, int y) {
         speedX = x;
@@ -116,10 +100,8 @@ public abstract class Ball extends JComponent {
     private void setPoints(double width, double height) {
         up.setLocation(center.getX(), center.getY() - (height / 2));
         down.setLocation(center.getX(), center.getY() + (height) / 10);
-
         left.setLocation(center.getX() - (width / 2), center.getY());
         right.setLocation(center.getX() + (width / 2), center.getY());
-
     }
 
     public int getSpeedX() {
@@ -128,5 +110,19 @@ public abstract class Ball extends JComponent {
 
     public int getSpeedY() {
         return speedY;
+    }
+
+    public void paint(Graphics g) {
+        drawBall((Graphics2D)g);
+    }
+
+    private void drawBall(Graphics2D g2d) {
+        Color tmp = g2d.getColor();
+        Shape s = getBallFace();
+        g2d.setColor(inner);
+        g2d.fill(s);
+        g2d.setColor(border);
+        g2d.draw(s);
+        g2d.setColor(tmp);
     }
 }
