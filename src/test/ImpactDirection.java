@@ -12,7 +12,7 @@ public enum ImpactDirection {
             return brick.setImpact(ball.down, Crack.UP);
         }
     },
-    DOWN_IMPACT{
+    DOWN_IMPACT {
         @Override
         public boolean setImpact(Brick brick, Ball ball, boolean isRubber) {
             if(isRubber)
