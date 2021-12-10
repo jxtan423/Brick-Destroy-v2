@@ -1,20 +1,3 @@
-/*
- *  Brick Destroy - A simple Arcade video game
- *   Copyright (C) 2017  Filippo Ranza
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package test;
 
 import java.awt.*;
@@ -61,15 +44,15 @@ public abstract class Wall {
     }
 
     public void findImpacts() {
-        if (player.impact(ball)) {
+        if (player.impact(ball))
             ball.reverseY();
-        } else if (impactWall()) {
+        else if (impactWall())
             brickCount--;
-        } else if (impactBorder()) {
+        else if (impactBorder())
             ball.reverseX();
-        } else if (impactCeiling()) {
+        else if (impactCeiling())
             ball.reverseY();
-        } else if (ballDrop()) {
+        else if (ballDrop()) {
             ballCount--;
             ballLost = true;
         }
@@ -115,14 +98,8 @@ public abstract class Wall {
         player.moveTo(startPoint);
         ball.moveTo(startPoint);
         Random rnd = new Random();
-        int speedX, speedY;
-        do {
-            speedX = rnd.nextInt(5) - 2;
-        } while (speedX == 0);
-        do {
-            speedY = -rnd.nextInt(3);
-        } while (speedY == 0);
-
+        int speedX = rnd.nextInt(2) + 2;
+        int speedY = -rnd.nextInt(2) - 2;
         ball.setSpeed(speedX, speedY);
         ballLost = false;
     }
