@@ -1,27 +1,8 @@
-/*
- *  Brick Destroy - A simple Arcade video game
- *   Copyright (C) 2017  Filippo Ranza
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package test;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 
 public class NormalGame extends Game {
@@ -29,7 +10,6 @@ public class NormalGame extends Game {
     private static final int DEF_WIDTH = 600;
     private static final int DEF_HEIGHT = 450;
     private static final String filename = "normal.txt";
-
     private static final Color BACKGROUND_COLOUR = Color.WHITE;
 
     private Timer gameTimer;
@@ -39,11 +19,10 @@ public class NormalGame extends Game {
     String ddSecond = "00", ddMin = "00";
     DecimalFormat format = new DecimalFormat("00");
 
-    private NormalWall wall;
-
     private final Font textFont;
     private final DebugConsole debugConsole;
     private final GameFrame owner;
+    private NormalWall wall;
 
     public NormalGame(GameFrame owner) {
         super(owner, DEF_WIDTH, DEF_HEIGHT, filename);
@@ -81,38 +60,43 @@ public class NormalGame extends Game {
             wall.move();
             wall.findImpacts();
             message = String.format("Bricks: %d Balls %d", wall.brickCount, wall.ballCount);
-            if (wall.isBallLost()) {
-                if (wall.ballEnd()) {
-                    wall.wallReset();
-                    message = "GAME OVER";
-                    reset();
-                }
-                wall.ballReset();
-                gameTimer.stop();
-                timer.stop();
-            } else if (wall.isDone()) {
-                if (!wall.hasLevel()) {
-                    message = "ALL WALLS DESTROYED";
-                    gameTimer.stop();
-                    timer.stop();
-                    show.setScore(min, second);
-                    submit.setHighScore(show.getHighScore());
-                    submit.scoreVisible();
-                } else {
-                    message = "NEXT LEVEL";
-                    gameTimer.stop();
-                    timer.stop();
-                    wall.ballReset();
-                    wall.wallReset();
-                    wall.nextLevel();
-                    show.setScore(min, second);
-                    this.owner.game();
-                    reset();
-                }
-                show.scoreVisible();
-            }
+            if (wall.isBallLost())
+                checkAmountOfBallLost();
+            else if (wall.isDone())
+                checkLevel();
             repaint();
         });
+    }
+
+    private void checkAmountOfBallLost() {
+        if (wall.ballEnd()) {
+            message = "GAME OVER";
+            reset();
+        }
+        wall.ballReset();
+        gameTimer.stop();
+        timer.stop();
+    }
+
+    private void checkLevel() {
+        if (!wall.hasLevel()) {
+            message = "ALL WALLS DESTROYED";
+            gameTimer.stop();
+            timer.stop();
+            show.setScore(min, second);
+            submit.setHighScore(show.getHighScore());
+            submit.scoreVisible();
+        } else {
+            message = "NEXT LEVEL";
+            gameTimer.stop();
+            timer.stop();
+            reset();
+            wall.ballReset();
+            wall.nextLevel();
+            show.setScore(min, second);
+            this.owner.game();
+        }
+        show.scoreVisible();
     }
 
     @Override
@@ -121,12 +105,13 @@ public class NormalGame extends Game {
         ddMin = "00";
         min = 0;
         second = 0;
+        wall.wallReset();
     }
 
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         clear(g2d);
-        g2d.setColor(Color.BLUE);
+        g2d.setColor(Color.BLUE.darker());
         g2d.drawString(tab, 230, 225);
         g2d.drawString(message, 250, 225);
 
@@ -136,7 +121,7 @@ public class NormalGame extends Game {
             if (!b.isBroken())
                 b.paint(g);
         g2d.setFont(textFont);
-        g2d.drawString(ddMin + ":" + ddSecond, 520, 45);
+        g2d.drawString(ddMin + ":" + ddSecond, 540, 85);
         if (showPauseMenu)
             pM.paint(g);
         Toolkit.getDefaultToolkit().sync();
@@ -151,7 +136,6 @@ public class NormalGame extends Game {
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
-
     }
 
     @Override
@@ -215,27 +199,22 @@ public class NormalGame extends Game {
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-
     }
 
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
-
     }
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
-
     }
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-
     }
 
     @Override
