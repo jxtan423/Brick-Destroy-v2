@@ -42,11 +42,11 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     private SpecialGame specialGame;
 
     private boolean gaming;
+    private boolean isNormalGame;
 
     /**
      * This is a constructor.
-     * It creates the GameBoard object and HomeMenu object.
-     * HomeMenu will be added to the frame and displayed on the user's screen first.
+     * It creates the HomeMenu object and adds into the frame.
      * The frame border will not be displayed on user's screen.
      */
 
@@ -74,6 +74,15 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setVisible(true);
     }
 
+    /**
+     * This methods destroys the current user's window.
+     * It removes NormalGame component if the parameter is true,
+     * else it removes SpecialGame component.
+     * HomeMenu object is created and added into the frame.
+     * The frame border will not be displayed on user's screen.
+     * @param isFromNormalGame To identify which frame the user came from
+     */
+
     public void enableHomeMenu(Boolean isFromNormalGame) {
         this.dispose();
         if (isFromNormalGame)
@@ -88,8 +97,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     /**
      * The current window will be destroyed once this method is executed.
-     * The HomeMenu will be removed from the user's screen.
-     * The GameBoard will be shown on the user's screen along with frame border.
+     * The SelectionGame component will be removed from the user's screen.
+     * The NormalGame will be shown on the user's screen along with frame border.
+     * Window focus listener is added for the frame.
      */
 
     public void enableNormalGame() {
@@ -100,9 +110,19 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setUndecorated(false);
         this.setResizable(false);
         initialize();
+        isNormalGame = true;
         /*to avoid problems with graphics focus controller is added here*/
         this.addWindowFocusListener(this);
     }
+
+    /**
+     * This method destroys current window,
+     * remove SelectionGame component,
+     * create SpecialGame object and add into the frame.
+     * The frame cannot be maximize.
+     * Window focus listener is added for the frame.
+     * @throws InterruptedException Any interruption during the thread is performing task is ignored
+     */
 
     public void enableSpecialGame() throws InterruptedException {
         this.dispose();
@@ -111,10 +131,18 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.add(specialGame, BorderLayout.CENTER);
         this.setUndecorated(false);
         this.setResizable(false);
+        isNormalGame = false;
         initialize();
         this.addWindowFocusListener(this);
     }
 
+    /**
+     * This method removes HomeMenu component if the
+     * parameter value is true.
+     * Selection object is created and will be added
+     * into the frame before execute initialize method.
+     * @param isFromHomeMenu To identify which frame the user came from
+     */
     public void enableSelectionGame(boolean isFromHomeMenu) {
         if (isFromHomeMenu)
             this.remove(homeMenu);
@@ -123,10 +151,20 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         initialize();
     }
 
+    /**
+     * This method removes SelectionGame's component
+     * and creates GameInfo object.
+     */
+
     public void enableInfo() {
         this.remove(selectionGame);
         new GameInfo(this);
     }
+
+    /**
+     * This method is to create HighScore object.
+     * @throws IOException File name that doesn't exists will be ignored
+     */
 
     public void enableScore() throws IOException {
         new HighScore(this);
@@ -146,18 +184,15 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setLocation(x, y);
     }
 
+    /**
+     * This method is to change the state of gaming
+     * and this method is used when pop up score appear
+     * as a new window that may cause window focus lost.
+     */
+
     public void game() {
         gaming = !gaming;
     }
-
-    /**
-     * Invoked when the Window is set to be the focused Window, which means
-     * that the Window, or one of its subcomponents, will receive keyboard
-     * events.
-     * The user starts the game.
-     *
-     * @param windowEvent the event to be processed
-     */
 
     @Override
     public void windowGainedFocus(WindowEvent windowEvent) {
@@ -172,20 +207,13 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         gaming = true;
     }
 
-    /**
-     * Invoked when the Window is no longer the focused Window, which means
-     * that keyboard events will no longer be delivered to the Window or any of
-     * its subcomponents.
-     * onLostFocus will be executed in GameBoard class if the user is playing.
-     *
-     * @param windowEvent the event to be processed
-     */
-
     @Override
     public void windowLostFocus(WindowEvent windowEvent) {
         if (gaming) {
-            //normalGame.onLostFocus();
-            //specialGame.onLostFocus();
+            if(isNormalGame)
+                normalGame.onLostFocus();
+            else
+                specialGame.onLostFocus();
         }
     }
 }
