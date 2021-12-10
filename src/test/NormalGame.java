@@ -10,10 +10,6 @@ public class NormalGame extends Game {
     private static final int DEF_WIDTH = 600;
     private static final int DEF_HEIGHT = 450;
     private static final String filename = "normal.txt";
-    private static final Color BACKGROUND_COLOUR = Color.WHITE;
-
-    private Timer gameTimer;
-    private Timer timer;
 
     int second, min;
     String ddSecond = "00", ddMin = "00";
@@ -109,33 +105,27 @@ public class NormalGame extends Game {
     }
 
     public void paint(Graphics g) {
+        super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        clear(g2d);
+
         g2d.setColor(Color.BLUE.darker());
         g2d.drawString(tab, 230, 225);
         g2d.drawString(message, 250, 225);
 
         wall.ball.paint(g);
         wall.player.paint(g);
+
         for (Brick b : wall.bricks)
             if (!b.isBroken())
                 b.paint(g);
+
         g2d.setFont(textFont);
         g2d.drawString(ddMin + ":" + ddSecond, 540, 85);
+
         if (showPauseMenu)
             pM.paint(g);
+
         Toolkit.getDefaultToolkit().sync();
-    }
-
-    private void clear(Graphics2D g2d) {
-        Color tmp = g2d.getColor();
-        g2d.setColor(BACKGROUND_COLOUR);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
-        g2d.setColor(tmp);
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
     }
 
     @Override
@@ -195,45 +185,5 @@ public class NormalGame extends Game {
                 System.exit(0);
             }
         }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent mouseEvent) {
-        Point p = mouseEvent.getPoint();
-        if (pM.getExitBtn() != null && showPauseMenu) {
-            if (pM.getExitBtn().contains(p) || pM.getContinueBtn().contains(p) || pM.getRestartBtn().contains(p))
-                this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            else
-                this.setCursor(Cursor.getDefaultCursor());
-        } else {
-            this.setCursor(Cursor.getDefaultCursor());
-        }
-    }
-
-    public void onLostFocus() {
-        gameTimer.stop();
-        timer.stop();
-        tab = "Focus lost";
-        repaint();
     }
 }

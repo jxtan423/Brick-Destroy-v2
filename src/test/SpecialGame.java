@@ -19,6 +19,7 @@ public class SpecialGame extends Game {
     private Timer celebration;
 
     private int second;
+    private final int CR7Score;
     private boolean isCR7Time;
     private boolean is7Pressed;
 
@@ -29,6 +30,7 @@ public class SpecialGame extends Game {
         isCR7Time = false;
         is7Pressed = false;
         second = 90;
+        CR7Score = 1;
     }
 
     @Override
@@ -40,14 +42,8 @@ public class SpecialGame extends Game {
     public void createTimer() {
         timer = new Timer(1000, e -> {
             second--;
-            if(second == 0) {
-                gameTimer.stop();
-                timer.stop();
-                show.setScore(wall.getScore());
-                submit.setHighScore(wall.getScore());
-                submit.scoreVisible();
-                show.scoreVisible();
-            }
+            if(second == 0)
+                gameOver();
         });
     }
 
@@ -59,23 +55,24 @@ public class SpecialGame extends Game {
             wall.move();
             wall.findImpacts();
             message = String.format("Balls : %d", wall.ballCount);
-            if (wall.isBallLost()) {
-                if (wall.ballEnd()) {
-                    tab = "GAME OVER";
-                    reset();
-                }
-                wall.ballReset();
-                gameTimer.stop();
-                timer.stop();
-            }
+            if (wall.isBallLost())
+                checkAmountOfBallLost();
             else if(wall.isDone())
                 second = 0;
-
-            if(wall.getScore() == 2)
+            if(wall.getScore() == CR7Score)
                 isCR7Time = !is7Pressed;
-
             repaint();
         });
+    }
+
+    private void checkAmountOfBallLost() {
+        if (wall.ballEnd()) {
+            tab = "GAME OVER";
+            reset();
+        }
+        wall.ballReset();
+        gameTimer.stop();
+        timer.stop();
     }
 
     @Override
@@ -84,9 +81,18 @@ public class SpecialGame extends Game {
         second = 90;
     }
 
+    private void gameOver() {
+        gameTimer.stop();
+        timer.stop();
+        show.setScore(wall.getScore());
+        submit.setHighScore(wall.getScore());
+        submit.scoreVisible();
+        show.scoreVisible();
+    }
+
     public void paint(Graphics g) {
+        super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        clear(g2d);
 
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0,0,897,675);
@@ -117,18 +123,6 @@ public class SpecialGame extends Game {
             pM.paint(g);
 
         Toolkit.getDefaultToolkit().sync();
-    }
-
-    private void clear(Graphics2D g2d) {
-        Color tmp = g2d.getColor();
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
-        g2d.setColor(tmp);
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
@@ -181,7 +175,7 @@ public class SpecialGame extends Game {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent keyEvent) {
         wall.player.stop();
     }
 
@@ -207,50 +201,5 @@ public class SpecialGame extends Game {
                 System.exit(0);
             }
         }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        Point p = e.getPoint();
-        if (pM.getExitBtn() != null && showPauseMenu) {
-            if (pM.getExitBtn().contains(p) || pM.getContinueBtn().contains(p) || pM.getRestartBtn().contains(p))
-                this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            else
-                this.setCursor(Cursor.getDefaultCursor());
-        } else {
-            this.setCursor(Cursor.getDefaultCursor());
-        }
-    }
-
-    public void onLostFocus() {
-        gameTimer.stop();
-        timer.stop();
-        tab = "Focus lost";
-        repaint();
     }
 }

@@ -1,12 +1,4 @@
-package test;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
-/**
+/*
  *  Brick Destroy - A simple Arcade video game
  *   Copyright (C) 2021 Tan Jian Xin
  *
@@ -23,6 +15,13 @@ import java.awt.event.MouseMotionListener;
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package test;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+
 
 public abstract class Game extends JComponent implements KeyListener, MouseListener, MouseMotionListener {
 
@@ -31,6 +30,9 @@ public abstract class Game extends JComponent implements KeyListener, MouseListe
     ShowScore show;
     String message;
     String tab;
+
+    Timer gameTimer;
+    Timer timer;
 
     boolean showPauseMenu;
     private final int DEF_WIDTH;
@@ -66,5 +68,63 @@ public abstract class Game extends JComponent implements KeyListener, MouseListe
         this.addKeyListener(this);
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        Graphics2D g2d = (Graphics2D) g;
+        clear(g2d);
+    }
+
+    private void clear(Graphics2D g2d) {
+        Color tmp = g2d.getColor();
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+        g2d.setColor(tmp);
+    }
+
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent mouseEvent) {
+        Point p = mouseEvent.getPoint();
+        if (pM.getExitBtn() != null && showPauseMenu) {
+            if (pM.getExitBtn().contains(p) || pM.getContinueBtn().contains(p) || pM.getRestartBtn().contains(p))
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            else
+                this.setCursor(Cursor.getDefaultCursor());
+        } else
+            this.setCursor(Cursor.getDefaultCursor());
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
+    public void onLostFocus() {
+        gameTimer.stop();
+        timer.stop();
+        message = "Focus lost";
+        repaint();
     }
 }
