@@ -81,12 +81,10 @@ public class Crack {
     protected void makeCrack(Point start, Point end) {
 
         GeneralPath path = new GeneralPath();
-
-
         path.moveTo(start.x, start.y);
 
-        double w = (end.x - start.x) / (double) steps;
-        double h = (end.y - start.y) / (double) steps;
+        double w = calculate_width(start, end);
+        double h = calculate_height(start, end);
 
         int bound = crackDepth;
         int jump = bound * 5;
@@ -94,7 +92,6 @@ public class Crack {
         double x, y;
 
         for (int i = 1; i < steps; i++) {
-
             x = (i * w) + start.x;
             y = (i * h) + start.y + randomInBounds(bound);
 
@@ -102,9 +99,7 @@ public class Crack {
                 y += jumps(jump, JUMP_PROBABILITY);
 
             path.lineTo(x, y);
-
         }
-
         path.lineTo(end.x, end.y);
         crack.append(path, true);
     }
@@ -112,6 +107,14 @@ public class Crack {
     private int randomInBounds(int bound) {
         int n = (bound * 2) + 1;
         return Brick.rnd.nextInt(n) - bound;
+    }
+
+    private double calculate_width(Point start, Point end) {
+        return (end.x - start.x) / (double) steps;
+    }
+
+    private double calculate_height(Point start, Point end) {
+        return (end.y - start.y) / (double) steps;
     }
 
     private boolean inMiddle(int i, int steps, int divisions) {
