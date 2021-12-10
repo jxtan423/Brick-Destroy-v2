@@ -62,7 +62,7 @@ public class GameInfo extends TextFrame {
         JLabel label = new JLabel(instruction);
         label.setBounds(10, 60, 511, 380);
         label.setForeground(Color.WHITE);
-        label.setFont(new Font("serif", Font.BOLD, 18));
+        label.setFont(new Font("serif", Font.PLAIN, 18));
         frame.add(label);
         frame.setVisible(true);
     }
