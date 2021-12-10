@@ -28,7 +28,7 @@ public class SpecialGame extends Game {
         this.owner = owner;
         isCR7Time = false;
         is7Pressed = false;
-        second = 7;
+        second = 90;
     }
 
     @Override
