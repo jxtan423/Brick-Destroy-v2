@@ -18,10 +18,10 @@ public class Crack {
     public static final int HORIZONTAL = 200;
 
     private final Brick brick;
-    private GeneralPath crack;
+    private final GeneralPath crack;
 
-    private int crackDepth;
-    private int steps;
+    private final int crackDepth;
+    private final int steps;
 
 
     public Crack(Brick brick, int crackDepth, int steps) {
@@ -46,7 +46,6 @@ public class Crack {
         Point impact = new Point((int) point.getX(), (int) point.getY());
         Point start = new Point();
         Point end = new Point();
-
 
         switch (direction) {
             case LEFT:
@@ -76,7 +75,6 @@ public class Crack {
                 makeCrack(impact, tmp);
 
                 break;
-
         }
     }
 
