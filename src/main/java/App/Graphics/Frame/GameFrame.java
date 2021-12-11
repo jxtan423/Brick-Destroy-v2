@@ -1,4 +1,4 @@
-/*
+package App.Graphics.Frame;/*
  *  Brick Destroy - A simple Arcade video game
  *   Copyright (C) 2017  Filippo Ranza
  *
@@ -15,16 +15,20 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+
+
+import App.Graphics.Frame.InGame.View.NormalGame;
+import App.Graphics.Frame.Menu.PageVC.SelectionGame;
+import App.Graphics.Frame.InGame.View.SpecialGame;
+import App.Graphics.Frame.Menu.PageVC.GameInfo;
+import App.Graphics.Frame.Menu.PageVC.HighScore;
+import App.Graphics.Frame.Menu.PageVC.HomeMenu;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * This class is to create a frame with different contents
@@ -46,7 +50,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     /**
      * This is a constructor.
-     * It creates the HomeMenu object and adds into the frame.
+     * It creates the test.HomeMenu object and adds into the frame.
      * The frame border will not be displayed on user's screen.
      */
 
@@ -76,9 +80,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     /**
      * This methods destroys the current user's window.
-     * It removes NormalGame component if the parameter is true,
-     * else it removes SpecialGame component.
-     * HomeMenu object is created and added into the frame.
+     * It removes test.NormalGame component if the parameter is true,
+     * else it removes test.SpecialGame component.
+     * test.HomeMenu object is created and added into the frame.
      * The frame border will not be displayed on user's screen.
      * @param isFromNormalGame To identify which frame the user came from
      */
@@ -97,8 +101,8 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     /**
      * The current window will be destroyed once this method is executed.
-     * The SelectionGame component will be removed from the user's screen.
-     * The NormalGame will be shown on the user's screen along with frame border.
+     * The test.SelectionGame component will be removed from the user's screen.
+     * The test.NormalGame will be shown on the user's screen along with frame border.
      * Window focus listener is added for the frame.
      */
 
@@ -117,8 +121,8 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     /**
      * This method destroys current window,
-     * remove SelectionGame component,
-     * create SpecialGame object and add into the frame.
+     * remove test.SelectionGame component,
+     * create test.SpecialGame object and add into the frame.
      * The frame cannot be maximize.
      * Window focus listener is added for the frame.
      * @throws InterruptedException Any interruption during the thread is performing task is ignored
@@ -137,7 +141,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
     /**
-     * This method removes HomeMenu component if the
+     * This method removes test.HomeMenu component if the
      * parameter value is true.
      * Selection object is created and will be added
      * into the frame before execute initialize method.
@@ -152,8 +156,8 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
     /**
-     * This method removes SelectionGame's component
-     * and creates GameInfo object.
+     * This method removes test.SelectionGame's component
+     * and creates test.GameInfo object.
      */
 
     public void enableInfo() {
@@ -162,7 +166,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
     /**
-     * This method is to create HighScore object.
+     * This method is to create test.HighScore object.
      * @throws IOException File name that doesn't exists will be ignored
      */
 
@@ -194,19 +198,30 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         gaming = !gaming;
     }
 
+    /**
+     * The first time the frame loses focus is because
+     * it has been disposed to install the GameBoard,
+     * so went it regains the focus it's ready to play.
+     * of course calling a method such as 'onLostFocus'
+     * is useful only if the GameBoard as been displayed
+     * at least once.
+     *
+     * @param windowEvent Any window activity performed by the user
+     */
     @Override
     public void windowGainedFocus(WindowEvent windowEvent) {
-        /*
-            the first time the frame loses focus is because
-            it has been disposed to install the GameBoard,
-            so went it regains the focus it's ready to play.
-            of course calling a method such as 'onLostFocus'
-            is useful only if the GameBoard as been displayed
-            at least once
-         */
         gaming = true;
     }
 
+    /**
+     * This method is executed when the user focus on
+     * another window instead of this window.
+     * When user is gaming, if the boolean variable is
+     * true, it executes the Normal Game, onLostFocus method
+     * else it executes another.
+     *
+     * @param windowEvent Any window activity performed by the user
+     */
     @Override
     public void windowLostFocus(WindowEvent windowEvent) {
         if (gaming) {

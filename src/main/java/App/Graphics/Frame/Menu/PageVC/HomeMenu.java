@@ -1,3 +1,4 @@
+package App.Graphics.Frame.Menu.PageVC;
 /*
  *  Brick Destroy - A simple Arcade video game
  *   Copyright (C) 2017  Filippo Ranza
@@ -15,8 +16,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
 
+import App.Graphics.Frame.GameFrame;
+import App.Graphics.Frame.Menu.Attributes.Button;
+import App.Graphics.Frame.Menu.Attributes.Text;
+import App.Graphics.Image;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -25,8 +29,8 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 /**
- * This class is to create and design the home page (content)
- * of the frame when user runs the program.
+ * This class display the Home Menu page
+ * along with images, buttons and texts
  */
 
 public class HomeMenu extends Image implements MouseListener, MouseMotionListener {
@@ -53,19 +57,19 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
 
     private final GameFrame owner;
     private final Dimension area;
-    private Button btn;
+    private Button button;
 
     private boolean pointToStart;
     private boolean pointToExit;
 
     /**
-     * This constructor is to create and design buttons,
-     * texts and the texts inside the container
-     * with specific fonts and colours.
+     * This constructor includes the buttons
+     * and content inside the frame.
      * Buttons are clickable since MouseListener
-     * is implemented and added.
+     * and MouseMotionListener
+     * are implemented and added.
      *
-     * @param owner The details and functionality of the frame
+     * @param owner Control GameFrame method whenever event is captured
      */
 
     public HomeMenu(GameFrame owner) {
@@ -80,15 +84,26 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
         this.addMouseMotionListener(this);
     }
 
+    /**
+     * This method creates buttons by creating
+     * button object in array form.
+     * An empty button is created for non-button text.
+     */
+
     @Override
     public void button() {
         int AMOUNT_OF_BUTTON = 2;
-        btn = new Button(area, AMOUNT_OF_BUTTON,true);
-        Rectangle[] rect = btn.getRect();
+        button = new Button(area, AMOUNT_OF_BUTTON, true);
+        Rectangle[] rect = button.getRect();
         startButton = rect[0];
         exitButton = rect[1];
-        empty = new Rectangle(0,0);
+        empty = new Rectangle(0, 0);
     }
+
+    /**
+     * Initialize both the font for non-button text
+     * and button text
+     */
 
     @Override
     public void content() {
@@ -100,7 +115,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
         greetingsFont = new Font("Noto Mono", Font.PLAIN, GREETINGS_FONT_SIZE);
         gameTitleFont = new Font("Noto Mono", Font.BOLD, GAME_TITLE_FONT_SIZE);
         creditsFont = new Font("Monospaced", Font.PLAIN, CREDITS_FONT_SIZE);
-        buttonFont = btn.getFont();
+        buttonFont = button.getFont();
     }
 
     /**
@@ -118,9 +133,9 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
     }
 
     /**
-     * In HomeMenu frame, there are texts and
-     * buttons to be drawn and painted.
-     *
+     * This method calls FontRenderContext for getting the
+     * string width and height in further.
+     * Execute the text and button methods.
      * @param g2d The graphics context in which to paint in 2D form
      */
 
@@ -131,8 +146,12 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
     }
 
     /**
-     * Texts are coordinated.
-     * Texts are drawn through drawTest method.
+     * Colour is set for non-button texts.
+     * 3 text objects are created with 3 different words.
+     * Title and credits texts are further coordinated under
+     * setter method in Text class.
+     * The coordinates are set for three non-button texts and pass to
+     * drawText method to draw and paint
      *
      * @param g2d The graphics context in which to paint in 2D form
      */
@@ -164,9 +183,9 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
     /**
      * The texts are drawn with specific font.
      *
-     * @param g2d The graphics context in which to paint in 2D form
-     * @param font The font of the text
-     * @param text The content that will be drawn in the form of string
+     * @param g2d         The graphics context in which to paint in 2D form
+     * @param font        The font of the text
+     * @param text        The content that will be drawn in the form of string
      * @param coordinates The coordinates of text
      */
 
@@ -194,8 +213,8 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
 
         g2d.setFont(buttonFont);
 
-        Text startTxt = new Text(startButton, txtRect, area,true);
-        Text exitTxt = new Text(exitButton, mTxtRect, area,true);
+        Text startTxt = new Text(startButton, txtRect, area, true);
+        Text exitTxt = new Text(exitButton, mTxtRect, area, true);
 
         Point START_TEXT_COORDINATES = new Point(startTxt.getCoordinate().x, startTxt.getCoordinate().y);
         Point EXIT_TEXT_COORDINATES = new Point(exitTxt.getCoordinate().x, exitTxt.getCoordinate().y);
@@ -207,6 +226,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
     /**
      * Button is drawn and filled with specific font
      * and colour.
+     * test.
      * Text inside the container is drawn
      * with specific font.
      * The button change colour whenever the mouse points
@@ -233,6 +253,15 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
         g2d.drawString(text, (int) coordinates.getX(), (int) coordinates.getY());
     }
 
+    /**
+     * This method gets the coordinate of the mouse.
+     * Whenever the mouse clicks on either of the buttons,
+     * the respective buttons will perform the respective
+     * function.
+     *
+     * @param mouseEvent Mouse activity made by user
+     */
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -244,11 +273,23 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
         }
     }
 
+    /**
+     * This method does nothing.
+     *
+     * @param mouseEvent Mouse activity made bu user
+     */
+
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-
     }
 
+    /**
+     * Whenever the mouse points to any button,
+     * it repaints the buttons and set the boolean
+     * variable to true for paint method to recognise.
+     *
+     * @param mouseEvent Mouse activity made by user
+     */
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
         if (pointToStart) {
@@ -260,21 +301,48 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
         }
     }
 
+    /**
+     * This method does nothing.
+     *
+     * @param mouseEvent Mouse activity made bu user
+     */
+
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
-
     }
+
+    /**
+     * This method does nothing.
+     *
+     * @param mouseEvent Mouse activity made bu user
+     */
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
-
     }
+
+    /**
+     * This method does nothing.
+     *
+     * @param mouseEvent Mouse activity made bu user
+     */
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-
     }
 
+    /**
+     * This method gets the coordinate of the mouse.
+     * Whenever the mouse points to any buttons,
+     * the cursor will turn to hand cursor.
+     * The respective boolean variable will be initialize
+     * as true for paint method to recognise
+     * and execute repaint function after that.
+     * Else, the cursor will turn to default mode and
+     * the boolean variable will be assigned to false.
+     *
+     * @param mouseEvent Mouse activity made bu user
+     */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();

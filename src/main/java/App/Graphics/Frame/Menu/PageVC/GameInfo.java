@@ -1,19 +1,34 @@
-package test;
+package App.Graphics.Frame.Menu.PageVC;
 
-import javax.imageio.ImageIO;
+import App.Graphics.Frame.GameFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-public class GameInfo extends TextFrame {
+/**
+ * This class display the info of the game.
+ * It tells user the instructions and
+ * how to play the game.
+ */
+
+public class GameInfo extends TextFrameView {
 
     private final GameFrame owner;
     private final JFrame frame;
     private final JButton btn;
 
     private BufferedImage img;
+
+    /**
+     * This constructor calls its parents'
+     * constructor to perform parents' attributes.
+     * The value of frame and buttons are initialize from
+     * its parents.
+     * It executes the content method.
+     *
+     * @param owner Control GameFrame method whenever event is captured
+     */
 
     public GameInfo(GameFrame owner) {
         super("Info");
@@ -23,6 +38,14 @@ public class GameInfo extends TextFrame {
         content();
     }
 
+    /**
+     * Whenever the button is clicked by the user,
+     * this frame will be destroyed and create
+     * selection game from GameFrame.
+     *
+     * @param e Any action made by the user
+     */
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btn) {
@@ -31,15 +54,17 @@ public class GameInfo extends TextFrame {
         }
     }
 
+    /**
+     * This method display the instructions and
+     * the tutorials by using HTML, p, ol and li
+     * tags to perform point form and paragraph for
+     * JLabel.
+     * The JLabel will be displayed to the user's screen
+     * with specific fonts, colours and location.
+     */
+
     @Override
     public void content() {
-        /*try {
-            img = ImageIO.read(getClass().getResourceAsStream("InfoBrick.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        frame.setContentPane(new JLabel(new ImageIcon(img)));
-        frame.add(btn);*/
         String instruction = "<html>" +
                 "<p>Normal Game</p>" +
                 "<ol type = 1>" +
@@ -51,12 +76,12 @@ public class GameInfo extends TextFrame {
                 "</ol>" +
                 "<p>Special Game</p>" +
                 "<ol type = 1>" +
-                "<li>Press A or D to move left or right.</li>" +
-                "<li>There is only one level.</li>" +
-                "<li>90 seconds gameplay.</li>" +
-                "<li>Win = Survive for 90 seconds or break all the bricks.</li>" +
-                "<li>Lose = No balls left.</li>" +
-                "<li>Score is recorded after gameplay.</li>" +
+                "<li> Press A or D to move left or right.</li>" +
+                "<li> There is only one level.</li>" +
+                "<li> 90 seconds gameplay.</li>" +
+                "<li> Win = Survive for 90 seconds or break all the bricks.</li>" +
+                "<li> Lose = No balls left.</li>" +
+                "<li> Score is recorded after gameplay.</li>" +
                 "</ol>" +
                 "</html>";
         JLabel label = new JLabel(instruction);

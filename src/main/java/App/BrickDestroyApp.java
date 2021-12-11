@@ -1,6 +1,11 @@
-/*
+package App;
+
+import App.Graphics.Frame.GameFrame;
+import java.awt.*;
+
+/**
  *  Brick Destroy - A simple Arcade video game
- *   Copyright (C) 2017  Filippo Ranza
+ *   Copyright (C) 2021 Tan Jian Xin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,18 +19,15 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @author Tan Jian Xin
+ * @version 2.0
  */
-package test;
 
-import java.awt.*;
+public class BrickDestroyApp {
 
-/**
- * @author Filippo Ranza
- * @version 0.1
- */
-public class GraphicsMain {
     /**
-     * This method will invoke GameFrame constructor and initialize method
+     * This main method will invoke GameFrame constructor and initialize method
      * in GameFrame class.
      *
      * @param args The command line arguments

@@ -1,5 +1,8 @@
-package test;
+package App.Graphics.Frame.Menu.PageVC;
 
+import App.Graphics.Frame.GameFrame;
+import App.Graphics.Frame.InGame.Model.Gamer;
+import App.Graphics.Frame.InGame.ScoreComparison;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -8,11 +11,26 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class HighScore extends TextFrame {
+/**
+ * This class is to display the top 5 players
+ * scoreboard for normal game and special game.
+ */
+
+public class HighScore extends TextFrameView {
 
     private final GameFrame owner;
     private final JFrame frame;
     private final JButton btn;
+
+    /**
+     * This constructor calls parent class
+     * and get the frame and button from parent
+     * class.
+     * The content of the frame will be displayed.
+     *
+     * @param owner Control GameFrame method whenever event is captured
+     * @throws IOException Improper data will be ignored
+     */
 
     public HighScore(GameFrame owner) throws IOException {
         super("High Score");
@@ -21,6 +39,14 @@ public class HighScore extends TextFrame {
         btn = super.getBtn();
         content();
     }
+
+    /**
+     * Create labels and set location, fonts and colour
+     * respectively.
+     * Labels are then added to the frame.
+     *
+     * @throws IOException Improper data will be ignored
+     */
 
     @Override
     public void content() throws IOException {
@@ -42,9 +68,22 @@ public class HighScore extends TextFrame {
         special.setFont(new Font("Arial", Font.PLAIN, 27));
         frame.add(special);
 
-        display("normal.txt", new Point(100, 60));
-        display("special.txt", new Point(100, 275));
+        display("src/main/resources/normal.txt", new Point(100, 60));
+        display("src/main/resources/special.txt", new Point(100, 275));
     }
+
+    /**
+     * This method reads the txt file and sort it in descending
+     * order based on user's score in an array.
+     * The sorted array overwrites the content under the same txt file.
+     * The txt files will be displayed on user's screen with
+     * sorted name and score.
+     * The location, size and fonts for txt files are set.
+     *
+     * @param filename The txt file name and directory
+     * @param pos The position of txt file that will be displayed
+     * @throws IOException Improper data will be ignored
+     */
 
     private void display(String filename, Point pos) throws IOException {
         ArrayList<Gamer> list = new ArrayList<>();
@@ -94,6 +133,13 @@ public class HighScore extends TextFrame {
         frame.setVisible(true);
     }
 
+    /**
+     * If user presses the "Back" button,
+     * this frame will be destroyed and
+     * selection game is displayed after.
+     *
+     * @param e Capture any event from this class
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btn) {
