@@ -4,6 +4,14 @@ import App.Graphics.Frame.InGame.View.Crack;
 
 import java.awt.*;
 
+/**
+ * This enum class is to identify the
+ * direction of the ball comes from
+ * in order to create a crack
+ * from specific start point to the
+ * end point.
+ */
+
 public enum DetermineDirection {
 
     LEFT {
@@ -38,6 +46,17 @@ public enum DetermineDirection {
             return Crack.makeRandomPoint(Crack.start, Crack.end, Crack.HORIZONTAL);
         }
     };
+
+    /**
+     * This abstract method is to implement on every
+     * enum constant to perform similar method where crack
+     * is created and formed but different functionality
+     * in terms of positioning and direction of the cracks.
+     *
+     * @param crack Crack class
+     * @param bounds The details of the brick in terms size, coordinate and location
+     * @return The crack coordinates where it forms
+     */
 
     public abstract Point makeCrack(Crack crack, Rectangle bounds);
 }
