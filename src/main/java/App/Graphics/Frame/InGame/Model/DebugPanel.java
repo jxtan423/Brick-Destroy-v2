@@ -1,29 +1,18 @@
-package App.Graphics.Frame.InGame.Model;/*
- *  Brick Destroy - A simple Arcade video game
- *   Copyright (C) 2017  Filippo Ranza
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
-import App.Graphics.Frame.InGame.Model.Wall;
+package App.Graphics.Frame.InGame.Model;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * This class inherits the JPanel class.
+ * This class can take control of the level
+ * by using buttons and slider and
+ * able to reset the ball whenever the
+ * user intends to do so as well as the
+ * ball speed.
+ */
 
 public class DebugPanel extends JPanel {
 
@@ -37,6 +26,16 @@ public class DebugPanel extends JPanel {
     private JSlider ballYSpeed;
 
     private Wall wall;
+
+    /**
+     * This constructor assigned buttons and
+     * slides and able to perform respective
+     * functions whenever the user clicks on
+     * individual button or slide on individual
+     * slider.
+     *
+     * @param wall The Wall class
+     */
 
     public DebugPanel(Wall wall) {
 
@@ -55,19 +54,43 @@ public class DebugPanel extends JPanel {
 
         this.add(ballXSpeed);
         this.add(ballYSpeed);
-
     }
+
+    /**
+     * This method is to set the
+     * background with specific colour
+     * and set the layout with specific grid.
+     */
 
     private void initialize() {
         this.setBackground(DEF_BKG);
         this.setLayout(new GridLayout(2, 2));
     }
 
+    /**
+     * Add action listener to the button and
+     * set the String inside the button.
+     *
+     * @param title The String that will be displayed on button
+     * @param e The action performed by the user
+     * @return The JButton along with its properties
+     */
+
     private JButton makeButton(String title, ActionListener e) {
         JButton out = new JButton(title);
         out.addActionListener(e);
         return out;
     }
+
+    /**
+     * This method design the slide and add
+     * the change listener into it.
+     *
+     * @param min The minimum number that can be slide (start point)
+     * @param max The maximum number that can be slide (end point)
+     * @param e The sliding action by the user
+     * @return The JSlider along with its properties
+     */
 
     private JSlider makeSlider(int min, int max, ChangeListener e) {
         JSlider out = new JSlider(min, max);
@@ -78,9 +101,16 @@ public class DebugPanel extends JPanel {
         return out;
     }
 
+    /**
+     * This method is to set the ball speed
+     * in terms of x and y coordinates.
+     *
+     * @param x The x coordinates speed of ball
+     * @param y The y coordinates speed of ball
+     */
+
     public void setValues(int x, int y) {
         ballXSpeed.setValue(x);
         ballYSpeed.setValue(y);
     }
-
 }
