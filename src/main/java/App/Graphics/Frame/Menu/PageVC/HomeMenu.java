@@ -1,21 +1,4 @@
 package App.Graphics.Frame.Menu.PageVC;
-/*
- *  Brick Destroy - A simple Arcade video game
- *   Copyright (C) 2017  Filippo Ranza
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 import App.Graphics.Frame.GameFrame;
 import App.Graphics.Frame.Menu.Attributes.Button;
@@ -123,7 +106,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
      * The graphics is passed to drawHomeMenu method
      * for further drawing and painting.
      *
-     * @param g The graphics context in which to paint
+     * @param g The graphics context on which to paint
      */
 
     @Override
@@ -136,7 +119,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
      * This method calls FontRenderContext for getting the
      * string width and height in further.
      * Execute the text and button methods.
-     * @param g2d The graphics context in which to paint in 2D form
+     * @param g2d The graphics context on which to paint in 2D form
      */
 
     public void drawHomeMenu(Graphics2D g2d) {
@@ -153,7 +136,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
      * The coordinates are set for three non-button texts and pass to
      * drawText method to draw and paint
      *
-     * @param g2d The graphics context in which to paint in 2D form
+     * @param g2d The graphics context on which to paint in 2D form
      */
 
     public void Text(Graphics2D g2d, FontRenderContext frc) {
@@ -183,7 +166,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
     /**
      * The texts are drawn with specific font.
      *
-     * @param g2d         The graphics context in which to paint in 2D form
+     * @param g2d         The graphics context on which to paint in 2D form
      * @param font        The font of the text
      * @param text        The content that will be drawn in the form of string
      * @param coordinates The coordinates of text
@@ -202,7 +185,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
      * Both buttons and texts are drawn through
      * drawButton method.
      *
-     * @param g2d The graphics context in which to paint in 2D form
+     * @param g2d The graphics context on which to paint in 2D form
      * @param frc The information needed to correctly measure text inside a container
      */
 
@@ -232,7 +215,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
      * The button change colour whenever the mouse points
      * to the respective button.
      *
-     * @param g2d           The graphics context in which to paint in 2D form
+     * @param g2d           The graphics context on which to paint in 2D form
      * @param coordinates   The coordinates of texts
      * @param button        The coordinates and area of both buttons
      * @param text          The content that will be drawn in the form of words
@@ -306,7 +289,6 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
      *
      * @param mouseEvent Mouse activity made bu user
      */
-
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
     }
@@ -316,7 +298,6 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
      *
      * @param mouseEvent Mouse activity made bu user
      */
-
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
     }
@@ -326,7 +307,6 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
      *
      * @param mouseEvent Mouse activity made bu user
      */
-
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
     }
