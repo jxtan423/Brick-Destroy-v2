@@ -2,7 +2,7 @@ package App.Graphics.Frame.InGame.View;
 
 import App.Graphics.Frame.GameFrame;
 import App.Graphics.Frame.InGame.Model.Wall;
-import App.Graphics.Frame.InGame.ShowScore;
+import App.Graphics.Frame.InGame.PopUpScore;
 import App.Graphics.Frame.InGame.SubmitScore;
 
 import javax.swing.*;
@@ -19,7 +19,7 @@ public abstract class Game extends JComponent implements KeyListener, MouseListe
 
     PauseMenu pM;
     SubmitScore submit;
-    ShowScore show;
+    PopUpScore show;
     String message;
     String tab;
 
@@ -47,7 +47,7 @@ public abstract class Game extends JComponent implements KeyListener, MouseListe
         this.DEF_WIDTH = DEF_WIDTH;
         this.DEF_HEIGHT = DEF_HEIGHT;
         pM = new PauseMenu(new Dimension(DEF_WIDTH, DEF_HEIGHT));
-        show = new ShowScore(owner);
+        show = new PopUpScore(owner);
         submit = new SubmitScore(owner, filename);
         showPauseMenu = false;
         tab = "Press Tab to start game";

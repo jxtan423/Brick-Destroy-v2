@@ -222,6 +222,7 @@ public class SpecialGame extends Game {
                     });
                     celebration.start();
                     is7Pressed = true;
+                    isCR7Time = false;
                 }
                 break;
             case KeyEvent.VK_ESCAPE:
