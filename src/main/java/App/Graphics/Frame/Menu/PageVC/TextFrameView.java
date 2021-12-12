@@ -12,7 +12,7 @@ import java.io.IOException;
  * display the image with "Back" button.
  */
 
-public abstract class TextFrameView extends Image implements ActionListener {
+public abstract class TextFrameView extends Image {
 
     private JFrame frame;
     private JButton btn;
@@ -87,7 +87,6 @@ public abstract class TextFrameView extends Image implements ActionListener {
         btn = new JButton("Back");
         btn.setFont(new Font("Arial", Font.ITALIC, 20));
         btn.setBounds(400, 470, 100, 30);
-        btn.addActionListener(this);
         frame.add(btn);
     }
 

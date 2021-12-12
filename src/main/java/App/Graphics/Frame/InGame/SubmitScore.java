@@ -114,7 +114,7 @@ public class SubmitScore extends Score {
      * @param e Any action performed by the user
      */
 
-    @Override
+    /*@Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btn) {
             try {
@@ -132,6 +132,6 @@ public class SubmitScore extends Score {
             frame.dispose();
             owner.enableHomeMenu(isFromNormalGame);
         }
-    }
+    }*/
 }
 

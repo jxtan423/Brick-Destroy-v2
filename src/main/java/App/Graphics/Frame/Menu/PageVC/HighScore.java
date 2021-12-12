@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -140,11 +141,18 @@ public class HighScore extends TextFrameView {
      *
      * @param e Capture any event from this class
      */
-    @Override
+    /*
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btn) {
             frame.dispose();
             owner.enableSelectionGame(false);
         }
+    }*/
+    public GameFrame getOwner() {
+        return this.owner;
+    }
+
+    public void addClickListener(ActionListener e) {
+        btn.addActionListener(e);
     }
 }

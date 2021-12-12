@@ -4,7 +4,6 @@ import App.Graphics.Frame.GameFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 
 /**
  * This class display the info of the game.
@@ -17,8 +16,6 @@ public class GameInfo extends TextFrameView {
     private final GameFrame owner;
     private final JFrame frame;
     private final JButton btn;
-
-    private BufferedImage img;
 
     /**
      * This constructor calls its parents'
@@ -46,13 +43,13 @@ public class GameInfo extends TextFrameView {
      * @param e Any action made by the user
      */
 
-    @Override
+    /*
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btn) {
+       if (e.getSource() == btn) {
             frame.dispose();
             owner.enableSelectionGame(false);
         }
-    }
+    }*/
 
     /**
      * This method display the instructions and
@@ -90,5 +87,16 @@ public class GameInfo extends TextFrameView {
         label.setFont(new Font("serif", Font.PLAIN, 18));
         frame.add(label);
         frame.setVisible(true);
+    }
+
+    /**
+     * This method is to get the
+     * GameFrame.
+     *
+     * @return The GameFrame where the components are created
+     */
+
+    public GameFrame getOwner() {
+        return this.owner;
     }
 }

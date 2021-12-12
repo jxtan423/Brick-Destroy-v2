@@ -182,11 +182,11 @@ public class ShowScore extends Score {
      * @param e Capture any event from this class
      */
 
-    @Override
+    /*@Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btn) {
             frame.dispose();
             owner.game();
         }
-    }
+    }*/
 }
