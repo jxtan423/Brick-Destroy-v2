@@ -1,29 +1,17 @@
-package App.Graphics.Frame.InGame.View;/*
- *  Brick Destroy - A simple Arcade video game
- *   Copyright (C) 2017  Filippo Ranza
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
+package App.Graphics.Frame.InGame.View;
 
 import App.Graphics.Frame.InGame.Model.DebugPanel;
 import App.Graphics.Frame.InGame.Model.Wall;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
+/**
+ * This class inherits JDialog and implements WindowListener.
+ * This class is to show a frame about debug console.
+ * This class will be applied on normal game ONLY.
+ */
 
 public class DebugConsole extends JDialog implements WindowListener {
 
@@ -33,17 +21,36 @@ public class DebugConsole extends JDialog implements WindowListener {
     private final NormalGame normalGame;
     private final Wall wall;
 
+    /**
+     * This constructor is to assigned variables from
+     * the parameters and execute the initialize method.
+     * DebugPanel is instantiated and is added into the
+     * JDialog.
+     * The debug console will fit the frame.
+     *
+     * @param owner Control GameFrame method whenever event is captured
+     * @param wall The wall
+     * @param normalGame The normal Game
+     */
+
     public DebugConsole(JFrame owner, Wall wall, NormalGame normalGame) {
         this.wall = wall;
         this.owner = owner;
         this.normalGame = normalGame;
         initialize();
-
         debugPanel = new DebugPanel(wall);
         this.add(debugPanel, BorderLayout.CENTER);
-
         this.pack();
     }
+
+    /**
+     * This method is to set the
+     * debug console.
+     * The name of the frame is set
+     * as well as the layout.
+     * This method also add a window listener
+     * to this class.
+     */
 
     private void initialize() {
         this.setModal(true);
@@ -54,6 +61,12 @@ public class DebugConsole extends JDialog implements WindowListener {
         this.setFocusable(true);
     }
 
+    /**
+     * This method is to set the
+     * location of the debug console
+     * at the middle of the normal game
+     * frame.
+     */
 
     private void setLocation() {
         int x = ((owner.getWidth() - this.getWidth()) / 2) + owner.getX();
@@ -61,32 +74,62 @@ public class DebugConsole extends JDialog implements WindowListener {
         this.setLocation(x, y);
     }
 
-
+    /**
+     * This method does nothing.
+     *
+     * @param windowEvent window event that performed by user
+     */
     @Override
     public void windowOpened(WindowEvent windowEvent) {
-
     }
 
+    /**
+     * This method will repaint the normal game
+     * frame whenever the user close the
+     * debug console.
+     *
+     * @param windowEvent window event that performed by user
+     */
     @Override
     public void windowClosing(WindowEvent windowEvent) {
         normalGame.repaint();
     }
 
+    /**
+     * This method does nothing.
+     *
+     * @param windowEvent window event that performed by user
+     */
     @Override
     public void windowClosed(WindowEvent windowEvent) {
-
     }
 
+    /**
+     * This method does nothing.
+     *
+     * @param windowEvent window event that performed by user
+     */
     @Override
     public void windowIconified(WindowEvent windowEvent) {
-
     }
 
+    /**
+     * This method does nothing.
+     *
+     * @param windowEvent window event that performed by user
+     */
     @Override
     public void windowDeiconified(WindowEvent windowEvent) {
-
     }
 
+    /**
+     * This method will set the location of the
+     * debug console, and get the speed of the ball
+     * from wall class and pass it to debug panel to
+     * perform its functionality.
+     *
+     * @param windowEvent window event that performed by user
+     */
     @Override
     public void windowActivated(WindowEvent windowEvent) {
         setLocation();
@@ -94,8 +137,12 @@ public class DebugConsole extends JDialog implements WindowListener {
         debugPanel.setValues(b.getSpeedX(), b.getSpeedY());
     }
 
+    /**
+     * This method does nothing.
+     *
+     * @param windowEvent window event that performed by user
+     */
     @Override
     public void windowDeactivated(WindowEvent windowEvent) {
-
     }
 }

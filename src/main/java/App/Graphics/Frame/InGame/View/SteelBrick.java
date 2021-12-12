@@ -1,28 +1,16 @@
-package App.Graphics.Frame.InGame.View;/*
- *  Brick Destroy - A simple Arcade video game
- *   Copyright (C) 2017  Filippo Ranza
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
+package App.Graphics.Frame.InGame.View;
 
 import App.Graphics.Frame.InGame.DetermineBricks;
-
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
+/**
+ * This class inherits the Brick class and implements the
+ * DetermineBricks interface.
+ * This class is to create a type of brick with
+ * specific colour and strength.
+ */
 
 public class SteelBrick extends Brick implements DetermineBricks {
 
@@ -34,22 +22,60 @@ public class SteelBrick extends Brick implements DetermineBricks {
     private final Random rnd;
     private final Shape brickFace;
 
+    /**
+     * This constructor calls its
+     * parents to create the brick.
+     * Random number generator is instantiated.
+     * brickFace is assigned by its parents'
+     * brickFace.
+     *
+     * @param point The coordinates of brick
+     * @param size The size of brick
+     */
+
     public SteelBrick(Point point, Dimension size) {
         super(point, size, DEF_BORDER, DEF_INNER, STEEL_STRENGTH);
         rnd = new Random();
         brickFace = super.brickFace;
     }
 
-
+    /**
+     * This method creates a rectangle object and
+     * return back the rectangle along with
+     * specific size and coordinates.
+     *
+     * @param pos The coordinates of brick
+     * @param size The size of brick
+     * @return The shape of the brick
+     */
     @Override
     protected Shape makeBrickFace(Point pos, Dimension size) {
         return new Rectangle(pos, size);
     }
 
+    /**
+     * This method is to get the
+     * shape of the brick by getting
+     * from its parents.
+     *
+     * @return The shape of the brick
+     */
     @Override
     public Shape getBrick() {
         return brickFace;
     }
+
+    /**
+     * This method is to setImpact to the
+     * brick whenever the ball collides
+     * with the brick.
+     * The impact method will be executed
+     * if the brick is not broken.
+     *
+     * @param point The ball direction
+     * @param dir The crack position
+     * @return Boolean value for the state of the respective brick
+     */
 
     public boolean setImpact(Point2D point, int dir) {
         if (super.isBroken())
@@ -58,12 +84,27 @@ public class SteelBrick extends Brick implements DetermineBricks {
         return super.isBroken();
     }
 
+    /**
+     * This method is to identify if the
+     * random number is smaller than the
+     * steel probability, it will execute
+     * the impact method at parent class.
+     */
+
     public void impact() {
         if (rnd.nextDouble() < STEEL_PROBABILITY) {
             super.impact();
         }
     }
 
+    /**
+     * This object is created and it is returned
+     * in the specific type of brick.
+     *
+     * @param point The coordinates of brick
+     * @param size The size of brick
+     * @return The respective type of brick object
+     */
     @Override
     public Brick getSpecificBrick(Point point, Dimension size) {
         return new SteelBrick(point, size);

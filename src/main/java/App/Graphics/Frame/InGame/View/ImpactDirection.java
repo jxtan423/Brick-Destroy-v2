@@ -1,5 +1,13 @@
 package App.Graphics.Frame.InGame.View;
 
+/**
+ * This enum class is to differentiate
+ * the type of impact which the bricks
+ * got will perform different functionality
+ * in terms of direction and position.
+ *
+ */
+
 public enum ImpactDirection {
 
     UP_IMPACT {
@@ -34,6 +42,17 @@ public enum ImpactDirection {
             return brick.setImpact(ball.left, Crack.LEFT);
         }
     };
+
+    /**
+     * This abstract method will be implemented by
+     * the enum constant to perform respective
+     * functionality whenever the condition meets.
+     *
+     * @param brick The respective brick
+     * @param ball The ball
+     * @param isRubber Boolean value whether is rubber ball or not
+     * @return The boolean value of brick impact
+     */
 
     public abstract boolean setImpact(Brick brick, Ball ball, boolean isRubber);
 }
