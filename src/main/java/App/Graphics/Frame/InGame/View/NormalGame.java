@@ -58,7 +58,7 @@ public class NormalGame extends Game {
      */
     @Override
     public void createWall() {
-        wall = new NormalWall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 30, 3, 3, new Point(300, 430));
+        wall = new NormalWall(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 1, 1, 3, new Point(300, 430));
     }
 
     /**

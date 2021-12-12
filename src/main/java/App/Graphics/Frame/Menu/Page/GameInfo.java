@@ -1,10 +1,10 @@
-package App.Graphics.Frame.Menu.PageVC;
+package App.Graphics.Frame.Menu.Page;
 
 import App.Graphics.Frame.GameFrame;
+import App.Graphics.Frame.Menu.Page.Controller.GameInfoController;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
 
 /**
  * This class display the info of the game.
@@ -12,13 +12,10 @@ import java.awt.image.BufferedImage;
  * how to play the game.
  */
 
-public class GameInfo extends TextFrameView {
+public class GameInfo extends TextFrame {
 
     private final GameFrame owner;
     private final JFrame frame;
-    private final JButton btn;
-
-    private BufferedImage img;
 
     /**
      * This constructor calls its parents'
@@ -34,24 +31,8 @@ public class GameInfo extends TextFrameView {
         super("Info");
         this.owner = owner;
         frame = super.getFrame();
-        btn = super.getBtn();
         content();
-    }
-
-    /**
-     * Whenever the button is clicked by the user,
-     * this frame will be destroyed and create
-     * selection game from GameFrame.
-     *
-     * @param e Any action made by the user
-     */
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btn) {
-            frame.dispose();
-            owner.enableSelectionGame(false);
-        }
+        new GameInfoController(this);
     }
 
     /**
@@ -90,5 +71,16 @@ public class GameInfo extends TextFrameView {
         label.setFont(new Font("serif", Font.PLAIN, 18));
         frame.add(label);
         frame.setVisible(true);
+    }
+
+    /**
+     * This method is to get the
+     * GameFrame.
+     *
+     * @return The GameFrame where the components are created
+     */
+
+    public GameFrame getOwner() {
+        return this.owner;
     }
 }

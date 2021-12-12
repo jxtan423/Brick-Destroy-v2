@@ -1,4 +1,4 @@
-package App.Graphics.Frame.Menu.PageVC;
+package App.Graphics.Frame.Menu.Page;
 
 import App.Graphics.Frame.GameFrame;
 import App.Graphics.Frame.Menu.Attributes.Button;

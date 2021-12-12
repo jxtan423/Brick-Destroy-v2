@@ -1,9 +1,8 @@
-package App.Graphics.Frame.Menu.PageVC;
+package App.Graphics.Frame.Menu.Page;
 
 import App.Graphics.Image;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.image.RescaleOp;
 import java.io.IOException;
 
@@ -12,7 +11,7 @@ import java.io.IOException;
  * display the image with "Back" button.
  */
 
-public abstract class TextFrameView extends Image implements ActionListener {
+public abstract class TextFrame extends Image {
 
     private JFrame frame;
     private JButton btn;
@@ -27,7 +26,7 @@ public abstract class TextFrameView extends Image implements ActionListener {
      * @param name The name of the frame
      */
 
-    public TextFrameView(String name) {
+    public TextFrame(String name) {
         super();
         setFrame(name);
         button();
@@ -69,7 +68,7 @@ public abstract class TextFrameView extends Image implements ActionListener {
     }
 
     /**
-     * @return The TextFrameView frame in terms of size and coordinates.
+     * @return The TextFrame frame in terms of size and coordinates.
      */
 
     public JFrame getFrame() {
@@ -87,7 +86,6 @@ public abstract class TextFrameView extends Image implements ActionListener {
         btn = new JButton("Back");
         btn.setFont(new Font("Arial", Font.ITALIC, 20));
         btn.setBounds(400, 470, 100, 30);
-        btn.addActionListener(this);
         frame.add(btn);
     }
 

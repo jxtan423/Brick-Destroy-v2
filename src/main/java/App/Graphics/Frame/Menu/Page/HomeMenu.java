@@ -1,4 +1,4 @@
-package App.Graphics.Frame.Menu.PageVC;
+package App.Graphics.Frame.Menu.Page;
 
 import App.Graphics.Frame.GameFrame;
 import App.Graphics.Frame.Menu.Attributes.Button;
@@ -119,6 +119,7 @@ public class HomeMenu extends Image implements MouseListener, MouseMotionListene
      * This method calls FontRenderContext for getting the
      * string width and height in further.
      * Execute the text and button methods.
+     *
      * @param g2d The graphics context on which to paint in 2D form
      */
 

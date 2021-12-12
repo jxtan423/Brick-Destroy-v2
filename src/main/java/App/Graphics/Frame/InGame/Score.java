@@ -1,6 +1,6 @@
 package App.Graphics.Frame.InGame;
 
-import App.Graphics.Frame.Menu.PageVC.TextFrameView;
+import App.Graphics.Frame.Menu.Page.TextFrame;
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,7 +10,7 @@ import java.awt.*;
  * the level.
  */
 
-public abstract class Score extends TextFrameView {
+public abstract class Score extends TextFrame {
 
     private final JFrame frame;
     private final JButton btn;
