@@ -1,6 +1,7 @@
 package App.Graphics.Frame.InGame;
 
 import App.Graphics.Frame.GameFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -68,6 +69,7 @@ public class ShowScore extends Score {
 
     /**
      * Set the score.
+     *
      * @param score The score the user gained in a single level
      */
 

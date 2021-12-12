@@ -36,7 +36,7 @@ public class SubmitScore extends Score {
      * frame from parents class.
      * Content and checkGame will be executed.
      *
-     * @param owner Control GameFrame method whenever event is captured
+     * @param owner    Control GameFrame method whenever event is captured
      * @param filename The filename to be read
      */
 
@@ -95,6 +95,7 @@ public class SubmitScore extends Score {
 
     /**
      * Set the high score
+     *
      * @param highScore The total score scored by the user
      */
 

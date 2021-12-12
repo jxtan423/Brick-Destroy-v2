@@ -4,6 +4,7 @@ import App.Graphics.Frame.GameFrame;
 import App.Graphics.Frame.InGame.Model.Wall;
 import App.Graphics.Frame.InGame.ShowScore;
 import App.Graphics.Frame.InGame.SubmitScore;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -36,16 +37,16 @@ public abstract class Game extends JComponent implements KeyListener, MouseListe
      * boolean value is assigned by false.
      * Numerous methods will be executed.
      *
-     * @param owner Control GameFrame method whenever event is captured
-     * @param DEF_WIDTH The width of the frame
+     * @param owner      Control GameFrame method whenever event is captured
+     * @param DEF_WIDTH  The width of the frame
      * @param DEF_HEIGHT The height of the frame
-     * @param filename The name of the file with directory
+     * @param filename   The name of the file with directory
      */
 
     public Game(GameFrame owner, int DEF_WIDTH, int DEF_HEIGHT, String filename) {
         this.DEF_WIDTH = DEF_WIDTH;
         this.DEF_HEIGHT = DEF_HEIGHT;
-        pM = new PauseMenu(new Dimension(DEF_WIDTH,DEF_HEIGHT));
+        pM = new PauseMenu(new Dimension(DEF_WIDTH, DEF_HEIGHT));
         show = new ShowScore(owner);
         submit = new SubmitScore(owner, filename);
         showPauseMenu = false;
