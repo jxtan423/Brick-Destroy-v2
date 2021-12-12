@@ -1,13 +1,11 @@
 package App.Graphics.Frame;
 
 import App.Graphics.Frame.InGame.View.NormalGame;
-import App.Graphics.Frame.Menu.GameInfoController;
-import App.Graphics.Frame.Menu.HighScoreController;
-import App.Graphics.Frame.Menu.PageVC.SelectionGame;
+import App.Graphics.Frame.Menu.Page.SelectionGame;
 import App.Graphics.Frame.InGame.View.SpecialGame;
-import App.Graphics.Frame.Menu.PageVC.GameInfo;
-import App.Graphics.Frame.Menu.PageVC.HighScore;
-import App.Graphics.Frame.Menu.PageVC.HomeMenu;
+import App.Graphics.Frame.Menu.Page.GameInfo;
+import App.Graphics.Frame.Menu.Page.HighScore;
+import App.Graphics.Frame.Menu.Page.HomeMenu;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
@@ -146,8 +144,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     public void enableInfo() {
         this.remove(selectionGame);
-        GameInfo gameInfo = new GameInfo(this);
-        new GameInfoController(gameInfo);
+        new GameInfo(this);
     }
 
     /**
@@ -156,8 +153,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
      */
 
     public void enableScore() throws IOException {
-        HighScore highScore = new HighScore(this);
-        new HighScoreController(highScore);
+        new HighScore(this);
     }
 
     /**

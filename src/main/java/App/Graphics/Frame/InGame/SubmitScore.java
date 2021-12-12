@@ -1,11 +1,8 @@
 package App.Graphics.Frame.InGame;
 
 import App.Graphics.Frame.GameFrame;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.*;
 import java.util.HashMap;
 
 /**
@@ -21,7 +18,6 @@ import java.util.HashMap;
 public class SubmitScore extends Score {
 
     private final JFrame frame;
-    private final JButton btn;
     private JTextField field;
     private final GameFrame owner;
 
@@ -45,9 +41,9 @@ public class SubmitScore extends Score {
         this.owner = owner;
         this.filename = filename;
         frame = super.getFrame();
-        btn = super.getBtn();
         content();
         checkGame();
+        new SubmitScoreController(this);
     }
 
     /**
@@ -92,7 +88,6 @@ public class SubmitScore extends Score {
         frame.setVisible(true);
     }
 
-
     /**
      * Set the high score
      * @param highScore The total score scored by the user
@@ -102,36 +97,31 @@ public class SubmitScore extends Score {
         this.highScore = highScore;
     }
 
+    public JTextField getField() {
+        return field;
+    }
+
     /**
-     * This method will captured the action of the user
-     * on clicking the button using the mouse.
-     * If the user clicks on the button, the name
-     * and the score will be saved into a txt file in
-     * a specific format.
-     * After saving, the frame will be destroyed itself
-     * and called HomeMenu to be displayed on user's screen.
+     * This method is to get the
+     * GameFrame.
      *
-     * @param e Any action performed by the user
+     * @return The GameFrame where the components are created
      */
 
-    /*@Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btn) {
-            try {
-                String word = field.getText();
-                File file = new File(filename);
-                FileWriter fileWriter = new FileWriter(file, true);
-                BufferedWriter buffer = new BufferedWriter(fileWriter);
-                PrintWriter printWriter = new PrintWriter(buffer);
-                printWriter.printf("%s %.2f\n", word, this.highScore);
-                printWriter.close();
+    public GameFrame getOwner() {
+        return owner;
+    }
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            frame.dispose();
-            owner.enableHomeMenu(isFromNormalGame);
-        }
-    }*/
+    public String getFilename() {
+        return filename;
+    }
+
+    public double getHighScore() {
+        return highScore;
+    }
+
+    public boolean isFromNormalGame() {
+        return isFromNormalGame;
+    }
 }
 

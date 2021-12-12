@@ -1,9 +1,10 @@
-package App.Graphics.Frame.Menu.PageVC;
+package App.Graphics.Frame.Menu.Page;
 
 import App.Graphics.Frame.GameFrame;
+import App.Graphics.Frame.Menu.Page.Controller.GameInfoController;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 /**
  * This class display the info of the game.
@@ -11,11 +12,10 @@ import java.awt.event.*;
  * how to play the game.
  */
 
-public class GameInfo extends TextFrameView {
+public class GameInfo extends TextFrame {
 
     private final GameFrame owner;
     private final JFrame frame;
-    private final JButton btn;
 
     /**
      * This constructor calls its parents'
@@ -31,25 +31,9 @@ public class GameInfo extends TextFrameView {
         super("Info");
         this.owner = owner;
         frame = super.getFrame();
-        btn = super.getBtn();
         content();
+        new GameInfoController(this);
     }
-
-    /**
-     * Whenever the button is clicked by the user,
-     * this frame will be destroyed and create
-     * selection game from GameFrame.
-     *
-     * @param e Any action made by the user
-     */
-
-    /*
-    public void actionPerformed(ActionEvent e) {
-       if (e.getSource() == btn) {
-            frame.dispose();
-            owner.enableSelectionGame(false);
-        }
-    }*/
 
     /**
      * This method display the instructions and

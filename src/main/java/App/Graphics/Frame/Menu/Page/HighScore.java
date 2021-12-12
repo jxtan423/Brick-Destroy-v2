@@ -1,13 +1,13 @@
-package App.Graphics.Frame.Menu.PageVC;
+package App.Graphics.Frame.Menu.Page;
 
 import App.Graphics.Frame.GameFrame;
 import App.Graphics.Frame.InGame.Model.Gamer;
 import App.Graphics.Frame.InGame.ScoreComparison;
+import App.Graphics.Frame.Menu.Page.Controller.HighScoreController;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -17,11 +17,10 @@ import java.util.Scanner;
  * scoreboard for normal game and special game.
  */
 
-public class HighScore extends TextFrameView {
+public class HighScore extends TextFrame {
 
     private final GameFrame owner;
     private final JFrame frame;
-    private final JButton btn;
 
     /**
      * This constructor calls parent class
@@ -37,8 +36,8 @@ public class HighScore extends TextFrameView {
         super("High Score");
         this.owner = owner;
         frame = super.getFrame();
-        btn = super.getBtn();
         content();
+        new HighScoreController(this);
     }
 
     /**
@@ -135,24 +134,13 @@ public class HighScore extends TextFrameView {
     }
 
     /**
-     * If user presses the "Back" button,
-     * this frame will be destroyed and
-     * selection game is displayed after.
+     * This method is to get the
+     * GameFrame.
      *
-     * @param e Capture any event from this class
+     * @return The GameFrame where the components are created
      */
-    /*
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btn) {
-            frame.dispose();
-            owner.enableSelectionGame(false);
-        }
-    }*/
+
     public GameFrame getOwner() {
         return this.owner;
-    }
-
-    public void addClickListener(ActionListener e) {
-        btn.addActionListener(e);
     }
 }

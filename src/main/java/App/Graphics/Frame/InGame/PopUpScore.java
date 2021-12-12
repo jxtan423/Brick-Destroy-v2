@@ -13,13 +13,12 @@ import java.awt.event.ActionEvent;
  * game as well as special game.
  */
 
-public class ShowScore extends Score {
+public class PopUpScore extends Score {
 
     private final JFrame frame;
-    private final JButton btn;
     private JLabel marks;
 
-    private GameFrame owner;
+    private final GameFrame owner;
     private double score;
     private double highScore;
 
@@ -32,12 +31,12 @@ public class ShowScore extends Score {
      * @param owner Control GameFrame method whenever event is captured
      */
 
-    public ShowScore(GameFrame owner) {
+    public PopUpScore(GameFrame owner) {
         super("Show Score", "Continue");
         frame = super.getFrame();
-        btn = super.getBtn();
         this.owner = owner;
         content();
+        new PopUpScoreController(this);
     }
 
     /**
@@ -174,19 +173,13 @@ public class ShowScore extends Score {
     }
 
     /**
-     * If user press "Continue" button, this
-     * frame will be destroyed and execute game method
-     * at GameFrame class to continue gaming for
-     * next level.
+     * This method is to get the
+     * GameFrame.
      *
-     * @param e Capture any event from this class
+     * @return The GameFrame where the components are created
      */
 
-    /*@Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btn) {
-            frame.dispose();
-            owner.game();
-        }
-    }*/
+    public GameFrame getOwner() {
+        return this.owner;
+    }
 }
