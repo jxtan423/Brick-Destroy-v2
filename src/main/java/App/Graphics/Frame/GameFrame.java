@@ -1,8 +1,8 @@
 package App.Graphics.Frame;
 
-import App.Graphics.Frame.InGame.View.NormalGame;
+import App.Graphics.Frame.InGame.Controller.Game.NormalGame;
 import App.Graphics.Frame.Menu.Page.SelectionGame;
-import App.Graphics.Frame.InGame.View.SpecialGame;
+import App.Graphics.Frame.InGame.Controller.Game.SpecialGame;
 import App.Graphics.Frame.Menu.Page.GameInfo;
 import App.Graphics.Frame.Menu.Page.HighScore;
 import App.Graphics.Frame.Menu.Page.HomeMenu;

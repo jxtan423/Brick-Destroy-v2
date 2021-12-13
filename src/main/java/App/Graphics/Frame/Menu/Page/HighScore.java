@@ -1,8 +1,8 @@
 package App.Graphics.Frame.Menu.Page;
 
 import App.Graphics.Frame.GameFrame;
-import App.Graphics.Frame.InGame.Model.Gamer;
-import App.Graphics.Frame.InGame.ScoreComparison;
+import App.Graphics.Frame.InGame.Model.ScoreboardSorting.Gamer;
+import App.Graphics.Frame.InGame.Model.ScoreboardSorting.ScoreComparison;
 import App.Graphics.Frame.Menu.Page.Controller.HighScoreController;
 
 import javax.swing.*;
