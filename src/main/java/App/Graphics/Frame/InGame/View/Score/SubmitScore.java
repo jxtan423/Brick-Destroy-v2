@@ -2,7 +2,6 @@ package App.Graphics.Frame.InGame.View.Score;
 
 import App.Graphics.Frame.GameFrame;
 import App.Graphics.Frame.InGame.Controller.Score.SubmitScoreController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
